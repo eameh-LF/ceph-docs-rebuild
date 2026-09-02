@@ -5,7 +5,7 @@
 
 ## Where I am after six months
 
-Since April I have mostly worked the low-hanging fruit, on purpose: audit the docs, file what was wrong, fix the dangerous and the obvious, and learn how the project reviews and ships. That was the right first step. It is not finished, and it is not a strategy either. It fixes pages; it does not change why pages go wrong.
+Since April, I have worked auditing the docs, filing what was wrong, fixing the dangerous and the obvious, and learning how the project reviews and ships. That was the right first step, and it is not finished, but it is not a strategy. It fixes pages; it does not change or improve how our docs are consumed.
 
 Where that stands today:
 
@@ -86,7 +86,7 @@ Others have done this too. Red Hat's modular documentation model (concept, proce
 
 More and more readers put their Ceph questions to an AI assistant, and those assistants fetch docs.ceph.com. Today they get HTML by default, with no index and no metadata to cite. A Markdown rendering and the raw source already exist on the site; nothing points to them, and no page says which release it applies to. The rebuild publishes the docs in the forms agents consume, and lets the template's metadata travel with every page. Most of this is build configuration on top of changes 1 and 2. docs.ceph.com is hosted on Read the Docs, which serves these files from the site root once the build emits them.
 
-| What agents need | Today (verified 2 Sep 2026) | After the rebuild |
+| What agents need | Today | After the rebuild |
 |---|---|---|
 | An index of the docs | `llms.txt` and `llms-full.txt` return 404 at the root and under every version; the sitemap lists ten version roots and no pages | `llms.txt` and `llms-full.txt` emitted by the build (sphinx-llm, the extension Read the Docs recommends) and served at the root from `latest` |
 | Plain-text pages | Two forms exist but nothing advertises them: raw source under `_sources`, and a Markdown rendering Read the Docs returns when asked for `text/markdown`. No `.md` URLs, no link from any page, no front matter | A linked Markdown copy of every page at a stable `.md` URL, listed in `llms.txt`, carrying title, release and review metadata |
