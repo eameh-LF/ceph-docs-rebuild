@@ -164,9 +164,6 @@
   <header class="mast">
     <div class="eyebrow">Ceph documentation · Proposal to the team · September 2026</div>
     <h1>Ceph Docs <span class="v">Rebuild</span></h1>
-    <p class="stand">Six months of cleanup are done. The next phase rebuilds the documentation top to bottom: a new architecture, modular pages, and docs that AI agents can read as easily as people.</p>
-    <div class="meta">
-      <span><b>From</b> Emmanuel Ameh, Technical Writer</span>
       <span><b>Status</b> For team review and approval</span>
     </div>
   </header>
@@ -174,7 +171,7 @@
   <section id="sofar">
     <div class="shead"><span class="n">01</span><h2>Six months in</h2></div>
     <div class="prose">
-      <p>Since April I have worked the low-hanging fruit on purpose: audit the docs, file what was wrong, fix the dangerous and the obvious, learn how the project reviews and ships. That was the right first step and it is not finished, but it is not a strategy. It fixes pages; it does not change why the pages go wrong.</p>
+      <p>Since April, I have worked auditing the docs, filing what was wrong, fixing the dangerous and the obvious, and learning how the project reviews and ships. That was the right first step, and it is not finished, but it is not a strategy. It fixes pages; it does not change or improve how our docs are consumed.</p>
     </div>
     <div class="strip">
       <div><b>65</b>defects found and filed</div>
@@ -264,7 +261,7 @@
         </div>
         <div class="tw">
           <table class="ag">
-            <thead><tr><th>What agents need</th><th>Today, verified 2 Sep 2026</th><th>After the rebuild</th></tr></thead>
+            <thead><tr><th>What agents need</th><th>Today</th><th>After the rebuild</th></tr></thead>
             <tbody>
               <tr><td>An index of the docs</td><td><span class="pill no">404</span>llms.txt and llms-full.txt return 404 at the root and under every version; the sitemap lists ten version roots and no pages</td><td>llms.txt and llms-full.txt emitted by the build (sphinx-llm, the extension Read the Docs recommends) and served at the root from latest</td></tr>
               <tr><td>Plain-text pages</td><td><span class="pill no">Hidden</span>two forms exist but nothing advertises them: raw source under _sources, and a Markdown rendering Read the Docs returns when asked for text/markdown. No .md URLs, no link from any page, no front matter</td><td>A linked Markdown copy of every page at a stable .md URL, listed in llms.txt, carrying title, release and review metadata</td></tr>
