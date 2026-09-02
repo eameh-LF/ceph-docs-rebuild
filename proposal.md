@@ -101,12 +101,59 @@ For the record: `llms.txt` is served by Anthropic, Cloudflare, GitHub and AWS, a
 
 Each step ends with something visible on docs.ceph.com. The source stays reStructuredText throughout. The dates are proposals; I would like to confirm them with the team.
 
-| When | Step | What happens | What you will see |
-|---|---|---|---|
-| Sep to Oct 2026 | The new front door | **Change the front of the site. Move nothing.** Switch on the generated outputs first (the `llms.txt` index and the Markdown rendering of each page): one build-configuration change on `main`, no content touched. Then the new landing page and the seven doors, built as a navigation layer over the existing pages: no files move, no links break. Two zero-cost fixes ride along: the generated command reference gets a visible entry, and the block quick start gets a real home. Page template agreed with the team. | docs.ceph.com opens differently, and agents get an index and a Markdown copy of every page. |
-| Nov to Dec 2026 | First service rebuilt | **Rebuild one section completely, as the model for the rest.** Block (RBD, 41 pages) converted end to end: nine core pages rewritten into about thirty modular ones, a Troubleshoot part written from nothing (Block has none today), 28 client and gateway pages re-homed with metadata, iSCSI kept behind its maintenance banner. Named anchors land first so no link breaks. This becomes the model for every other section. | One complete section in the new form, side by side with the old. |
-| Q1 2027 | The rest of the services, and Operate | **Repeat for the other user-facing sections.** File (CephFS, 57 pages) goes second because its index already has the shape. Then Object (RGW, 76 pages, leading on generated reference), cluster operations (72), and Deploy (cephadm and install, 42), where the duplicated install and upgrade procedures finally merge. Option reference coverage moves from 36 percent toward all 2,166 options. Conversions run from a checklist so other contributors can pick them up. | The user-facing tree fully in the new shape. |
-| Q2 2027 | Finish and lock it in | **Finish, retire the old navigation, add checks so it stays this way.** Developer docs (154 pages) consolidated into one track, with the twenty or so operator pages hiding there moved out. Old navigation retired on `main`; release branches keep theirs until end of life, so redirects apply to `latest`. Metadata, anchor and template checks added to the build so the structure holds without anyone policing it by hand. Docs MCP server if the stretch goal is approved. | A rebuilt docs.ceph.com, and checks that keep it that way. |
+### Step 1, Sep to Oct 2026: The new front door
+
+Change the front of the site. Move nothing.
+
+- Rewrite the landing page: seven visible entry points with a sentence each, instead of a feature list and a hidden table of contents.
+- Add seven door pages. Each lists the existing pages that belong to it, where they live today. Sphinx lets an index point at any page, so nothing moves.
+- Regroup the service indexes (RBD, CephFS, RGW, CSI) under five headings: Learn, Set up, Operate, Troubleshoot, Reference. CephFS already has these groups, hidden in comments.
+- Add the Troubleshoot page: links to the seven troubleshooting pages that exist and to the health-checks page.
+- Two small fixes: give the generated command reference a title and a home under Reference; put the block quick start under Start here.
+- One build change: add the sphinx-llm extension so each build also emits the llms.txt index and a Markdown rendering of every page. The .rst source is untouched.
+- Agree the page template with the team, on paper. No pages are converted yet.
+
+**You will see:** docs.ceph.com opens on seven clear ways in, the sidebar follows them, every existing URL still works, and agents get an index and a plain-text copy of every page.
+
+### Step 2, Nov to Dec 2026: First service rebuilt
+
+Rebuild one section completely, as the model for the rest.
+
+- Block (RBD, 41 pages) is the proposal: the smallest and calmest section, and it has no troubleshooting page today.
+- Land named anchors on every RBD page first, so links keep working when pages split. 34 of the 41 have none today.
+- Rewrite the nine core pages (commands, snapshots, mirroring, live migration, encryption, the two caches, Windows, the index) into about thirty modular pages on the template: one task per page, with metadata and a verify step.
+- Write the Troubleshoot part from nothing: three to five symptom-led pages.
+- Re-home the 28 client and gateway pages with metadata only. iSCSI stays behind its maintenance banner; the Kubernetes and Nomad pages move to the CSI door.
+- Single-source the repeated procedures inside Block. "Create a pool for RBD images" is written out six times today.
+- Add redirects for the pages that split, and review the result with the RBD reviewer.
+
+**You will see:** one complete section in the new form, side by side with the old, and a conversion checklist other people can follow.
+
+### Step 3, Q1 2027: The rest of the services and Operate
+
+Repeat for the other user-facing sections.
+
+- File (CephFS, 57 pages) goes first, because its index already has the shape. It proves the regroup path rather than the rewrite path.
+- Object (RGW, 76 pages) leads on generated reference: half of it is API and option reference, and its flat index of about fifty entries gets the five headings.
+- Cluster operations (72 pages) is already split by directory; each subdirectory becomes the matching door part.
+- Deploy (cephadm and install, 42 pages): the duplicated install and upgrade procedures finally merge, and one upgrade hub replaces five places.
+- Generated option reference grows from 36 percent toward all 2,166 options, one options file at a time.
+- Conversions run from the step 2 checklist and are filed as tracker items, so other contributors can pick them up.
+
+**You will see:** the user-facing tree fully in the new shape.
+
+### Step 4, Q2 2027: Finish and lock it in
+
+Finish, retire the old navigation, add checks so it stays this way.
+
+- Developer docs (154 pages) consolidated into one track. The twenty or so operator pages hiding in dev/ move to their user doors.
+- Old navigation retired on main. Release branches keep theirs until end of life, so redirects apply to latest.
+- Build checks: every page has metadata and a named anchor, procedure pages carry the template's parts, and placeholders or broken cross-references fail the build.
+- Configuration options and commands published as JSON next to the pages, from the same sources the HTML uses.
+- A Ceph docs MCP server, if the stretch goal is approved.
+- The first docs health report: open defects, option coverage, pages missing metadata, review latency.
+
+**You will see:** a rebuilt docs.ceph.com, and checks that keep it that way.
 
 In the background throughout: the 34 open register items close as each section is rebuilt, about a day a week. The cleanup never stops, but it no longer sets the agenda.
 

@@ -120,17 +120,18 @@
   .pill.ok{background:var(--ok-soft);color:var(--ok-ink)}
 
   /* rollout */
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0 1.3rem;margin-top:1.4rem;position:relative}
-  .steps::before{content:"";position:absolute;left:0;right:0;top:.55rem;height:2px;background:var(--rule2);z-index:0}
-  .step{position:relative;padding-top:1.5rem}
-  .step::before{content:"";position:absolute;left:0;top:0;width:1.15rem;height:1.15rem;border-radius:50%;background:var(--paper);border:2px solid var(--rule2);z-index:2}
-  .step.now::before{background:var(--accent);border-color:var(--accent)}
+  .steps{display:grid;margin-top:1.2rem;border-top:1px solid var(--rule2)}
+  .step{display:grid;grid-template-columns:12.5rem 1fr;gap:1.6rem;padding:1.3rem 0 1.5rem;border-bottom:1px solid var(--rule)}
   .step .when{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
   .step.now .when{color:var(--accent);font-weight:500}
-  .step h3{margin:.3rem 0 .5rem;font-size:1.1rem}
-  .step p{margin:0 0 .55rem;font-size:.9rem;color:var(--ink2)}
-  .step .lead{font-family:var(--display);font-weight:600;font-size:.95rem;color:var(--ink);margin:0 0 .45rem}
-  .step .see{font-family:var(--display);font-size:.86rem;color:var(--ink);padding:.55rem .7rem;background:var(--ok-soft);border-left:3px solid var(--ok)}
+  .step.now .when::before{content:"";display:inline-block;width:.6rem;height:.6rem;border-radius:50%;background:var(--accent);margin-right:.5rem;vertical-align:1px}
+  .step h3{margin:.3rem 0 .5rem;font-size:1.15rem}
+  .step .lead{font-family:var(--display);font-weight:600;font-size:.95rem;color:var(--ink);margin:0}
+  .step ul{margin:0 0 .9rem;padding:0;list-style:none;display:grid;gap:.45rem;font-size:.93rem;color:var(--ink2)}
+  .step li{padding-left:1.05rem;position:relative}
+  .step li::before{content:"";position:absolute;left:0;top:.6em;width:.38rem;height:.38rem;background:var(--rule2)}
+  .step.now li::before{background:var(--accent)}
+  .step .see{font-family:var(--display);font-size:.9rem;color:var(--ink);padding:.6rem .8rem;background:var(--ok-soft);border-left:3px solid var(--ok)}
   .step .see b{color:var(--ok-ink);font-weight:600}
   .bg{margin:1.6rem 0 0;padding:.9rem 1.1rem;border:1px solid var(--rule);background:var(--surface);font-size:.95rem;max-width:44rem}
   .bg b{font-family:var(--display);font-weight:600}
@@ -147,8 +148,7 @@
 
   @media (max-width:860px){
     .nav2,.tpl,.asks{grid-template-columns:1fr}
-    .steps{grid-template-columns:1fr;gap:1.4rem}
-    .steps::before{display:none}
+    .step{grid-template-columns:1fr;gap:.6rem}
   }
   @media (max-width:600px){
     body{font-size:16px}
@@ -286,32 +286,78 @@
     </div>
     <div class="steps">
       <div class="step now">
-        <div class="when">Sep to Oct 2026</div>
-        <h3>The new front door</h3>
-        <p class="lead">Change the front of the site. Move nothing.</p>
-        <p>Switch on the generated outputs first (the llms.txt index and the Markdown rendering of each page): one build-configuration change on main, no content touched. Then the new landing page and the seven doors, built as a navigation layer over the existing pages; no files move, no links break. Two zero-cost fixes ride along: the generated command reference gets a visible entry, and the block quick start gets a real home. Page template agreed with the team.</p>
-        <div class="see"><b>You will see:</b> docs.ceph.com opens differently, and agents get an index and a Markdown copy of every page.</div>
+        <div>
+          <div class="when">Sep to Oct 2026</div>
+          <h3>The new front door</h3>
+          <p class="lead">Change the front of the site. Move nothing.</p>
+        </div>
+        <div>
+          <ul>
+          <li>Rewrite the landing page: seven visible entry points with a sentence each, instead of a feature list and a hidden table of contents.</li>
+          <li>Add seven door pages. Each lists the existing pages that belong to it, where they live today. Sphinx lets an index point at any page, so nothing moves.</li>
+          <li>Regroup the service indexes (RBD, CephFS, RGW, CSI) under five headings: Learn, Set up, Operate, Troubleshoot, Reference. CephFS already has these groups, hidden in comments.</li>
+          <li>Add the Troubleshoot page: links to the seven troubleshooting pages that exist and to the health-checks page.</li>
+          <li>Two small fixes: give the generated command reference a title and a home under Reference; put the block quick start under Start here.</li>
+          <li>One build change: add the sphinx-llm extension so each build also emits the llms.txt index and a Markdown rendering of every page. The .rst source is untouched.</li>
+          <li>Agree the page template with the team, on paper. No pages are converted yet.</li>
+          </ul>
+          <div class="see"><b>You will see:</b> docs.ceph.com opens on seven clear ways in, the sidebar follows them, every existing URL still works, and agents get an index and a plain-text copy of every page.</div>
+        </div>
       </div>
       <div class="step">
-        <div class="when">Nov to Dec 2026</div>
-        <h3>First service rebuilt</h3>
-        <p class="lead">Rebuild one section completely, as the model for the rest.</p>
-        <p>Block (RBD, 41 pages) converted end to end: nine core pages rewritten into about thirty modular ones, a Troubleshoot part written from nothing (Block has none today), 28 client and gateway pages re-homed with metadata, iSCSI kept behind its maintenance banner. Named anchors land first so no link breaks. This becomes the model for every other section.</p>
-        <div class="see"><b>You will see:</b> one complete section in the new form, side by side with the old.</div>
+        <div>
+          <div class="when">Nov to Dec 2026</div>
+          <h3>First service rebuilt</h3>
+          <p class="lead">Rebuild one section completely, as the model for the rest.</p>
+        </div>
+        <div>
+          <ul>
+          <li>Block (RBD, 41 pages) is the proposal: the smallest and calmest section, and it has no troubleshooting page today.</li>
+          <li>Land named anchors on every RBD page first, so links keep working when pages split. 34 of the 41 have none today.</li>
+          <li>Rewrite the nine core pages (commands, snapshots, mirroring, live migration, encryption, the two caches, Windows, the index) into about thirty modular pages on the template: one task per page, with metadata and a verify step.</li>
+          <li>Write the Troubleshoot part from nothing: three to five symptom-led pages.</li>
+          <li>Re-home the 28 client and gateway pages with metadata only. iSCSI stays behind its maintenance banner; the Kubernetes and Nomad pages move to the CSI door.</li>
+          <li>Single-source the repeated procedures inside Block. "Create a pool for RBD images" is written out six times today.</li>
+          <li>Add redirects for the pages that split, and review the result with the RBD reviewer.</li>
+          </ul>
+          <div class="see"><b>You will see:</b> one complete section in the new form, side by side with the old, and a conversion checklist other people can follow.</div>
+        </div>
       </div>
       <div class="step">
-        <div class="when">Q1 2027</div>
-        <h3>The rest of the services and Operate</h3>
-        <p class="lead">Repeat for the other user-facing sections.</p>
-        <p>File (CephFS, 57 pages) second, because its index already has the shape. Then Object (RGW, 76, leading on generated reference), cluster operations (72), and Deploy (cephadm and install, 42), where the duplicated install and upgrade procedures finally merge. Option reference coverage moves from 36 percent toward all 2,166 options. Conversions run from a checklist so contributors can pick them up.</p>
-        <div class="see"><b>You will see:</b> the user-facing tree fully in the new shape.</div>
+        <div>
+          <div class="when">Q1 2027</div>
+          <h3>The rest of the services and Operate</h3>
+          <p class="lead">Repeat for the other user-facing sections.</p>
+        </div>
+        <div>
+          <ul>
+          <li>File (CephFS, 57 pages) goes first, because its index already has the shape. It proves the regroup path rather than the rewrite path.</li>
+          <li>Object (RGW, 76 pages) leads on generated reference: half of it is API and option reference, and its flat index of about fifty entries gets the five headings.</li>
+          <li>Cluster operations (72 pages) is already split by directory; each subdirectory becomes the matching door part.</li>
+          <li>Deploy (cephadm and install, 42 pages): the duplicated install and upgrade procedures finally merge, and one upgrade hub replaces five places.</li>
+          <li>Generated option reference grows from 36 percent toward all 2,166 options, one options file at a time.</li>
+          <li>Conversions run from the step 2 checklist and are filed as tracker items, so other contributors can pick them up.</li>
+          </ul>
+          <div class="see"><b>You will see:</b> the user-facing tree fully in the new shape.</div>
+        </div>
       </div>
       <div class="step">
-        <div class="when">Q2 2027</div>
-        <h3>Finish and lock it in</h3>
-        <p class="lead">Finish, retire the old navigation, add checks so it stays this way.</p>
-        <p>Developer docs (154 pages) consolidated into one track, with the twenty or so operator pages hiding there moved out. Old navigation retired on main; release branches keep theirs until end of life, so redirects apply to latest. Metadata, anchor and template checks added to the build so the structure holds without hand-policing. Docs MCP server if the stretch is approved.</p>
-        <div class="see"><b>You will see:</b> a rebuilt docs.ceph.com, and checks that keep it that way.</div>
+        <div>
+          <div class="when">Q2 2027</div>
+          <h3>Finish and lock it in</h3>
+          <p class="lead">Finish, retire the old navigation, add checks so it stays this way.</p>
+        </div>
+        <div>
+          <ul>
+          <li>Developer docs (154 pages) consolidated into one track. The twenty or so operator pages hiding in dev/ move to their user doors.</li>
+          <li>Old navigation retired on main. Release branches keep theirs until end of life, so redirects apply to latest.</li>
+          <li>Build checks: every page has metadata and a named anchor, procedure pages carry the template's parts, and placeholders or broken cross-references fail the build.</li>
+          <li>Configuration options and commands published as JSON next to the pages, from the same sources the HTML uses.</li>
+          <li>A Ceph docs MCP server, if the stretch goal is approved.</li>
+          <li>The first docs health report: open defects, option coverage, pages missing metadata, review latency.</li>
+          </ul>
+          <div class="see"><b>You will see:</b> a rebuilt docs.ceph.com, and checks that keep it that way.</div>
+        </div>
       </div>
     </div>
     <div class="bg"><b>In the background throughout:</b> the 34 open register items close as each section is rebuilt, about a day a week, so the cleanup never stops but never again sets the agenda.</div>
