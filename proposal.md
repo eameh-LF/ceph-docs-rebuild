@@ -1,6 +1,3 @@
----
-title: Ceph docs rebuild
----
 
 # Ceph docs rebuild
 

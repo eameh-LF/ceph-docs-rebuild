@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A proposal to the Ceph documentation team: rebuild docs.ceph.com around the reader, in modular pages that machines can read.">
+<meta name="author" content="Emmanuel Ameh">
+<title>Ceph Docs Rebuild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    color-scheme:light;
+    --paper:#f3f5f8; --surface:#ffffff; --inset:#e9edf2;
+    --ink:#161c26; --ink2:#4b5566; --muted:#788293;
+    --rule:#dbe1e9; --rule2:#c3ccd8;
+    --accent:#cf3b31; --accent-ink:#b02f27; --accent-soft:#fbe9e6;
+    --ok:#2b8a5c; --ok-soft:#e2f2e9; --ok-ink:#1f6b46;
+    --no:#8f9aab;
+    --display:"Red Hat Display",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --serif:"Source Serif 4","Iowan Old Style",Georgia,"Times New Roman",serif;
+    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#11151b; --surface:#191f28; --inset:#1f2731;
+    --ink:#eaeef3; --ink2:#b4bcc8; --muted:#818b9b;
+    --rule:#2a323e; --rule2:#3a4452;
+    --accent:#ef6a60; --accent-ink:#f38a82; --accent-soft:#3a201d;
+    --ok:#52b983; --ok-soft:#17301f; --ok-ink:#8fdbb0;
+    --no:#6b7687;
+  }}
+  :root[data-theme="dark"]{
+    color-scheme:dark;
+    --paper:#11151b; --surface:#191f28; --inset:#1f2731;
+    --ink:#eaeef3; --ink2:#b4bcc8; --muted:#818b9b;
+    --rule:#2a323e; --rule2:#3a4452;
+    --accent:#ef6a60; --accent-ink:#f38a82; --accent-soft:#3a201d;
+    --ok:#52b983; --ok-soft:#17301f; --ok-ink:#8fdbb0;
+    --no:#6b7687;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--paper)}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-ink);text-decoration-thickness:1px;text-underline-offset:2px}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .wrap{max-width:62rem;margin:0 auto;padding:2.5rem 1.5rem 4rem}
+  .prose{max-width:42rem}
+  .prose p{margin:0 0 1rem}
+  h1,h2,h3,h4{font-family:var(--display);letter-spacing:-.01em;text-wrap:balance;margin:0}
+  h2{font-size:1.7rem;font-weight:700;line-height:1.2}
+  h3{font-size:1.12rem;font-weight:600;line-height:1.3}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  strong{font-weight:600}
+
+  .mast{padding:1.2rem 0 2rem;border-bottom:2px solid var(--ink)}
+  .mast h1{font-size:clamp(2.6rem,6vw,4rem);font-weight:700;line-height:1.02;margin:.6rem 0 1rem}
+  .mast h1 .v{color:var(--accent)}
+  .stand{font-size:1.3rem;line-height:1.4;max-width:38rem;margin:0 0 1.3rem}
+  .meta{display:flex;flex-wrap:wrap;gap:.35rem 2rem;font-family:var(--display);font-size:.88rem;color:var(--ink2)}
+  .meta b{font-weight:600;color:var(--ink)}
+
+  section{padding:2.6rem 0 0}
+  .shead{display:grid;grid-template-columns:3rem 1fr;gap:1rem;align-items:baseline;border-top:1px solid var(--rule2);padding-top:1.1rem;margin-bottom:1.2rem}
+  .shead .n{font-family:var(--mono);font-size:.85rem;color:var(--accent);font-weight:500}
+
+  .strip{display:flex;flex-wrap:wrap;gap:.6rem 2.4rem;margin:.4rem 0 1.2rem;padding:.9rem 1.1rem;background:var(--inset)}
+  .strip div{font-family:var(--display);font-size:.86rem;color:var(--ink2)}
+  .strip b{display:block;font-size:1.6rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.1}
+
+  .pivot{font-family:var(--display);font-size:clamp(1.4rem,2.8vw,1.9rem);font-weight:600;line-height:1.3;letter-spacing:-.01em;max-width:36rem;margin:0 0 1rem;padding-left:1rem;border-left:4px solid var(--accent)}
+
+  .move{display:grid;grid-template-columns:4.2rem 1fr;gap:1rem;margin-top:2.2rem}
+  .move .big{font-family:var(--display);font-size:3rem;font-weight:700;color:var(--accent);line-height:.9;letter-spacing:-.04em}
+  .move h3{font-size:1.4rem;margin-bottom:.5rem}
+  .move .prose p{font-size:1rem}
+  .move .pre{font-size:.9rem;color:var(--ink2);margin:.2rem 0 0}
+
+  /* before / after nav */
+  .nav2{display:grid;grid-template-columns:1fr 1.25fr;gap:1.2rem;margin:1.1rem 0 .4rem}
+  .navcol{border:1px solid var(--rule);background:var(--surface);padding:1rem 1.1rem}
+  .navcol h4{font-family:var(--display);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 .6rem}
+  .navcol.after h4{color:var(--ok-ink)}
+  .navcol ul{margin:0;padding:0;list-style:none;font-family:var(--mono);font-size:.78rem;line-height:1.5;color:var(--ink2);columns:2;column-gap:1.2rem}
+  .navcol.after ol{margin:0;padding:0;list-style:none;display:grid;gap:.55rem}
+  .navcol.after li{display:grid;grid-template-columns:1.6rem 1fr;gap:.4rem;font-size:.92rem;line-height:1.35}
+  .navcol.after li b{font-family:var(--display);font-weight:600;color:var(--ink)}
+  .navcol.after li span{color:var(--ink2);font-size:.86rem}
+  .navcol.after li i{font-family:var(--mono);font-style:normal;font-size:.75rem;color:var(--accent);padding-top:.15rem}
+  .navcol.after li em{font-family:var(--mono);font-style:normal;font-size:.7rem;color:var(--muted);margin-left:.45rem;white-space:nowrap}
+  .shape{margin:.9rem 0 0;font-family:var(--display);font-size:.88rem;color:var(--ink2)}
+  .shape b{color:var(--ink)}
+  .shape span{font-family:var(--mono);font-size:.78rem;color:var(--ink);background:var(--inset);padding:.15rem .45rem;margin-right:.25rem;white-space:nowrap}
+
+  /* page template */
+  .tpl{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.1rem 0 .4rem;align-items:start}
+  .page{border:1px solid var(--rule2);background:var(--surface);padding:1rem 1.1rem 1.1rem;font-family:var(--display);font-size:.86rem;color:var(--ink2);position:relative}
+  .page::before{content:"procedure page";position:absolute;top:-.6rem;left:.9rem;background:var(--accent);color:#fff;font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .5rem}
+  .page .t{font-weight:700;font-size:1.05rem;color:var(--ink);margin:.3rem 0 .2rem}
+  .page .m{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-bottom:.6rem}
+  .page .row{display:grid;grid-template-columns:7.2rem 1fr;gap:.5rem;padding:.4rem 0;border-top:1px dashed var(--rule)}
+  .page .row b{font-weight:600;color:var(--ink)}
+  .types{display:grid;gap:.7rem}
+  .type{border-left:3px solid var(--ink);padding:.1rem 0 .1rem .8rem}
+  .type h4{font-family:var(--display);font-size:1rem;margin:0 0 .15rem}
+  .type p{margin:0;font-size:.92rem;color:var(--ink2)}
+
+  /* agent-ready table */
+  .tw{overflow-x:auto;margin:1.1rem 0 .3rem}
+  table{border-collapse:collapse;width:100%;font-size:.92rem;line-height:1.4}
+  th{font-family:var(--display);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.4rem .7rem .5rem;border-bottom:1px solid var(--rule2);font-weight:600}
+  td{padding:.6rem .7rem;border-bottom:1px solid var(--rule);vertical-align:top}
+  td:first-child{font-family:var(--display);font-weight:600;white-space:nowrap}
+  .pill{display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;padding:.12rem .45rem;margin-right:.4rem;white-space:nowrap}
+  .ag th:nth-child(1),.ag td:nth-child(1){width:21%}
+  .ag th:nth-child(2),.ag td:nth-child(2){width:36%}
+  .ag td{font-size:.9rem}
+  .ag td:nth-child(2){color:var(--ink2)}
+  .pill.no{background:var(--inset);color:var(--ink2)}
+  .pill.ok{background:var(--ok-soft);color:var(--ok-ink)}
+
+  /* rollout */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0 1.3rem;margin-top:1.4rem;position:relative}
+  .steps::before{content:"";position:absolute;left:0;right:0;top:.55rem;height:2px;background:var(--rule2);z-index:0}
+  .step{position:relative;padding-top:1.5rem}
+  .step::before{content:"";position:absolute;left:0;top:0;width:1.15rem;height:1.15rem;border-radius:50%;background:var(--paper);border:2px solid var(--rule2);z-index:2}
+  .step.now::before{background:var(--accent);border-color:var(--accent)}
+  .step .when{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .step.now .when{color:var(--accent);font-weight:500}
+  .step h3{margin:.3rem 0 .5rem;font-size:1.1rem}
+  .step p{margin:0 0 .55rem;font-size:.9rem;color:var(--ink2)}
+  .step .see{font-family:var(--display);font-size:.86rem;color:var(--ink);padding:.55rem .7rem;background:var(--ok-soft);border-left:3px solid var(--ok)}
+  .step .see b{color:var(--ok-ink);font-weight:600}
+  .bg{margin:1.6rem 0 0;padding:.9rem 1.1rem;border:1px solid var(--rule);background:var(--surface);font-size:.95rem;max-width:44rem}
+  .bg b{font-family:var(--display);font-weight:600}
+
+  .asks{counter-reset:ask;display:grid;grid-template-columns:1fr 1fr;gap:1.3rem 3rem;margin-top:1.2rem}
+  .ask{position:relative;padding-left:2.6rem}
+  .ask::before{counter-increment:ask;content:counter(ask);position:absolute;left:0;top:-.1rem;font-family:var(--display);font-size:1.9rem;font-weight:700;color:var(--accent);line-height:1;letter-spacing:-.03em}
+  .ask h3{margin-bottom:.3rem;font-size:1.05rem}
+  .ask p{margin:0;font-size:.95rem;color:var(--ink2)}
+  .kicker{margin:2.2rem 0 0;font-size:1.2rem;line-height:1.4;max-width:38rem;font-style:italic}
+
+  footer{margin-top:3.2rem;padding-top:1rem;border-top:1px solid var(--rule2);font-family:var(--display);font-size:.8rem;color:var(--muted);display:grid;gap:.35rem}
+  footer a{color:var(--ink2)}
+
+  @media (max-width:860px){
+    .nav2,.tpl,.asks{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr;gap:1.4rem}
+    .steps::before{display:none}
+  }
+  @media (max-width:600px){
+    body{font-size:16px}
+    .move{grid-template-columns:1fr;gap:.3rem}
+    .move .big{font-size:2.2rem}
+    .shead{grid-template-columns:1fr;gap:.3rem}
+    .navcol ul{columns:1}
+  }
+  @media print{body{background:#fff;color:#000;font-size:11pt}.wrap{max-width:none;padding:0}section{break-inside:avoid-page}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <div class="eyebrow">Ceph documentation · Proposal to the team · September 2026</div>
+    <h1>Ceph Docs <span class="v">Rebuild</span></h1>
+    <p class="stand">Six months of cleanup are done. The next phase rebuilds the documentation top to bottom: a new architecture, modular pages, and docs that AI agents can read as easily as people.</p>
+    <div class="meta">
+      <span><b>From</b> Emmanuel Ameh, Technical Writer</span>
+      <span><b>Status</b> For team review and approval</span>
+    </div>
+  </header>
+
+  <section id="sofar">
+    <div class="shead"><span class="n">01</span><h2>Six months in</h2></div>
+    <div class="prose">
+      <p>Since April I have worked the low-hanging fruit on purpose: audit the docs, file what was wrong, fix the dangerous and the obvious, learn how the project reviews and ships. That was the right first step and it is not finished, but it is not a strategy. It fixes pages; it does not change why the pages go wrong.</p>
+    </div>
+    <div class="strip">
+      <div><b>65</b>defects found and filed</div>
+      <div><b>30</b>fixed or in review</div>
+      <div><b>43</b>pull requests merged</div>
+      <div><b>34</b>still open, kept in the background</div>
+    </div>
+    <div class="prose">
+      <p>The remaining cleanup continues at about a day a week, folded into whichever section is being rebuilt. Everything else in this document is the pivot.</p>
+    </div>
+  </section>
+
+  <section id="pivot">
+    <div class="shead"><span class="n">02</span><h2>The pivot</h2></div>
+    <p class="pivot">Stop treating the docs as pages to fix. Rebuild them top to bottom around what the reader is trying to do, in modular pages that can be reused, checked, and read by machines.</p>
+    <div class="prose">
+      <p>Today the documentation is organized by daemon and module: 26 entries in the sidebar, eleven of them single pages, arranged the way Ceph is built rather than the way it is used. The landing page has no map of its own and sends first-time users to the developer guide. The procedures a new user meets first, installing packages, creating a pool for a service and creating a client user, appear on five to seven pages each and have drifted: two of the seven client-user copies omit a capability the canonical page requires. No page carries metadata, so nothing knows what release a page applies to or when it was last true. And an AI agent asked about Ceph gets HTML by default, with no index and no metadata to cite; the Markdown form the site can already serve is advertised nowhere. Three moves change that.</p>
+    </div>
+  </section>
+
+  <section id="moves">
+    <div class="shead"><span class="n">03</span><h2>Three moves</h2></div>
+
+    <div class="move">
+      <div class="big">1</div>
+      <div>
+        <h3>A new architecture: seven doors, one shape</h3>
+        <div class="prose">
+          <p>The top level becomes seven doors ordered by the reader's journey. Inside every storage service, the same five parts appear in the same order, so a reader who has learned one section can navigate all of them. Nothing is deleted: all 616 pages already have a home in the seven doors (the <a href="door-map/">page-by-page map</a> is a companion to this proposal), and they are mapped into the new navigation first, then moved behind redirects. The tree half does this already: the CephFS index groups its pages into concepts, administration, mounting and troubleshooting but hides the headings, the RADOS section is split into configuration, operations, troubleshooting and APIs, and the new CSI chapter uses one page shape for all four backends. Move 1 makes that visible everywhere and finishes it.</p>
+        </div>
+        <div class="nav2">
+          <div class="navcol">
+            <h4>Today: 26 sidebar entries on main, by component</h4>
+            <ul><li>start</li><li>install</li><li>cephadm</li><li>rados</li><li>cephfs</li><li>rbd</li><li>radosgw</li><li>csi</li><li>mgr</li><li>mgr/dashboard</li><li>monitoring</li><li>api</li><li>architecture</li><li>Developer Guide</li><li>dev/internals</li><li>governance</li><li>Technical Charter</li><li>foundation</li><li>ceph-volume</li><li>crimson</li><li>releases/general</li><li>releases</li><li>security</li><li>hardware-monitoring</li><li>Glossary</li><li>Tracing</li></ul>
+          </div>
+          <div class="navcol after">
+            <h4>Proposed: seven doors, by what the reader is doing</h4>
+            <ol>
+              <li><i>1</i><div><b>Start here</b> <em>13 pages</em><br><span>What Ceph is, the architecture in brief, choosing a deployment and a release, quick starts</span></div></li>
+              <li><i>2</i><div><b>Deploy</b> <em>21 pages</em><br><span>cephadm first, Rook and CSI on Kubernetes, requirements, Windows clients, and one upgrade hub for steps now spread over five places</span></div></li>
+              <li><i>3</i><div><b>Operate</b> <em>72 pages</em><br><span>Day-two cluster operations: pools, CRUSH, monitoring, dashboard, security, manager modules, maintenance</span></div></li>
+              <li><i>4</i><div><b>Storage services</b> <em>190 pages</em><br><span>Block (RBD, NVMe-oF, legacy iSCSI), File (CephFS, NFS, SMB), Object (RGW), Kubernetes (CSI), each in the same shape</span></div></li>
+              <li><i>5</i><div><b>Troubleshoot</b> <em>11 pages</em><br><span>One hub keyed by symptom over the seven troubleshooting pages and 96 health-check codes that exist today, plus the pages missing for Block, NVMe-oF, SMB and CSI</span></div></li>
+              <li><i>6</i><div><b>Reference</b> <em>141 pages</em><br><span>Configuration options, CLI and man pages, APIs, release notes. 36 percent of options and the full command tree are generated today; the rest follows</span></div></li>
+              <li><i>7</i><div><b>Develop and contribute</b> <em>168 pages</em><br><span>Developer guide, internals, docs guide, governance, foundation, technical charter</span></div></li>
+            </ol>
+          </div>
+        </div>
+        <p class="shape"><b>The shape inside every service:</b> <span>Learn</span><span>Set up</span><span>Operate</span><span>Troubleshoot</span><span>Reference</span></p>
+        <p class="pre">Page counts are today's pages mapped to each door on main. About 90 need rewriting; the other 526 need metadata and a new home only. Precedent: Kubernetes (Getting started, Concepts, Tasks, Tutorials, Reference, Contribute) and the Diataxis model, whose four types Django's documentation is organized around and which Canonical, Cloudflare and Gatsby have adopted.</p>
+      </div>
+    </div>
+
+    <div class="move">
+      <div class="big">2</div>
+      <div>
+        <h3>Modular pages: three types, one template</h3>
+        <div class="prose">
+          <p>Every page becomes one of three types and follows one template. A procedure documents one task, names the releases it applies to, and ends with how to verify it worked. Repeated procedures are written once in a shared snippet directory and included where needed, with per-page substitutions for the pool or user name, so they cannot drift apart; today the whole tree uses three include directives and one substitution. The first conversions pay for themselves: creating a pool for RBD images is written out six times inside the Block section alone, and only one copy verifies the result. The template is the contract that makes the whole tree consistent, and it is what makes the pages machine-readable.</p>
+        </div>
+        <div class="tpl">
+          <div class="types">
+            <div class="type"><h4>Concept</h4><p>Explains one idea the reader needs before acting. No commands, no steps.</p></div>
+            <div class="type"><h4>Procedure</h4><p>One task, numbered steps, one command per step, expected output, verification.</p></div>
+            <div class="type"><h4>Reference</h4><p>Facts to look up, not remember: options, commands, limits. Generated from source where possible.</p></div>
+          </div>
+          <div class="page">
+            <div class="t">Create an erasure-coded pool</div>
+            <div class="m">type: procedure · applies to: Squid, Tentacle · reviewed: 2026-09 · owner: rados</div>
+            <div class="row"><b>Before you start</b><span>Cluster health, permissions, an EC profile chosen</span></div>
+            <div class="row"><b>Steps</b><span>Numbered. One command each, with the output you should see</span></div>
+            <div class="row"><b>Verify</b><span>The command that proves it worked</span></div>
+            <div class="row"><b>If it fails</b><span>The two or three most common failures and what they mean</span></div>
+            <div class="row"><b>Related</b><span>The concept behind it, the reference for every option</span></div>
+          </div>
+        </div>
+        <p class="pre">Precedent: Red Hat's modular documentation model (concept, procedure and reference modules assembled into user stories). The downstream Red Hat Ceph Storage guides already use it (Prerequisites, Procedure, Verification), and IBM Storage Ceph uses the same shape under DITA labels.</p>
+      </div>
+    </div>
+
+    <div class="move">
+      <div class="big">3</div>
+      <div>
+        <h3>Agent-ready: docs that machines can read, cite and trust</h3>
+        <div class="prose">
+          <p>Readers increasingly put Ceph questions to AI assistants, and those assistants fetch docs.ceph.com. Today they get HTML by default, with no index and no metadata to cite. A Markdown rendering and the raw source already exist on the site; nothing points to them, and no page says which release it applies to. The rebuild publishes the documentation in the forms agents consume and lets the template's metadata travel with every page. Most of this is build configuration on top of moves 1 and 2, and docs.ceph.com is hosted on Read the Docs, which serves these files from the site root once the build emits them.</p>
+        </div>
+        <div class="tw">
+          <table class="ag">
+            <thead><tr><th>What agents need</th><th>Today, verified 2 Sep 2026</th><th>After the rebuild</th></tr></thead>
+            <tbody>
+              <tr><td>An index of the docs</td><td><span class="pill no">404</span>llms.txt and llms-full.txt return 404 at the root and under every version; the sitemap lists ten version roots and no pages</td><td>llms.txt and llms-full.txt emitted by the build (sphinx-llm, the extension Read the Docs recommends) and served at the root from latest</td></tr>
+              <tr><td>Plain-text pages</td><td><span class="pill no">Hidden</span>two forms exist but nothing advertises them: raw source under _sources, and a Markdown rendering Read the Docs returns when asked for text/markdown. No .md URLs, no link from any page, no front matter</td><td>A linked Markdown copy of every page at a stable .md URL, listed in llms.txt, carrying title, release and review metadata</td></tr>
+              <tr><td>Page metadata</td><td><span class="pill no">0 of 612</span>live pages carry content metadata: no description, canonical URL, applies-to release, review date or owner</td><td>Type, applies-to releases, last reviewed and owner on every page; canonical URLs set in the build</td></tr>
+              <tr><td>Machine-readable reference</td><td><span class="pill no">Parsed, not published</span>the build already reads the option YAML and command tables to render HTML; 36 percent of options reach a page and the full command list sits on one hidden page</td><td>Every option and command rendered, and published as JSON next to the pages from the same sources</td></tr>
+              <tr><td>Stable, citable anchors</td><td><span class="pill no">318 of 612</span>pages have no named anchor; section ids change whenever a title changes</td><td>Every page and every procedure carries a named label, enforced by a build check</td></tr>
+              <tr><td>Direct query</td><td><span class="pill no">Unadvertised</span>a Read the Docs search API and a Sphinx inventory exist, discoverable only if you already know; no MCP server</td><td>Stretch: a Ceph docs MCP server over the Markdown and JSON outputs, usable by agents and the dashboard</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="pre">Precedent: llms.txt is served by Anthropic, Cloudflare, GitHub and AWS, and by 87 of the top 1,000 sites (8.7 percent, Tranco list, June 2026). Cloudflare and Cash App serve a Markdown copy of every page. Read the Docs serves llms.txt from the site root of the default version once the build emits it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="rollout">
+    <div class="shead"><span class="n">04</span><h2>Rollout: what you will see, and when</h2></div>
+    <div class="prose">
+      <p>Each step ends with something visible on docs.ceph.com. Dates are proposals to confirm with the team.</p>
+    </div>
+    <div class="steps">
+      <div class="step now">
+        <div class="when">Sep to Oct 2026</div>
+        <h3>The new front door</h3>
+        <p>llms.txt and a linked Markdown copy of every page ship first: one build change on main. Then the new landing page and the seven doors, built as a navigation layer over the existing pages; no files move, no links break. Two zero-cost fixes ride along: the generated command reference gets a visible entry, and the block quick start gets a real home. Page template agreed with the team.</p>
+        <div class="see"><b>You will see:</b> docs.ceph.com opens differently, and agents get an index and a Markdown copy of every page.</div>
+      </div>
+      <div class="step">
+        <div class="when">Nov to Dec 2026</div>
+        <h3>First service rebuilt</h3>
+        <p>Block (RBD, 41 pages) converted end to end: nine core pages rewritten into about thirty modular ones, a Troubleshoot part written from nothing (Block has none today), 28 client and gateway pages re-homed with metadata, iSCSI kept behind its maintenance banner. Named anchors land first so no link breaks. This becomes the model for every other section.</p>
+        <div class="see"><b>You will see:</b> one complete section in the new form, side by side with the old.</div>
+      </div>
+      <div class="step">
+        <div class="when">Q1 2027</div>
+        <h3>The rest of the services and Operate</h3>
+        <p>File (CephFS, 57 pages) second, because its index already has the shape. Then Object (RGW, 76, leading on generated reference), cluster operations (72), and Deploy (cephadm and install, 42), where the duplicated install and upgrade procedures finally merge. Option reference coverage moves from 36 percent toward all 2,166 options. Conversions run from a checklist so contributors can pick them up.</p>
+        <div class="see"><b>You will see:</b> the user-facing tree fully in the new shape.</div>
+      </div>
+      <div class="step">
+        <div class="when">Q2 2027</div>
+        <h3>Finish and lock it in</h3>
+        <p>Developer docs (154 pages) consolidated into one track, with the twenty or so operator pages hiding there moved out. Old navigation retired on main; release branches keep theirs until end of life, so redirects apply to latest. Metadata, anchor and template checks added to the build so the structure holds without hand-policing. Docs MCP server if the stretch is approved.</p>
+        <div class="see"><b>You will see:</b> a rebuilt docs.ceph.com, and checks that keep it that way.</div>
+      </div>
+    </div>
+    <div class="bg"><b>In the background throughout:</b> the 34 open register items close as each section is rebuilt, about a day a week, so the cleanup never stops but never again sets the agenda.</div>
+  </section>
+
+  <section id="asks">
+    <div class="shead"><span class="n">05</span><h2>What I need from the team</h2></div>
+    <div class="asks">
+      <div class="ask"><h3>Approve the direction</h3><p>The seven doors and the three page types. The <a href="door-map/">page-by-page map</a> of all 616 pages to their new homes is a companion to this proposal; it names the twenty or so judgment calls (manager modules, NFS and SMB, man pages, iSCSI) that need the team's view.</p></div>
+      <div class="ask"><h3>Pick the first service</h3><p>Block (RBD) is my proposal: the smallest and calmest section (41 pages, 33 doc commits since 2025, five open doc issues) with a visible gap to close, since it has no troubleshooting page. CephFS follows. cephadm is the alternative, as a Deploy-door pilot, if that matters more to you.</p></div>
+      <div class="ask"><h3>One reviewer per section</h3><p>A named subsystem reviewer for each door as it is rebuilt, so conversions are reviewed in days, not months.</p></div>
+      <div class="ask"><h3>Two weeks on the template</h3><p>Comments on the page template by mid-September, then it is frozen for the first rebuild and revised only after Block ships.</p></div>
+    </div>
+    <p class="kicker">The cleanup showed me how the docs break. The rebuild is how they stop breaking.</p>
+  </section>
+
+  <footer>
+    <span>Figures verified 2 September 2026 against tracker.ceph.com, ceph/ceph main at commit d78578929f9, ceph/ceph.io, and the live docs.ceph.com site. Companion: <a href="door-map/">the page-by-page door map</a>. Plain-text source: <a href="https://github.com/eameh-LF/ceph-docs-rebuild">github.com/eameh-LF/ceph-docs-rebuild</a>.</span>
+    <span>Sources: <a href="https://redhat-documentation.github.io/modular-docs/">Red Hat modular documentation reference guide</a> · <a href="https://canonical.com/blog/diataxis-a-new-foundation-for-canonical-documentation">Canonical on Diataxis</a> · <a href="https://kubernetes.io/docs/home/">Kubernetes documentation structure</a> · <a href="https://docs.readthedocs.com/platform/latest/reference/llms-txt.html">Read the Docs llms.txt support</a> · <a href="https://github.com/NVIDIA/sphinx-llm">sphinx-llm</a> · <a href="https://www.rankability.com/data/llms-txt-adoption/">llms.txt adoption, June 2026</a> · <a href="https://blog.cloudflare.com/markdown-for-agents/">Cloudflare, Markdown for agents</a> · <a href="https://diataxis.fr/">Diataxis</a> · <a href="https://docs.redhat.com/en/documentation/red_hat_ceph_storage/8/html-single/installation_guide/index">Red Hat Ceph Storage 8 installation guide</a></span>
+    <span>Companion documents for the detail: "Ceph Docs 2.0" (management plan) and the maintainer RFC "Ceph Documentation Modernization".</span>
+  </footer>
+</div>
+</body>
+</html>

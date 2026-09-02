@@ -1,7 +1,3 @@
----
-title: Ceph docs rebuild, door map
-permalink: /door-map/
----
 
 # Ceph docs rebuild: door map
 
@@ -484,4 +480,3 @@ Rule for the rewrite estimate. A page counts as "rewrite" if any of these hold: 
 
 ---
 
-[Back to the proposal](../)

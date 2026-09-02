@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Every page on ceph/ceph main mapped to one of the seven proposed doors, with the decisions the team needs to make.">
+<meta name="author" content="Emmanuel Ameh">
+<title>Ceph Docs Door Map</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{color-scheme:light;--paper:#f3f5f8;--surface:#ffffff;--inset:#e9edf2;--ink:#161c26;--ink2:#4b5566;--muted:#788293;--rule:#dbe1e9;--rule2:#c3ccd8;--accent:#cf3b31;--accent-ink:#b02f27;
+    --display:"Red Hat Display",system-ui,sans-serif;--serif:"Source Serif 4",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--paper:#11151b;--surface:#191f28;--inset:#1f2731;--ink:#eaeef3;--ink2:#b4bcc8;--muted:#818b9b;--rule:#2a323e;--rule2:#3a4452;--accent:#ef6a60;--accent-ink:#f38a82}}
+  :root[data-theme="dark"]{color-scheme:dark;--paper:#11151b;--surface:#191f28;--inset:#1f2731;--ink:#eaeef3;--ink2:#b4bcc8;--muted:#818b9b;--rule:#2a323e;--rule2:#3a4452;--accent:#ef6a60;--accent-ink:#f38a82}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.5}
+  .wrap{max-width:72rem;margin:0 auto;padding:2.5rem 1.5rem 4rem}
+  h1,h2,h3{font-family:var(--display);letter-spacing:-.01em;text-wrap:balance}
+  h1{font-size:clamp(2rem,4.5vw,2.8rem);line-height:1.05;margin:0 0 .8rem;padding-bottom:1rem;border-bottom:2px solid var(--ink)}
+  h2{font-size:1.5rem;margin:2.6rem 0 .6rem;padding-top:1rem;border-top:1px solid var(--rule2)}
+  h3{font-size:1.1rem;margin:1.8rem 0 .5rem;color:var(--ink)}
+  p{max-width:46rem;margin:0 0 .9rem;color:var(--ink2)}
+  h1+p{color:var(--ink);font-size:1.05rem}
+  ul,ol{max-width:46rem;padding-left:1.3rem;color:var(--ink2)} li{margin:.3rem 0}
+  b{font-weight:600;color:var(--ink)}
+  table{border-collapse:collapse;width:100%;font-size:.86rem;line-height:1.4;margin:.6rem 0 1rem;background:var(--surface);display:block;overflow-x:auto;border:1px solid var(--rule)}
+  thead,tbody,tr{display:table-row-group} tr{display:table-row}
+  th{font-family:var(--display);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.5rem .65rem;border-bottom:1px solid var(--rule2);white-space:nowrap;background:var(--inset)}
+  td{padding:.45rem .65rem;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2)}
+  td:first-child{font-family:var(--mono);font-size:.78rem;color:var(--ink);white-space:nowrap}
+  td:nth-child(2){color:var(--ink)}
+  @media print{body{background:#fff;color:#000}table{font-size:8pt}}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 .6rem}
+  .tw{overflow-x:auto;margin:.6rem 0 1rem;border:1px solid var(--rule);background:var(--surface)}
+  .tw table{display:table;border:0;margin:0;overflow:visible}
+  code{font-family:var(--mono);font-size:.85em;background:var(--inset);padding:.05rem .3rem}
+  footer{margin-top:3rem;padding-top:1rem;border-top:1px solid var(--rule2);font-family:var(--display);font-size:.82rem;color:var(--muted)}
+  footer a{color:var(--ink2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="eyebrow">Ceph documentation · Companion to the rebuild proposal · September 2026</p>
+<h1>Ceph Docs Door Map</h1>
+<p>Companion to the Ceph Docs Rebuild proposal. Drafted 2 September 2026 against ceph/ceph main at commit d78578929f9 (616 .rst pages). Every table below is a proposal for the team to correct; the Ambiguities section lists the judgment calls that need a decision.</p>
+<h2>Map of old pages to new homes</h2>
+<p>Draft against upstream <code>main</code> at commit d78578929f9 (2 September 2026), read from the <code>doc/</code> tree. Titles are each file&#x27;s first document heading (overline or underline form). Doors follow the proposal: 1 Start here, 2 Deploy, 3 Operate, 4 Storage services (Block, File, Object, Kubernetes), 5 Troubleshoot, 6 Reference, 7 Develop and contribute. Parts inside a service: Learn, Set up, Operate, Troubleshoot, Reference. For Deploy and Operate pages the same five words are used where they fit.</p>
+<p>Inventory on main: 616 <code>.rst</code> files, including 51 man pages and a few include fragments. The root toctree has 26 entries. Per-directory counts today: rbd 41, radosgw 76, cephfs 57, rados 72, cephadm 27 + install 15 = 42, dev 154.</p>
+<p>Marks used in the note column: <code>hub</code> = toctree-only page that dissolves into navigation; <code>stub</code> = under about 25 lines with no real content; <code>external</code> = integration with software outside Ceph; <code>mixed</code> = clearly mixes concept and procedure (or procedure and reference) and must be split under the three-type template; <code>long (N)</code> = line count that forces a split under one-task-per-procedure; <code>deprec</code> = carries a deprecation or obsolescence notice.</p>
+<h2>Top-level mapping</h2>
+<p>Every entry in <code>doc/index.rst</code> (in toctree order), then every top-level directory and root file not in the toctree.</p>
+<div class="tw"><table>
+<tr><th>Root entry or directory</th><th>Pages</th><th>Door</th><th>Reason</th></tr>
+<tr><td>start/index</td><td>7</td><td>1 Start here (3), 2 Deploy (2), 7 Develop (2)</td><td>Intro and beginner&#x27;s guide open the journey; hardware and OS recommendations are Deploy requirements; get-involved and documenting-ceph are contributor pages</td></tr>
+<tr><td>install/index</td><td>15</td><td>2 Deploy (11), 4 Block (1), 5 (1), 7 (2)</td><td>Deployment method chooser plus package and manual install; QEMU install belongs to Block; build and clone are developer tasks</td></tr>
+<tr><td>cephadm/index</td><td>27</td><td>2 Deploy (6), 3 Operate (15), 4 Services (5), 5 (1)</td><td>Bootstrap, adoption and upgrade are Deploy; host and service management are day two; MDS, RGW, NFS, SMB and iSCSI service pages are each service&#x27;s Set up</td></tr>
+<tr><td>rados/index</td><td>72</td><td>3 Operate (35), 5 Troubleshoot (9), 6 Reference (28)</td><td>Directory already splits into operations, troubleshooting, configuration and api; the split maps almost one to one onto doors</td></tr>
+<tr><td>cephfs/index</td><td>57</td><td>4 File</td><td>Whole directory is the File service</td></tr>
+<tr><td>rbd/index</td><td>41</td><td>4 Block</td><td>Whole directory is the Block service (includes iSCSI and NVMe-oF gateways)</td></tr>
+<tr><td>radosgw/index</td><td>76</td><td>4 Object</td><td>Whole directory is the Object service (includes S3 and Swift API reference)</td></tr>
+<tr><td>csi/index</td><td>6</td><td>4 Kubernetes</td><td>Already shaped as Learn plus Set up per backend</td></tr>
+<tr><td>mgr/index</td><td>29</td><td>3 Operate (19), 4 Services (4), 2 (1), 6 (2), 7 (3)</td><td>Module guides are operator pages; nfs, smb, rgw and mds_autoscaler belong to services; rook is a deployment backend; RESTful and CLI API to Reference; module authoring to Develop</td></tr>
+<tr><td>mgr/dashboard</td><td>(in mgr)</td><td>3 Operate</td><td>Dashboard is a day-two management surface; its 1752 lines split into set up, operate and reference within Operate</td></tr>
+<tr><td>monitoring/index</td><td>1</td><td>3 Operate</td><td>Monitoring overview and metric catalogue</td></tr>
+<tr><td>api/index</td><td>2</td><td>6 Reference</td><td>API hub and generated mon command API</td></tr>
+<tr><td>architecture/index</td><td>9</td><td>1 Start here</td><td>&quot;Architecture in brief&quot; lives in Door 1; two deep pages (ceph-protocol, extending-ceph) could move to Door 7</td></tr>
+<tr><td>Developer Guide (dev/developer_guide/index)</td><td>19</td><td>7 Develop</td><td>Contributor track</td></tr>
+<tr><td>dev/internals</td><td>135</td><td>7 Develop</td><td>Internals track; about 20 pages are user-facing and are listed in the dev family map</td></tr>
+<tr><td>governance</td><td>1</td><td>7 Develop</td><td>Project governance</td></tr>
+<tr><td>Technical Charter (technical-charter)</td><td>1</td><td>7 Develop</td><td>Project governance</td></tr>
+<tr><td>foundation</td><td>1</td><td>7 Develop</td><td>Project governance</td></tr>
+<tr><td>ceph-volume/index</td><td>24</td><td>6 Reference</td><td>Subcommand reference pages; one provisioning procedure should be written in Operate and link here</td></tr>
+<tr><td>crimson/crimson</td><td>1</td><td>2 Deploy</td><td>Tech preview page whose bulk is &quot;Deploying Crimson with Cephadm&quot;; flags and metrics sections are Reference</td></tr>
+<tr><td>releases/general</td><td>1</td><td>6 Reference</td><td>Release cadence and lifecycle; link from Door 1 (&quot;which release&quot;) and Door 2 (upgrades)</td></tr>
+<tr><td>releases/index</td><td>21</td><td>6 Reference</td><td>Release timeline plus 20 per-release notes</td></tr>
+<tr><td>security/index</td><td>14</td><td>7 Develop (4), 6 Reference (10)</td><td>Vulnerability reporting process is project process; the CVE list is a reference</td></tr>
+<tr><td>hardware-monitoring/index</td><td>1</td><td>3 Operate</td><td>Node-proxy hardware monitoring; deploy procedure plus limitations; its &quot;For Developers&quot; section is Door 7</td></tr>
+<tr><td>Glossary (glossary)</td><td>1</td><td>6 Reference</td><td>Glossary</td></tr>
+<tr><td>Tracing (jaegertracing/index)</td><td>1</td><td>3 Operate</td><td>Enabling Jaeger tracing on a running cluster; Door 5 links to it</td></tr>
+<tr><td>man/ (not in root toctree; built through man_index.rst and per-service man hubs)</td><td>51</td><td>6 Reference</td><td>Man pages are the CLI reference; 6 of the 51 are missing from man_index.rst (ceph-bluestore-tool, ceph-kvstore-tool, ceph-monstore-tool, ceph-objectstore-tool, mount.fuse.ceph, rgw-gap-list)</td></tr>
+<tr><td>man_index.rst</td><td>1</td><td>6 Reference</td><td>Build-only toctree for the man builder</td></tr>
+<tr><td>index.rst</td><td>1</td><td>1 Start here</td><td>Root landing; rewritten as the seven-door front page</td></tr>
+<tr><td>changelog/</td><td>69 .txt</td><td>6 Reference</td><td>Historical per-version changelogs (not rst); archive or link from release notes</td></tr>
+<tr><td>mon/</td><td>0 rst</td><td>7 Develop</td><td>One dot diagram and README for paxos; developer material</td></tr>
+<tr><td>images/, _static/, _templates/, _themes/, _ext/, scripts/</td><td>0 rst</td><td>none</td><td>Build assets and Sphinx extensions; no door</td></tr>
+</table></div>
+<p>Door totals from this mapping (all 616 files): Door 1 = 13, Door 2 = 21, Door 3 = 72, Door 4 = 190 (Block 43, File 63, Object 78, Kubernetes 6), Door 5 = 11, Door 6 = 141, Door 7 = 168.</p>
+<h2>Page-by-page maps</h2>
+<h3>start/ (7 pages)</h3>
+<div class="tw"><table>
+<tr><th>path</th><th>title</th><th>door</th><th>part</th><th>note</th></tr>
+<tr><td>start/index.rst</td><td>Intro to Ceph</td><td>1 Start here</td><td>Learn</td><td>landing: component overview plus two toctrees; rewrite as the Door 1 landing</td></tr>
+<tr><td>start/beginners-guide.rst</td><td>Beginner&#x27;s Guide</td><td>1 Start here</td><td>Learn</td><td>mixed: component concepts followed by cephadm bootstrap steps; split into a concept and a quick start</td></tr>
+<tr><td>start/quick-rbd.rst</td><td>Block Device Quick Start</td><td>1 Start here</td><td>Set up</td><td>not in start/index toctree; reachable only via rbd/iscsi-target-cli.rst; pre-cephadm content; rewrite as a quick start or retire</td></tr>
+<tr><td>start/hardware-recommendations.rst</td><td>Hardware Recommendations</td><td>2 Deploy</td><td>Learn</td><td>requirements; long (672); sizing tables are Reference material</td></tr>
+<tr><td>start/os-recommendations.rst</td><td>OS Recommendations</td><td>2 Deploy</td><td>Reference</td><td>platform support matrix by release</td></tr>
+<tr><td>start/get-involved.rst</td><td>Get Involved in the Ceph Community!</td><td>7 Develop</td><td>n/a</td><td>community channel table; also link from Door 1 footer and the Door 5 &quot;get help&quot; page</td></tr>
+<tr><td>start/documenting-ceph.rst</td><td>Documenting Ceph</td><td>7 Develop</td><td>n/a</td><td>long (1095); overlaps dev/documenting.rst and dev/generatedocs.rst; merge the three</td></tr>
+</table></div>
+<h3>install/ (15 pages)</h3>
+<div class="tw"><table>
+<tr><th>path</th><th>title</th><th>door</th><th>part</th><th>note</th></tr>
+<tr><td>install/index.rst</td><td>Installing Ceph</td><td>2 Deploy</td><td>Learn</td><td>deployment-method chooser (cephadm, Rook, others, manual, Windows); reuse as Door 2 landing</td></tr>
+<tr><td>install/index_manual.rst</td><td>Installation (Manual)</td><td>2 Deploy</td><td>Set up</td><td>hub</td></tr>
+<tr><td>install/get-packages.rst</td><td>Get Packages</td><td>2 Deploy</td><td>Set up</td><td>mixed procedure and reference (repo URLs, signing keys); 417 lines</td></tr>
+<tr><td>install/get-tarballs.rst</td><td>Downloading a Ceph Release Tarball</td><td>2 Deploy</td><td>Set up</td><td>stub (13 lines); merge into get-packages</td></tr>
+<tr><td>install/mirrors.rst</td><td>Ceph Mirrors</td><td>2 Deploy</td><td>Reference</td><td>mirror list plus &quot;how to run a mirror&quot;</td></tr>
+<tr><td>install/containers.rst</td><td>Ceph Container Images</td><td>2 Deploy</td><td>Reference</td><td>image names and tag conventions; concept plus reference</td></tr>
+<tr><td>install/install-storage-cluster.rst</td><td>Install Ceph Storage Cluster</td><td>2 Deploy</td><td>Set up</td><td>manual package install (APT, RPM)</td></tr>
+<tr><td>install/manual-deployment.rst</td><td>Manual Deployment</td><td>2 Deploy</td><td>Set up</td><td>long (585); one procedure per daemon after the split</td></tr>
+<tr><td>install/manual-freebsd-deployment.rst</td><td>Manual Deployment on FreeBSD</td><td>2 Deploy</td><td>Set up</td><td>platform-specific; deprec; mark legacy</td></tr>
+<tr><td>install/install-vm-cloud.rst</td><td>Install Virtualization for Block Device</td><td>4 Block</td><td>Set up</td><td>external (QEMU, libvirt packages); sits with rbd/qemu-rbd and rbd/libvirt</td></tr>
+<tr><td>install/clone-source.rst</td><td>Cloning the Ceph Source Code Repository</td><td>7 Develop</td><td>n/a</td><td>developer task</td></tr>
+<tr><td>install/build-ceph.rst</td><td>Build Ceph</td><td>7 Develop</td><td>n/a</td><td>developer task; overlaps dev/developer_guide/essentials</td></tr>
+<tr><td>install/windows-install.rst</td><td>Installing Ceph on Windows</td><td>2 Deploy</td><td>Set up</td><td>orphan (reached by :ref: only); Windows client install</td></tr>
+<tr><td>install/windows-basic-config.rst</td><td>Windows basic configuration</td><td>2 Deploy</td><td>Set up</td><td>orphan; short</td></tr>
+<tr><td>install/windows-troubleshooting.rst</td><td>Troubleshooting Ceph on Windows</td><td>5 Troubleshoot</td><td>Troubleshoot</td><td>orphan</td></tr>
+</table></div>
+<h3>cephadm/ including cephadm/services/ (27 pages)</h3>
+<div class="tw"><table>
+<tr><th>path</th><th>title</th><th>door</th><th>part</th><th>note</th></tr>
+<tr><td>cephadm/index.rst</td><td>Cephadm</td><td>2 Deploy</td><td>Learn</td><td>landing plus toctree; links dev/cephadm/index as &quot;Cephadm Feature Planning&quot; (developer design docs in user nav)</td></tr>
+<tr><td>cephadm/compatibility.rst</td><td>Compatibility and Stability</td><td>2 Deploy</td><td>Reference</td><td>container engine and OS support matrix</td></tr>
+<tr><td>cephadm/install.rst</td><td>Using Cephadm to Deploy a New Ceph Cluster</td><td>2 Deploy</td><td>Set up</td><td>long (612); mixed: requirements, bootstrap options, adding hosts, adding OSDs, deploying services; split into several procedures</td></tr>
+<tr><td>cephadm/adoption.rst</td><td>Converting an Existing Cluster to Cephadm</td><td>2 Deploy</td><td>Set up</td><td>procedure</td></tr>
+<tr><td>cephadm/upgrade.rst</td><td>Upgrading Ceph</td><td>2 Deploy</td><td>Operate</td><td>proposal places upgrades in Deploy; procedure plus a troubleshooting section</td></tr>
+<tr><td>cephadm/client-setup.rst</td><td>Basic Ceph Client Setup</td><td>2 Deploy</td><td>Set up</td><td>short procedure</td></tr>
+<tr><td>cephadm/docker-live-restore.rst</td><td>Cephadm and Docker Engine: Live Restore</td><td>3 Operate</td><td>Operate</td><td>niche</td></tr>
+<tr><td>cephadm/host-management.rst</td><td>Host Management</td><td>3 Operate</td><td>Operate</td><td>long (782); mixed procedure and reference (labels, maintenance mode, host spec)</td></tr>
+<tr><td>cephadm/services/index.rst</td><td>Service Management</td><td>3 Operate</td><td>Operate</td><td>long (965); mixed: service spec concept, procedures, spec schema reference; schema goes to Door 6</td></tr>
+<tr><td>cephadm/services/mon.rst</td><td>MON Service</td><td>3 Operate</td><td>Operate</td><td></td></tr>
+<tr><td>cephadm/services/mgr.rst</td><td>MGR Service</td><td>3 Operate</td><td>Operate</td><td>short</td></tr>
+<tr><td>cephadm/services/osd.rst</td><td>OSD Service</td><td>3 Operate</td><td>Operate</td><td>long (1320); mixed: drive group concept, procedures, spec reference; split</td></tr>
+<tr><td>cephadm/services/monitoring.rst</td><td>Monitoring Services</td><td>3 Operate</td><td>Set up</td><td>long (692); Prometheus, Grafana, Alertmanager, node-exporter; mixed</td></tr>
+<tr><td>cephadm/services/snmp-gateway.rst</td><td>SNMP Gateway Service</td><td>3 Operate</td><td>Set up</td><td></td></tr>
+<tr><td>cephadm/services/mgmt-gateway.rst</td><td>Management Gateway</td><td>3 Operate</td><td>Set up</td><td></td></tr>
+<tr><td>cephadm/services/oauth2-proxy.rst</td><td>OAuth2 Proxy</td><td>3 Operate</td><td>Set up</td><td>SSO; security</td></tr>
+<tr><td>cephadm/services/tracing.rst</td><td>Tracing Services</td><td>3 Operate</td><td>Set up</td><td>short; duplicates the deployment steps in jaegertracing/index</td></tr>
+<tr><td>cephadm/services/custom-container.rst</td><td>Custom Container Service</td><td>3 Operate</td><td>Set up</td><td></td></tr>
+<tr><td>cephadm/certmgr.rst</td><td>Certificate Management</td><td>3 Operate</td><td>Operate</td><td>security</td></tr>
+<tr><td>cephadm/operations.rst</td><td>Cephadm Operations</td><td>3 Operate</td><td>Operate</td><td>long (1032); grab-bag: logs, daemon control, cluster shutdown and startup, CEPHADM_* health checks, config; mixes Operate, Troubleshoot and Reference; split</td></tr>
+<tr><td>cephadm/version-tracker.rst</td><td>Version Tracking for Ceph</td><td>3 Operate</td><td>Operate</td><td>new feature page; procedure plus reference</td></tr>
+<tr><td>cephadm/services/mds.rst</td><td>MDS Service</td><td>4 File</td><td>Set up</td><td>deploy MDS with cephadm; overlaps cephfs/add-remove-mds</td></tr>
+<tr><td>cephadm/services/rgw.rst</td><td>RGW Service</td><td>4 Object</td><td>Set up</td><td>long (597); mixed spec reference and procedures; deprec</td></tr>
+<tr><td>cephadm/services/nfs.rst</td><td>NFS Service</td><td>4 File (NFS)</td><td>Set up</td><td>512 lines; overlaps mgr/nfs.rst</td></tr>
+<tr><td>cephadm/services/smb.rst</td><td>SMB Service</td><td>4 File (SMB)</td><td>Set up</td><td>overlaps mgr/smb.rst</td></tr>
+<tr><td>cephadm/services/iscsi.rst</td><td>iSCSI Service</td><td>4 Block</td><td>Set up</td><td>legacy gateway</td></tr>
+<tr><td>cephadm/troubleshooting.rst</td><td>Troubleshooting</td><td>5 Troubleshoot</td><td>Troubleshoot</td><td>597 lines; linked from the Door 5 hub</td></tr>
+</table></div>
+<h3>rbd/ (41 pages, all Door 4 Block)</h3>
+<p>Also mapped into Block from elsewhere: install/install-vm-cloud.rst (Set up) and cephadm/services/iscsi.rst (Set up). No page in rbd/ is a troubleshooting page: the Block Troubleshoot part is a gap.</p>
+<div class="tw"><table>
+<tr><th>path</th><th>title</th><th>door</th><th>part</th><th>note</th></tr>
+<tr><td>rbd/index.rst</td><td>Ceph Block Device</td><td>4 Block</td><td>Learn</td><td>landing: concept intro plus five toctree hubs (Basic Commands, Operations, Integrations, Manpages, APIs)</td></tr>
+<tr><td>rbd/rados-rbd-cmds.rst</td><td>Basic Block Device Commands</td><td>4 Block</td><td>Set up</td><td>mixed procedure and reference (create pool, create image, resize, remove, trash); split into Set up procedures and point at man/8/rbd</td></tr>
+<tr><td>rbd/rbd-operations.rst</td><td>Ceph Block Device Operations</td><td>4 Block</td><td>Operate</td><td>hub</td></tr>
+<tr><td>rbd/rbd-snapshot.rst</td><td>Snapshots</td><td>4 Block</td><td>Operate</td><td>mixed: layering and copy-on-write concept plus procedures; 368 lines</td></tr>
+<tr><td>rbd/rbd-exclusive-locks.rst</td><td>RBD Exclusive Locks</td><td>4 Block</td><td>Learn</td><td>concept with a blocklisting note</td></tr>
+<tr><td>rbd/rbd-mirroring.rst</td><td>RBD Mirroring</td><td>4 Block</td><td>Operate</td><td>long (633); mixed: concept, Set up (pool and peer config), Operate (promote, demote, status); split</td></tr>
+<tr><td>rbd/rbd-live-migration.rst</td><td>Image Live-Migration</td><td>4 Block</td><td>Operate</td><td>416 lines; concept intro then procedures</td></tr>
+<tr><td>rbd/rbd-persistent-read-only-cache.rst</td><td>RBD Persistent Read-only Cache</td><td>4 Block</td><td>Set up</td><td>mixed concept and configuration</td></tr>
+<tr><td>rbd/rbd-persistent-write-log-cache.rst</td><td>RBD Persistent Write Log Cache</td><td>4 Block</td><td>Set up</td><td>mixed concept and configuration</td></tr>
+<tr><td>rbd/rbd-encryption.rst</td><td>Image Encryption</td><td>4 Block</td><td>Operate</td><td>mixed: format concept plus procedures</td></tr>
+<tr><td>rbd/rbd-config-ref.rst</td><td>Config Settings</td><td>4 Block</td><td>Reference</td><td>confval generated; Block Reference entry built from source</td></tr>
+<tr><td>rbd/rbd-replay.rst</td><td>RBD Replay</td><td>4 Block</td><td>Operate</td><td>short (42); fold into the rbd-replay man pages</td></tr>
+<tr><td>rbd/rbd-integrations.rst</td><td>Ceph Block Device 3rd Party Integration</td><td>4 Block</td><td>Set up</td><td>hub</td></tr>
+<tr><td>rbd/rbd-ko.rst</td><td>Kernel Module Operations</td><td>4 Block</td><td>Set up</td><td>client mapping; short</td></tr>
+<tr><td>rbd/qemu-rbd.rst</td><td>QEMU and Block Devices</td><td>4 Block</td><td>Set up</td><td>external</td></tr>
+<tr><td>rbd/libvirt.rst</td><td>Using libvirt with Ceph RBD</td><td>4 Block</td><td>Set up</td><td>external; 320 lines</td></tr>
+<tr><td>rbd/rbd-kubernetes.rst</td><td>Block Devices and Kubernetes</td><td>4 Block</td><td>Set up</td><td>stub (32) pointing at csi/rbd; merge into 4 Kubernetes</td></tr>
+<tr><td>rbd/rbd-nomad.rst</td><td>Block Devices and Nomad</td><td>4 Block</td><td>Set up</td><td>external (Ceph-CSI on Nomad); 476 lines; belongs with 4 Kubernetes (CSI)</td></tr>
+<tr><td>rbd/rbd-openstack.rst</td><td>Block Devices and OpenStack</td><td>4 Block</td><td>Set up</td><td>external</td></tr>
+<tr><td>rbd/rbd-cloudstack.rst</td><td>Block Devices and CloudStack</td><td>4 Block</td><td>Set up</td><td>external</td></tr>
+<tr><td>rbd/rbd-windows.rst</td><td>RBD on Windows</td><td>4 Block</td><td>Set up</td><td>Windows client; mixed Set up, Operate and Troubleshoot</td></tr>
+<tr><td>rbd/iscsi-overview.rst</td><td>Ceph iSCSI Gateway</td><td>4 Block</td><td>Learn</td><td>hub plus concept; ceph-iscsi is legacy, NVMe-oF is the successor</td></tr>
+<tr><td>rbd/iscsi-requirements.rst</td><td>iSCSI Gateway Requirements</td><td>4 Block</td><td>Set up</td><td></td></tr>
+<tr><td>rbd/iscsi-targets.rst</td><td>iSCSI Targets</td><td>4 Block</td><td>Set up</td><td>hub</td></tr>
+<tr><td>rbd/iscsi-target-cli.rst</td><td>Configuring the iSCSI Target using the Command Line Interface</td><td>4 Block</td><td>Set up</td><td>266 lines; carries the only toctree link to start/quick-rbd</td></tr>
+<tr><td>rbd/iscsi-target-cli-manual-install.rst</td><td>Manual ceph-iscsi Installation</td><td>4 Block</td><td>Set up</td><td></td></tr>
+<tr><td>rbd/iscsi-target-ansible.rst</td><td>Configuring the iSCSI Target using Ansible</td><td>4 Block</td><td>Set up</td><td>external (ceph-ansible); deprec; retire</td></tr>
+<tr><td>rbd/iscsi-initiators.rst</td><td>Configuring the iSCSI Initiators</td><td>4 Block</td><td>Set up</td><td>hub</td></tr>
+<tr><td>rbd/iscsi-initiator-linux.rst</td><td>iSCSI Initiator for Linux</td><td>4 Block</td><td>Set up</td><td>client-side procedure</td></tr>
+<tr><td>rbd/iscsi-initiator-win.rst</td><td>iSCSI Initiator for Microsoft Windows</td><td>4 Block</td><td>Set up</td><td>client-side procedure</td></tr>
+<tr><td>rbd/iscsi-initiator-esx.rst</td><td>iSCSI Initiator for VMware ESX</td><td>4 Block</td><td>Set up</td><td>client-side procedure</td></tr>
+<tr><td>rbd/iscsi-monitoring.rst</td><td>Monitoring Ceph iSCSI gateways</td><td>4 Block</td><td>Operate</td><td></td></tr>
+<tr><td>rbd/nvmeof-overview.rst</td><td>Ceph NVMe-oF Gateway</td><td>4 Block</td><td>Learn</td><td>hub plus concept (HA gateway groups)</td></tr>
+<tr><td>rbd/nvmeof-requirements.rst</td><td>NVMe-oF Gateway Requirements</td><td>4 Block</td><td>Set up</td><td>short</td></tr>
+<tr><td>rbd/nvmeof-target-configure.rst</td><td>Installing and Configuring NVMe-oF Targets</td><td>4 Block</td><td>Set up</td><td></td></tr>
+<tr><td>rbd/nvmeof-initiators.rst</td><td>Configuring the NVMe-oF Initiators</td><td>4 Block</td><td>Set up</td><td>hub</td></tr>
+<tr><td>rbd/nvmeof-initiator-linux.rst</td><td>NVMe/TCP Initiator for Linux</td><td>4 Block</td><td>Set up</td><td></td></tr>
+<tr><td>rbd/nvmeof-initiator-esx.rst</td><td>NVMe/TCP Initiator for VMware ESX</td><td>4 Block</td><td>Set up</td><td></td></tr>
+<tr><td>rbd/man/index.rst</td><td>Ceph Block Device Manpages</td><td>4 Block</td><td>Reference</td><td>hub over man/8; dissolve into Door 6</td></tr>
+<tr><td>rbd/api/index.rst</td><td>Ceph Block Device APIs</td><td>4 Block</td><td>Reference</td><td>stub hub (8 lines)</td></tr>
+<tr><td>rbd/api/librbdpy.rst</td><td>Librbd (Python)</td><td>4 Block</td><td>Reference</td><td>automodule API page; built into Door 6</td></tr>
+</table></div>
+<h3>cephfs/ (57 pages, all Door 4 File)</h3>
+<p>Also mapped into File from elsewhere: cephadm/services/mds.rst, cephadm/services/nfs.rst, cephadm/services/smb.rst, mgr/nfs.rst, mgr/smb.rst, mgr/mds_autoscaler.rst (63 pages in total).</p>
+<div class="tw"><table>
+<tr><th>path</th><th>title</th><th>door</th><th>part</th><th>note</th></tr>
+<tr><td>cephfs/index.rst</td><td>Ceph File System</td><td>4 File</td><td>Learn</td><td>landing; toctrees already grouped as Administration, Mounting, Concepts, Troubleshooting and Disaster Recovery, Developer Guides (group headings hidden inside raw HTML comments)</td></tr>
+<tr><td>cephfs/createfs.rst</td><td>Create a Ceph file system</td><td>4 File</td><td>Set up</td><td>mixed: pool and layout concepts plus procedure</td></tr>
+<tr><td>cephfs/administration.rst</td><td>CephFS Administrative commands</td><td>4 File</td><td>Reference</td><td>fs command reference with confval</td></tr>
+<tr><td>cephfs/multifs.rst</td><td>Multiple Ceph File Systems</td><td>4 File</td><td>Learn</td><td>concept; short</td></tr>
+<tr><td>cephfs/add-remove-mds.rst</td><td>Deploying Metadata Servers</td><td>4 File</td><td>Set up</td><td>mixed: hardware sizing, cephadm and manual deploy; overlaps cephadm/services/mds</td></tr>
+<tr><td>cephfs/standby.rst</td><td>Terminology</td><td>4 File</td><td>Operate</td><td>file has no document title (first heading is Terminology; index labels it MDS failover and standby configuration); mixed concept and config</td></tr>
+<tr><td>cephfs/cache-configuration.rst</td><td>MDS Cache Configuration</td><td>4 File</td><td>Reference</td><td>confval plus guidance; mixed</td></tr>
+<tr><td>cephfs/mds-config-ref.rst</td><td>MDS Config Reference</td><td>4 File</td><td>Reference</td><td>confval generated</td></tr>
+<tr><td>cephfs/nfs.rst</td><td>NFS</td><td>4 File (NFS)</td><td>Set up</td><td>short pointer page to mgr/nfs</td></tr>
+<tr><td>cephfs/app-best-practices.rst</td><td>Application best practices for distributed file systems</td><td>4 File</td><td>Learn</td><td></td></tr>
+<tr><td>cephfs/fs-volumes.rst</td><td>FS Volumes and Subvolumes</td><td>4 File</td><td>Operate</td><td>long (1858); mixed concept and command reference; split into concept, procedures and CLI reference; deprec</td></tr>
+<tr><td>cephfs/quota.rst</td><td>CephFS Quotas</td><td>4 File</td><td>Operate</td><td>mixed concept and procedure</td></tr>
+<tr><td>cephfs/health-messages.rst</td><td>CephFS health messages</td><td>4 File</td><td>Troubleshoot</td><td>reference list of MDS health codes; feeds the Door 5 hub</td></tr>
+<tr><td>cephfs/upgrading.rst</td><td>Upgrading the MDS Cluster</td><td>4 File</td><td>Operate</td><td>short procedure; link from Door 2 upgrade</td></tr>
+<tr><td>cephfs/cephfs-top.rst</td><td>CephFS Top Utility</td><td>4 File</td><td>Operate</td><td>tool page; duplicates man/8/cephfs-top</td></tr>
+<tr><td>cephfs/cephfs-tool.rst</td><td>cephfs-tool</td><td>4 File</td><td>Reference</td><td>CLI reference; no man page</td></tr>
+<tr><td>cephfs/snap-schedule.rst</td><td>Snapshot Scheduling Module</td><td>4 File</td><td>Operate</td><td>mgr module doc that lives in cephfs; correct home</td></tr>
+<tr><td>cephfs/cephfs-mirroring.rst</td><td>CephFS Snapshot Mirroring</td><td>4 File</td><td>Operate</td><td>long (1466); mixed concept, Set up and Operate; duplicates dev/cephfs-mirroring.rst; deprec</td></tr>
+<tr><td>cephfs/cephfs-mirroring-checkpoints.rst</td><td>CephFS Snapshot Mirroring Checkpoints</td><td>4 File</td><td>Operate</td><td></td></tr>
+<tr><td>cephfs/purge-queue.rst</td><td>Purge Queue</td><td>4 File</td><td>Learn</td><td>concept plus confval</td></tr>
+<tr><td>cephfs/client-config-ref.rst</td><td>Client Configuration</td><td>4 File</td><td>Reference</td><td>confval generated</td></tr>
+<tr><td>cephfs/client-auth.rst</td><td>CephFS Client Capabilities</td><td>4 File</td><td>Set up</td><td>541 lines; mixed concept and procedure</td></tr>
+<tr><td>cephfs/mount-prerequisites.rst</td><td>Mount CephFS: Prerequisites</td><td>4 File</td><td>Set up</td><td></td></tr>
+<tr><td>cephfs/mount-using-kernel-driver.rst</td><td>Mount CephFS using Kernel Driver</td><td>4 File</td><td>Set up</td><td>deprec note</td></tr>
+<tr><td>cephfs/mount-using-fuse.rst</td><td>Mount CephFS using FUSE</td><td>4 File</td><td>Set up</td><td></td></tr>
+<tr><td>cephfs/ceph-dokan.rst</td><td>Mount CephFS on Windows</td><td>4 File</td><td>Set up</td><td>Windows client</td></tr>
+<tr><td>cephfs/kernel-features.rst</td><td>Supported Features of the Kernel Driver</td><td>4 File</td><td>Reference</td><td></td></tr>
+<tr><td>cephfs/mds-states.rst</td><td>MDS States</td><td>4 File</td><td>Learn</td><td>concept; doubles as a state table</td></tr>
+<tr><td>cephfs/posix.rst</td><td>Differences from POSIX</td><td>4 File</td><td>Learn</td><td></td></tr>
+<tr><td>cephfs/mds-journaling.rst</td><td>MDS Journaling</td><td>4 File</td><td>Learn</td><td>concept plus confval</td></tr>
+<tr><td>cephfs/file-layouts.rst</td><td>File layouts</td><td>4 File</td><td>Operate</td><td>mixed concept and procedure (xattrs)</td></tr>
+<tr><td>cephfs/mdcache.rst</td><td>CephFS Distributed Metadata Cache</td><td>4 File</td><td>Learn</td><td></td></tr>
+<tr><td>cephfs/dynamic-metadata-management.rst</td><td>CephFS Dynamic Metadata Management</td><td>4 File</td><td>Learn</td><td></td></tr>
+<tr><td>cephfs/cephfs-io-path.rst</td><td>Ceph File System I/O Path</td><td>4 File</td><td>Learn</td><td></td></tr>
+<tr><td>cephfs/charmap.rst</td><td>CephFS Directory Entry Name Normalization and Case Folding</td><td>4 File</td><td>Operate</td><td>mixed concept and procedure</td></tr>
+<tr><td>cephfs/lazyio.rst</td><td>LazyIO</td><td>4 File</td><td>Learn</td><td>concept plus usage</td></tr>
+<tr><td>cephfs/dirfrags.rst</td><td>Configuring Directory fragmentation</td><td>4 File</td><td>Learn</td><td>concept plus config</td></tr>
+<tr><td>cephfs/multimds.rst</td><td>Configuring multiple active MDS daemons</td><td>4 File</td><td>Operate</td><td>mixed concept and procedure (pinning)</td></tr>
+<tr><td>cephfs/snapshots.rst</td><td>CephFS Snapshots</td><td>4 File</td><td>Operate</td><td>short; overlaps dev/cephfs-snapshots</td></tr>
+<tr><td>cephfs/fscrypt.rst</td><td>Fscrypt Encryption on CephFS</td><td>4 File</td><td>Operate</td><td>mixed; overlaps dev/cephfs-fscrypt</td></tr>
+<tr><td>cephfs/eviction.rst</td><td>Ceph file system client eviction</td><td>4 File</td><td>Troubleshoot</td><td>concept plus procedure; Operate or Troubleshoot</td></tr>
+<tr><td>cephfs/scrub.rst</td><td>Ceph File System Scrub</td><td>4 File</td><td>Operate</td><td></td></tr>
+<tr><td>cephfs/damaged-rank.rst</td><td>Damaged Ranks</td><td>4 File</td><td>Troubleshoot</td><td></td></tr>
+<tr><td>cephfs/full.rst</td><td>Handling a full Ceph file system</td><td>4 File</td><td>Troubleshoot</td><td></td></tr>
+<tr><td>cephfs/disaster-recovery-experts.rst</td><td>Advanced: Metadata repair tools</td><td>4 File</td><td>Troubleshoot</td><td>529 lines</td></tr>
+<tr><td>cephfs/troubleshooting.rst</td><td>Troubleshooting</td><td>4 File</td><td>Troubleshoot</td><td>597 lines; already symptom-led</td></tr>
+<tr><td>cephfs/disaster-recovery.rst</td><td>Disaster recovery</td><td>4 File</td><td>Troubleshoot</td><td></td></tr>
+<tr><td>cephfs/cephfs-journal-tool.rst</td><td>cephfs-journal-tool</td><td>4 File</td><td>Reference</td><td>tool reference used by Troubleshoot; no man page</td></tr>
+<tr><td>cephfs/recover-fs-after-mon-store-loss.rst</td><td>Recovering the file system after catastrophic Monitor store loss</td><td>4 File</td><td>Troubleshoot</td><td></td></tr>
+<tr><td>cephfs/journaler.rst</td><td>Journaler</td><td>4 File</td><td>Reference</td><td>stub (7 lines, confval); merge into mds-config-ref</td></tr>
+<tr><td>cephfs/capabilities.rst</td><td>Capabilities in CephFS</td><td>4 File</td><td>Learn</td><td>internals-leaning concept; index files it under Developer Guides; could be Door 7</td></tr>
+<tr><td>cephfs/api/index.rst</td><td>CephFS APIs</td><td>4 File</td><td>Reference</td><td>stub hub</td></tr>
+<tr><td>cephfs/api/libcephfs-py.rst</td><td>LibCephFS (Python)</td><td>4 File</td><td>Reference</td><td>stub (automodule)</td></tr>
+<tr><td>cephfs/api/libcephfs-java.rst</td><td>Libcephfs (Javadoc)</td><td>4 File</td><td>Reference</td><td>stub; external link</td></tr>
+<tr><td>cephfs/mantle.rst</td><td>Mantle</td><td>4 File</td><td>Operate</td><td>experimental Lua balancer; developer-leaning; could be Door 7</td></tr>
+<tr><td>cephfs/experimental-features.rst</td><td>Experimental Features</td><td>4 File</td><td>Reference</td><td>not in cephfs/index toctree; deprec; retire or fold into kernel-features</td></tr>
+<tr><td>cephfs/metrics.rst</td><td>Metrics</td><td>4 File</td><td>Reference</td><td>client and MDS metrics list</td></tr>
+</table></div>
+<h3>radosgw/ (76 pages, all Door 4 Object)</h3>
+<p>Also mapped into Object from elsewhere: cephadm/services/rgw.rst (Set up) and mgr/rgw.rst (Set up) for 78 in total. The index toctree is one flat list of 50 entries with no grouping.</p>
+<div class="tw"><table>
+<tr><th>path</th><th>title</th><th>door</th><th>part</th><th>note</th></tr>
+<tr><td>radosgw/index.rst</td><td>Ceph Object Gateway</td><td>4 Object</td><td>Learn</td><td>landing; flat 50-entry toctree; rewrite with the five parts</td></tr>
+<tr><td>radosgw/frontends.rst</td><td>HTTP Frontends</td><td>4 Object</td><td>Reference</td><td>beast options; mixed Set up and Reference</td></tr>
+<tr><td>radosgw/multisite.rst</td><td>Multi-Site</td><td>4 Object</td><td>Set up</td><td>long (1602); mixed: realm, zonegroup and zone concepts plus many procedures (failover, migration); split</td></tr>
+<tr><td>radosgw/zone-features.rst</td><td>Zone Features</td><td>4 Object</td><td>Reference</td><td></td></tr>
+<tr><td>radosgw/placement.rst</td><td>Pool Placement and Storage Classes</td><td>4 Object</td><td>Operate</td><td>mixed concept and procedure</td></tr>
+<tr><td>radosgw/multisite-sync-policy.rst</td><td>Multisite Sync Policy</td><td>4 Object</td><td>Operate</td><td>long (726); mixed concept, procedure and examples</td></tr>
+<tr><td>radosgw/pools.rst</td><td>Pools</td><td>4 Object</td><td>Learn</td><td>short; merge into placement</td></tr>
+<tr><td>radosgw/config-ref.rst</td><td>Ceph Object Gateway Config Reference</td><td>4 Object</td><td>Reference</td><td>confval generated</td></tr>
+<tr><td>radosgw/admin.rst</td><td>Admin Guide</td><td>4 Object</td><td>Operate</td><td>long (1033); radosgw-admin users, quotas, usage; mixed procedure and reference; overlaps man/8/radosgw-admin</td></tr>
+<tr><td>radosgw/account.rst</td><td>User Accounts</td><td>4 Object</td><td>Operate</td><td>mixed concept and procedure</td></tr>
+<tr><td>radosgw/s3.rst</td><td>Ceph Object Gateway S3 API</td><td>4 Object</td><td>Reference</td><td>hub with feature support table</td></tr>
+<tr><td>radosgw/s3/commons.rst</td><td>Common Entities</td><td>4 Object</td><td>Reference</td><td>API reference; deprec note</td></tr>
+<tr><td>radosgw/s3/authentication.rst</td><td>Authentication and ACLs</td><td>4 Object</td><td>Reference</td><td>API reference; deprec note</td></tr>
+<tr><td>radosgw/s3/serviceops.rst</td><td>Service Operations</td><td>4 Object</td><td>Reference</td><td>API reference</td></tr>
+<tr><td>radosgw/s3/bucketops.rst</td><td>Bucket Operations</td><td>4 Object</td><td>Reference</td><td>API reference; long (969)</td></tr>
+<tr><td>radosgw/s3/objectops.rst</td><td>Object Operations</td><td>4 Object</td><td>Reference</td><td>API reference</td></tr>
+<tr><td>radosgw/s3/s3control.rst</td><td>S3 Control</td><td>4 Object</td><td>Reference</td><td>API reference</td></tr>
+<tr><td>radosgw/s3/cpp.rst</td><td>C++ S3 Examples</td><td>4 Object</td><td>Reference</td><td>client SDK example; candidate for Door 7 or ceph.io</td></tr>
+<tr><td>radosgw/s3/csharp.rst</td><td>C# S3 Examples</td><td>4 Object</td><td>Reference</td><td>client SDK example</td></tr>
+<tr><td>radosgw/s3/java.rst</td><td>Java S3 Examples</td><td>4 Object</td><td>Reference</td><td>client SDK example</td></tr>
+<tr><td>radosgw/s3/perl.rst</td><td>Perl S3 Examples</td><td>4 Object</td><td>Reference</td><td>client SDK example</td></tr>
+<tr><td>radosgw/s3/php.rst</td><td>PHP S3 Examples</td><td>4 Object</td><td>Reference</td><td>client SDK example</td></tr>
+<tr><td>radosgw/s3/python.rst</td><td>Python S3 Examples</td><td>4 Object</td><td>Reference</td><td>client SDK example</td></tr>
+<tr><td>radosgw/s3/ruby.rst</td><td>Ruby AWS::SDK Examples (aws-sdk gem ~&gt;2)</td><td>4 Object</td><td>Reference</td><td>client SDK example; outdated SDK major version</td></tr>
+<tr><td>radosgw/iam.rst</td><td>Ceph Object Gateway IAM API</td><td>4 Object</td><td>Reference</td><td></td></tr>
+<tr><td>radosgw/rgw-cache.rst</td><td>RGW Data Caching and CDN</td><td>4 Object</td><td>Operate</td><td>index links it as rgw-cache.rst with the extension</td></tr>
+<tr><td>radosgw/swift.rst</td><td>Ceph Object Gateway Swift API</td><td>4 Object</td><td>Reference</td><td>hub plus feature table</td></tr>
+<tr><td>radosgw/swift/auth.rst</td><td>Authentication</td><td>4 Object</td><td>Reference</td><td>API reference</td></tr>
+<tr><td>radosgw/swift/serviceops.rst</td><td>Service Operations</td><td>4 Object</td><td>Reference</td><td>API reference</td></tr>
+<tr><td>radosgw/swift/containerops.rst</td><td>Container Operations</td><td>4 Object</td><td>Reference</td><td>API reference</td></tr>
+<tr><td>radosgw/swift/objectops.rst</td><td>Object Operations</td><td>4 Object</td><td>Reference</td><td>API reference</td></tr>
+<tr><td>radosgw/swift/tempurl.rst</td><td>Temp URL Operations</td><td>4 Object</td><td>Reference</td><td>API reference</td></tr>
+<tr><td>radosgw/swift/tutorial.rst</td><td>Tutorial</td><td>4 Object</td><td>Set up</td><td>client-side tutorial; short</td></tr>
+<tr><td>radosgw/swift/java.rst</td><td>Java Swift Examples</td><td>4 Object</td><td>Reference</td><td>client SDK example</td></tr>
+<tr><td>radosgw/swift/python.rst</td><td>Python Swift Examples</td><td>4 Object</td><td>Reference</td><td>client SDK example</td></tr>
+<tr><td>radosgw/swift/ruby.rst</td><td>Ruby Swift Examples</td><td>4 Object</td><td>Reference</td><td>client SDK example</td></tr>
+<tr><td>radosgw/adminops.rst</td><td>Admin Operations</td><td>4 Object</td><td>Reference</td><td>long (3169); Admin Ops REST API; generate from source if possible</td></tr>
+<tr><td>radosgw/api.rst</td><td>librgw (Python)</td><td>4 Object</td><td>Reference</td><td>stub (16 lines)</td></tr>
+<tr><td>radosgw/nfs.rst</td><td>NFS</td><td>4 Object</td><td>Set up</td><td>RGW export over NFS-Ganesha; 372 lines; overlaps mgr/nfs; cross-link from File (NFS)</td></tr>
+<tr><td>radosgw/keystone.rst</td><td>Integrating with OpenStack Keystone</td><td>4 Object</td><td>Set up</td><td>external</td></tr>
+<tr><td>radosgw/barbican.rst</td><td>OpenStack Barbican Integration</td><td>4 Object</td><td>Set up</td><td>external</td></tr>
+<tr><td>radosgw/vault.rst</td><td>HashiCorp Vault Integration</td><td>4 Object</td><td>Set up</td><td>external; 440 lines</td></tr>
+<tr><td>radosgw/kmip.rst</td><td>KMIP Integration</td><td>4 Object</td><td>Set up</td><td>external</td></tr>
+<tr><td>radosgw/opa.rst</td><td>Open Policy Agent Integration</td><td>4 Object</td><td>Set up</td><td>external; short</td></tr>
+<tr><td>radosgw/keycloak.rst</td><td>Integrating Keycloak with RadosGW</td><td>4 Object</td><td>Set up</td><td>external</td></tr>
+<tr><td>radosgw/ldap-auth.rst</td><td>LDAP Authentication</td><td>4 Object</td><td>Set up</td><td>external</td></tr>
+<tr><td>radosgw/multitenancy.rst</td><td>RGW Multi-tenancy</td><td>4 Object</td><td>Learn</td><td>mixed concept and procedure</td></tr>
+<tr><td>radosgw/compression.rst</td><td>Compression</td><td>4 Object</td><td>Operate</td><td>procedure</td></tr>
+<tr><td>radosgw/encryption.rst</td><td>Encryption</td><td>4 Object</td><td>Set up</td><td>mixed: SSE concepts plus configuration</td></tr>
+<tr><td>radosgw/bucketpolicy.rst</td><td>Bucket Policies</td><td>4 Object</td><td>Reference</td><td>policy grammar plus examples</td></tr>
+<tr><td>radosgw/dynamicresharding.rst</td><td>RGW Dynamic Bucket Index Resharding</td><td>4 Object</td><td>Operate</td><td>mixed concept, procedure and confval</td></tr>
+<tr><td>radosgw/mfa.rst</td><td>RGW Support for Multifactor Authentication</td><td>4 Object</td><td>Operate</td><td></td></tr>
+<tr><td>radosgw/sync-modules.rst</td><td>Sync Modules</td><td>4 Object</td><td>Learn</td><td>hub plus concept</td></tr>
+<tr><td>radosgw/archive-sync-module.rst</td><td>Archive Sync Module</td><td>4 Object</td><td>Set up</td><td>short</td></tr>
+<tr><td>radosgw/cloud-sync-module.rst</td><td>Cloud Sync Module</td><td>4 Object</td><td>Set up</td><td></td></tr>
+<tr><td>radosgw/elastic-sync-module.rst</td><td>Elasticsearch Sync Module</td><td>4 Object</td><td>Set up</td><td>external</td></tr>
+<tr><td>radosgw/notifications.rst</td><td>Bucket Notifications</td><td>4 Object</td><td>Operate</td><td>long (788); mixed concept, procedure and REST reference; deprec note; split</td></tr>
+<tr><td>radosgw/s3-notification-compatibility.rst</td><td>S3 Bucket Notifications Compatibility</td><td>4 Object</td><td>Reference</td><td></td></tr>
+<tr><td>radosgw/layout.rst</td><td>RADOS Gateway Data Layout</td><td>4 Object</td><td>Learn</td><td>internals-leaning concept; could be Door 7</td></tr>
+<tr><td>radosgw/STS.rst</td><td>STS in Ceph</td><td>4 Object</td><td>Set up</td><td>mixed concept, config and API examples</td></tr>
+<tr><td>radosgw/STSLite.rst</td><td>STS Lite</td><td>4 Object</td><td>Set up</td><td>deprec note</td></tr>
+<tr><td>radosgw/session-tags.rst</td><td>Session tags for Attribute Based Access Control in STS</td><td>4 Object</td><td>Reference</td><td>mixed</td></tr>
+<tr><td>radosgw/role.rst</td><td>Role</td><td>4 Object</td><td>Reference</td><td>long (604); REST API for roles</td></tr>
+<tr><td>radosgw/oidc.rst</td><td>OpenID Connect Provider in RGW</td><td>4 Object</td><td>Reference</td><td>REST API</td></tr>
+<tr><td>radosgw/orphans.rst</td><td>Orphan List and Associated Tooling</td><td>4 Object</td><td>Troubleshoot</td><td>tools; deprec note for radosgw-admin orphans</td></tr>
+<tr><td>radosgw/troubleshooting.rst</td><td>Troubleshooting</td><td>4 Object</td><td>Troubleshoot</td><td>208 lines; symptom-led</td></tr>
+<tr><td>radosgw/qat-accel.rst</td><td>QAT Acceleration for Encryption and Compression</td><td>4 Object</td><td>Set up</td><td>hardware-specific</td></tr>
+<tr><td>radosgw/uadk-accel.rst</td><td>UADK Acceleration for Compression</td><td>4 Object</td><td>Set up</td><td>hardware-specific</td></tr>
+<tr><td>radosgw/s3select.rst</td><td>Ceph s3 select</td><td>4 Object</td><td>Reference</td><td>long (813); feature reference</td></tr>
+<tr><td>radosgw/lua-scripting.rst</td><td>Lua Scripting</td><td>4 Object</td><td>Reference</td><td>long (606); API reference plus examples</td></tr>
+<tr><td>radosgw/d3n_datacache.rst</td><td>D3N RGW Data Cache</td><td>4 Object</td><td>Set up</td><td></td></tr>
+<tr><td>radosgw/cloud-transition.rst</td><td>Cloud Transition</td><td>4 Object</td><td>Operate</td><td>523 lines; mixed</td></tr>
+<tr><td>radosgw/cloud-restore.rst</td><td>Cloud Restore</td><td>4 Object</td><td>Operate</td><td></td></tr>
+<tr><td>radosgw/metrics.rst</td><td>Metrics</td><td>4 Object</td><td>Reference</td><td>perf counter list</td></tr>
+<tr><td>radosgw/bucket_logging.rst</td><td>Bucket Logging</td><td>4 Object</td><td>Operate</td><td>mixed procedure and reference</td></tr>
+<tr><td>radosgw/s3_objects_dedup.rst</td><td>Full RGW Object Dedup</td><td>4 Object</td><td>Operate</td><td></td></tr>
+</table></div>
+<h3>csi/ (6 pages, all Door 4 Kubernetes)</h3>
+<div class="tw"><table>
+<tr><th>path</th><th>title</th><th>door</th><th>part</th><th>note</th></tr>
+<tr><td>csi/index.rst</td><td>Ceph Container Storage Interface (CSI)</td><td>4 Kubernetes</td><td>Learn</td><td>landing; already in the proposed shape (Learn, then Set up per backend); external with an explicit &quot;where the documentation lives&quot; scope statement</td></tr>
+<tr><td>csi/deployment.rst</td><td>Deploying Ceph-CSI</td><td>4 Kubernetes</td><td>Set up</td><td>external (operator, Helm, raw manifests); Helm and raw manifests marked deprecated</td></tr>
+<tr><td>csi/rbd.rst</td><td>RBD with Ceph-CSI</td><td>4 Kubernetes</td><td>Set up</td><td>Ceph-side preparation (pool, CephX user)</td></tr>
+<tr><td>csi/cephfs.rst</td><td>CephFS with Ceph-CSI</td><td>4 Kubernetes</td><td>Set up</td><td>Ceph-side preparation</td></tr>
+<tr><td>csi/nfs.rst</td><td>NFS with Ceph-CSI</td><td>4 Kubernetes</td><td>Set up</td><td>Ceph-side preparation</td></tr>
+<tr><td>csi/nvmeof.rst</td><td>NVMe-oF with Ceph-CSI</td><td>4 Kubernetes</td><td>Set up</td><td>short; under active development</td></tr>
+</table></div>
+<h2>Family maps</h2>
+<h3>rados/ (72 pages)</h3>
+<div class="tw"><table>
+<tr><th>Subdirectory</th><th>Pages</th><th>Door split</th><th>Notes</th></tr>
+<tr><td>rados/configuration</td><td>17</td><td>6 Reference (12), 3 Operate (5)</td><td>Reference: index (hub), auth-config-ref, bluestore-config-ref, filestore-config-ref (deprec, retire), general-config-ref (stub, 19), journal-ref (stub, 18), mclock-config-ref, mon-config-ref, mon-osd-interaction, network-config-ref, osd-config-ref, pool-pg-config-ref. Operate: ceph-conf (Configuring Ceph, long 782, mixed), common, mon-lookup-dns, msgr2, storage-devices (Learn). All *-ref pages use confval and are already source-generated</td></tr>
+<tr><td>rados/operations (with pgcalc)</td><td>34</td><td>3 Operate (27), 6 Reference (6), 5 Troubleshoot (1)</td><td>Reference: control (Control Commands, 700 lines), erasure-code-clay, -isa, -jerasure, -lrc, -shec (plugin parameter pages). Troubleshoot: health-checks (2391 lines, the health code catalogue). Operate: everything else; long mixed pages needing a split are crush-map (1193), placement-groups (1053), pools (917), monitoring (866), user-management (874), crush-map-edits (773), erasure-code (576); cache-tiering is deprecated and should retire; pg-concepts, pg-states, data-placement are Learn pages</td></tr>
+<tr><td>rados/troubleshooting</td><td>8</td><td>5 Troubleshoot (8)</td><td>index (hub), troubleshooting-mon (836), troubleshooting-osd (1020), troubleshooting-pg (938), log-and-debug, memory-profiling, cpu-profiling, community (get help). The three long pages are already problem-led and become the spine of the Door 5 hub</td></tr>
+<tr><td>rados/api</td><td>7</td><td>6 Reference (7)</td><td>index, librados (C), libradospp (stub, 9 lines), python, libcephsqlite, objclass-sdk, librados-intro (1052-line tutorial that fits Door 7 &quot;build on Ceph&quot; better than Reference)</td></tr>
+<tr><td>rados/bluestore</td><td>4</td><td>3 Operate (2), 6 Reference (2)</td><td>Operate: bluefs-spillover-cleaner, fast-onode-scan. Reference: fcm-plugin, rocksdb-config. Not linked from rados/index; reached from bluestore-config-ref</td></tr>
+<tr><td>rados/man</td><td>1</td><td>6 Reference</td><td>hub over man/8 (19 pages plus ceph-post-file hidden); dissolve</td></tr>
+<tr><td>rados/index.rst</td><td>1</td><td>3 Operate</td><td>landing with three columns (Config and Deploy, Operations, APIs); dissolves into Doors 3 and 6</td></tr>
+</table></div>
+<h3>mgr/ (29 pages)</h3>
+<div class="tw"><table>
+<tr><th>Group</th><th>Pages</th><th>Door</th><th>Files</th></tr>
+<tr><td>Orchestration</td><td>3</td><td>3 Operate (1), 2 Deploy (1), 7 Develop (1)</td><td>orchestrator (Orchestrator CLI, Operate); rook (Deploy: Rook backend, 39 lines, stub-like); orchestrator_modules (Develop: writing orchestrator plugins)</td></tr>
+<tr><td>Dashboard and APIs</td><td>6</td><td>3 Operate (4), 6 Reference (2)</td><td>dashboard (1752 lines, mixed set up, operate and reference; split), dashboard_plugins/debug.inc, feature_toggles.inc, motd.inc (includes); ceph_api/index (RESTful API, Reference), cli_api (Reference)</td></tr>
+<tr><td>Monitoring and alerting</td><td>10</td><td>3 Operate</td><td>prometheus (470, mixed with confval), alerts, influx, telegraf, telemetry, crash, insights, iostat, diskprediction, progress</td></tr>
+<tr><td>NFS, SMB and service modules</td><td>4</td><td>4 Storage services</td><td>nfs (1242 lines, File NFS, overlaps cephadm/services/nfs and cephfs/nfs), smb (2084 lines, File SMB, overlaps cephadm/services/smb), rgw (Object Set up: realm bootstrap via mgr module), mds_autoscaler (File, stub 24 lines)</td></tr>
+<tr><td>Misc</td><td>6</td><td>3 Operate (4), 7 Develop (2)</td><td>administrator (ceph-mgr Administrator&#x27;s Guide), index (hub), localpool, ceph_secrets (Operate); modules (module developer&#x27;s guide, 881 lines) and hello (example module) to Develop</td></tr>
+</table></div>
+<p>Each module page mixes an operator guide with an option table (<code>.. mgr_module::</code> or confval); the option tables should be generated into Door 6 and the guide stay in Operate.</p>
+<h3>man/ (51 pages, all Door 6 Reference; all <code>:orphan:</code>)</h3>
+<div class="tw"><table>
+<tr><th>Group</th><th>Pages</th><th>Files</th></tr>
+<tr><td>Cluster daemons and core CLI</td><td>7</td><td>ceph (1879 lines), ceph-mon, ceph-osd, ceph-mds, ceph-run, ceph-syn, cephadm (664)</td></tr>
+<tr><td>Keys, auth and config</td><td>4</td><td>ceph-authtool, ceph-create-keys, ceph-conf, librados-config</td></tr>
+<tr><td>Maps and CRUSH</td><td>4</td><td>crushtool, crushdiff, monmaptool, osdmaptool</td></tr>
+<tr><td>OSD and store tools</td><td>10</td><td>ceph-bluestore-tool, ceph-objectstore-tool, ceph-kvstore-tool, ceph-monstore-tool, ceph-volume (568), ceph-volume-systemd, ceph-dencoder, ceph-clsinfo, ceph-debugpack, ceph-post-file</td></tr>
+<tr><td>RADOS</td><td>2</td><td>rados, ceph-immutable-object-cache</td></tr>
+<tr><td>RBD</td><td>10</td><td>rbd (1072), rbd-fuse, rbd-nbd, rbd-ggate, rbdmap, ceph-rbdnamer, rbd-mirror, rbd-replay, rbd-replay-prep, rbd-replay-many</td></tr>
+<tr><td>CephFS</td><td>6</td><td>ceph-fuse, mount.ceph, mount.fuse.ceph, cephfs-shell (652), cephfs-top, cephfs-mirror</td></tr>
+<tr><td>RGW</td><td>8</td><td>radosgw, radosgw-admin (1095), rgw-orphan-list, rgw-gap-list, rgw-policy-check, rgw-policy-test, rgw-restore-bucket-index, ceph-diff-sorted</td></tr>
+</table></div>
+<p>Duplication with prose pages: man/8/rbd and rbd/rados-rbd-cmds; man/8/ceph and rados/operations/control; man/8/radosgw-admin and radosgw/admin; man/8/ceph-volume and ceph-volume/; man/8/cephfs-top and cephfs/cephfs-top; man/8/cephadm and cephadm/install plus cephadm/operations. Man pages are reached today through three hubs (man_index.rst, rados/man/index, rbd/man/index) and direct toctree entries in cephfs/index and radosgw/index.</p>
+<h3>dev/ (154 pages, Door 7 Develop unless noted)</h3>
+<div class="tw"><table>
+<tr><th>Subdirectory</th><th>Pages</th><th>Notes</th></tr>
+<tr><td>dev/developer_guide (with testing_integration_tests)</td><td>19</td><td>Contributor track: workflow, essentials, merging, tests, teuthology, dashboard developer docs (dash-devel, 2748 lines), jaegertracing (duplicates jaegertracing/index)</td></tr>
+<tr><td>dev top-level files</td><td>71</td><td>Internals plus the user-facing candidates listed below</td></tr>
+<tr><td>dev/osd_internals (with erasure_coding)</td><td>31</td><td>OSD internals and EC design documents</td></tr>
+<tr><td>dev/crimson</td><td>10</td><td>Crimson and SeaStore internals</td></tr>
+<tr><td>dev/cephadm (with design)</td><td>7</td><td>Design notes; linked from cephadm/index as &quot;Cephadm Feature Planning&quot; and from developer_guide; not user docs</td></tr>
+<tr><td>dev/ceph-volume</td><td>5</td><td>ceph-volume developer notes</td></tr>
+<tr><td>dev/mds_internals</td><td>5</td><td>MDS internals</td></tr>
+<tr><td>dev/radosgw (with admin)</td><td>5</td><td>RGW internals; s3_compliance and admin/adminops_nonimplemented are user-facing reference</td></tr>
+<tr><td>dev/dashboard</td><td>1</td><td>UI design goals</td></tr>
+</table></div>
+<p>dev/ pages that are user-facing or duplicate a user page, with the user door they belong to:</p>
+<div class="tw"><table>
+<tr><th>dev page</th><th>User door</th><th>Reason</th></tr>
+<tr><td>dev/ceph_krb_auth.rst</td><td>3 Operate (security) or retire</td><td>1096-line Kerberos set-up guide written for operators; the feature never shipped as supported</td></tr>
+<tr><td>dev/perf_counters.rst, dev/perf_histograms.rst</td><td>3 Operate (monitoring) plus 6 Reference</td><td>Admin socket perf dump is an operator task; schema is reference</td></tr>
+<tr><td>dev/health-reports.rst</td><td>3 Operate</td><td>&quot;How to get reports&quot; is operator content; implementation half stays in Door 7</td></tr>
+<tr><td>dev/crush-msr.rst</td><td>3 Operate (CRUSH)</td><td>MSR rules are user-configurable; belongs beside rados/operations/crush-map</td></tr>
+<tr><td>dev/mon-elections.rst</td><td>3 Operate (Learn)</td><td>Concept behind rados/operations/change-mon-elections</td></tr>
+<tr><td>dev/erasure-coded-pool.rst</td><td>3 Operate</td><td>Overlaps rados/operations/erasure-code; merge</td></tr>
+<tr><td>dev/config.rst</td><td>3 Operate</td><td>Overlaps rados/configuration/ceph-conf; merge</td></tr>
+<tr><td>dev/cephfs-mirroring.rst</td><td>4 File</td><td>Duplicates cephfs/cephfs-mirroring (641 vs 1466 lines); merge</td></tr>
+<tr><td>dev/cephfs-snapshots.rst, dev/cephfs-fscrypt.rst, dev/file-striping.rst</td><td>4 File (Learn)</td><td>Concept pages that pair with cephfs/snapshots, cephfs/fscrypt, cephfs/file-layouts</td></tr>
+<tr><td>dev/radosgw/s3_compliance.rst</td><td>4 Object (Reference)</td><td>S3 API compliance table that users look for</td></tr>
+<tr><td>dev/radosgw/admin/adminops_nonimplemented.rst</td><td>4 Object (Reference)</td><td>Companion to radosgw/adminops</td></tr>
+<tr><td>dev/rbd-diff.rst, dev/rbd-export.rst</td><td>6 Reference</td><td>File format specs for tooling authors</td></tr>
+<tr><td>dev/zoned-storage.rst</td><td>2 Deploy (advanced)</td><td>Build and deploy notes for SMR devices; mixed</td></tr>
+<tr><td>dev/dpdk.rst, dev/blkin.rst</td><td>3 Operate plus 7</td><td>Config half is operator content, build half is developer</td></tr>
+<tr><td>dev/documenting.rst, dev/generatedocs.rst</td><td>7 Develop</td><td>Correct door, but duplicate start/documenting-ceph; merge into one docs guide</td></tr>
+<tr><td>dev/developer_guide/jaegertracing.rst</td><td>7 Develop</td><td>Duplicates jaegertracing/index and cephadm/services/tracing</td></tr>
+<tr><td>dev/cephadm/host-maintenance.rst, dev/cephadm/compliance-check.rst</td><td>7 Develop</td><td>Design proposals; remove the &quot;Feature Planning&quot; link from cephadm user navigation</td></tr>
+<tr><td>dev/kubernetes.rst, dev/dev_cluster_deployment.rst</td><td>7 Develop</td><td>Explicitly not user docs; keep</td></tr>
+<tr><td>dev/osd_internals/erasure_coding/client_support.rst</td><td>7 Develop</td><td>Design doc; its user-facing facts (EC overwrites, omap on EC) belong in rados/operations/erasure-code</td></tr>
+</table></div>
+<h3>Small families and single files</h3>
+<div class="tw"><table>
+<tr><th>Family</th><th>Pages</th><th>Door</th><th>Notes</th></tr>
+<tr><td>api/</td><td>2</td><td>6 Reference</td><td>index (API Documentation hub) and mon_command_api (3-line stub, generated at build)</td></tr>
+<tr><td>releases/</td><td>22</td><td>6 Reference</td><td>general (cadence, naming, lifecycle; link from Door 1 and Door 2), index (timeline), 20 per-release notes from argonaut to tentacle (generated aggregates); changelog/ holds 69 historical .txt files</td></tr>
+<tr><td>security/</td><td>14</td><td>7 Develop (4), 6 Reference (10)</td><td>index (Security), process, securitylead, workinggroup are project process; cves.rst plus 9 CVE pages are reference (CVE pages are reached only from cves.rst)</td></tr>
+<tr><td>ceph-volume/</td><td>24</td><td>6 Reference</td><td>index and intro (deprec notes), inventory, drive-group (stub 14), systemd; lvm/ 13 subcommand pages (activate, batch, create, encryption, list, migrate, new-db, new-wal, prepare, scan stub, systemd, zap, index); simple/ 4 (legacy ceph-disk migration); zfs/ 2 (FreeBSD). Subcommand pages are reference; the one provisioning procedure operators need should live in Operate (OSD service) and link here</td></tr>
+<tr><td>monitoring/</td><td>1</td><td>3 Operate</td><td>507 lines: monitoring stack, then per-service metric sections (OSD, pool, RGW, CephFS, Block, hardware); Learn plus Reference; the service sections belong in each service&#x27;s Operate part</td></tr>
+<tr><td>hardware-monitoring/</td><td>1</td><td>3 Operate</td><td>194 lines: overview, limitations, deploy the agent, examples, &quot;For Developers&quot; (Door 7)</td></tr>
+<tr><td>jaegertracing/</td><td>1</td><td>3 Operate</td><td>134 lines; overlaps cephadm/services/tracing and dev/developer_guide/jaegertracing</td></tr>
+<tr><td>architecture/</td><td>9</td><td>1 Start here</td><td>index (hub), storage-cluster, scalability-high-availability, dynamic-cluster-management, erasure-coding, ceph-clients (Learn); ceph-protocol, extending-ceph (could be Door 7); cache-tiering (48 lines, deprec; retire)</td></tr>
+<tr><td>crimson/</td><td>1</td><td>2 Deploy</td><td>Crimson (Tech Preview): deploy with cephadm, required flags, CPU allocation, backends, metrics; mixed</td></tr>
+<tr><td>glossary.rst</td><td>1</td><td>6 Reference</td><td>582 lines</td></tr>
+<tr><td>governance.rst</td><td>1</td><td>7 Develop</td><td></td></tr>
+<tr><td>foundation.rst</td><td>1</td><td>7 Develop</td><td></td></tr>
+<tr><td>technical-charter.rst</td><td>1</td><td>7 Develop</td><td></td></tr>
+<tr><td>man_index.rst</td><td>1</td><td>6 Reference</td><td>build-only toctree; 45 of 51 man pages</td></tr>
+<tr><td>index.rst</td><td>1</td><td>1 Start here</td><td>root landing; rewrite</td></tr>
+</table></div>
+<h2>Summary by door</h2>
+<p>Rule for the rewrite estimate. A page counts as &quot;rewrite&quot; if any of these hold: it is a hub or stub that dissolves into navigation; it clearly mixes concept with procedure (or procedure with reference) and must be split into the three page types; it is over about 600 lines, which under one-task-per-procedure forces a split; or it is deprecated content to retire. Every other page counts as &quot;re-home only&quot;: it moves behind a redirect, gains the metadata block and a type label, and keeps its content. Generated reference (confval, mgr_module, automodule), man pages, release notes and Door 7 pages count as re-home only. The count is a reading of first headings, line counts and section structure, not a line-by-line edit estimate.</p>
+<div class="tw"><table>
+<tr><th>Door</th><th>Existing pages mapped</th><th>Rewrite</th><th>Re-home only</th><th>Biggest ambiguities</th></tr>
+<tr><td>1 Start here</td><td>13</td><td>5</td><td>8</td><td>How deep architecture/ goes before it becomes internals; quick-rbd is stale and orphaned; where the Rook and Kubernetes introduction lives (Deploy or Start here)</td></tr>
+<tr><td>2 Deploy</td><td>21</td><td>7</td><td>14</td><td>Upgrades in Deploy (proposal) versus Operate; cephadm service pages for storage daemons; Windows client install (Deploy or the services); crimson tech preview placement</td></tr>
+<tr><td>3 Operate</td><td>72</td><td>18</td><td>54</td><td>mgr modules split three ways; monitoring content spread over five places; &quot;security&quot; collides with security/ (vulnerability process); health-checks home; cephadm/operations grab-bag</td></tr>
+<tr><td>4 Storage services</td><td>190 (Block 43, File 63, Object 78, Kubernetes 6)</td><td>44</td><td>146</td><td>NFS and SMB pages scattered across cephadm, mgr, cephfs, radosgw, csi; iSCSI legacy footprint (13 pages); 10 RGW SDK example pages; Block has no Troubleshoot page; RGW index is a flat 50-entry list</td></tr>
+<tr><td>5 Troubleshoot</td><td>11</td><td>5</td><td>6</td><td>The hub is new; 11 more service troubleshooting pages stay in Door 4 and are linked; health-checks is both the symptom index and a reference table</td></tr>
+<tr><td>6 Reference</td><td>141</td><td>8</td><td>133</td><td>Man pages duplicate six prose pages; ceph-volume Deploy versus Reference; rados/api Reference versus Develop; release notes generation; changelog/ archive</td></tr>
+<tr><td>7 Develop and contribute</td><td>168</td><td>3</td><td>165</td><td>About 20 dev/ pages are user-facing; security process versus CVE list; three overlapping docs guides; cephadm design docs linked from user nav</td></tr>
+<tr><td>Total</td><td>616</td><td>90</td><td>526</td><td></td></tr>
+</table></div>
+<h2>Ambiguities and recommendations</h2>
+<ol>
+<li>mgr modules split across Operate, Reference and the services. Each module page is a guide plus an option table. Recommendation: one operator page per module in Door 3 (or in the service for nfs, smb, rgw, mds_autoscaler, snap-schedule), option tables generated into Door 6, module authoring (modules.rst, orchestrator_modules.rst, hello.rst) in Door 7, mgr/index dissolved. Rook (mgr/rook.rst) becomes the Door 2 &quot;Rook and Kubernetes&quot; entry, expanded.</li>
+<li>ceph-volume as Deploy versus Reference. The 24 pages are subcommand references with a short intro. Recommendation: Door 6 Reference (CLI), with one Operate procedure &quot;Provision OSDs with ceph-volume&quot; under the OSD service page linking into it; mark simple/ (ceph-disk migration) and zfs/ as legacy; ceph-volume/intro merges with the man page synopsis.</li>
+<li>hardware-monitoring. A single page mixing overview, limitations, a deploy procedure, examples and a developer section. Recommendation: Door 3 Operate &gt; Monitoring, split into concept plus procedure; the &quot;For Developers&quot; section goes to Door 7; consider folding into the monitoring landing so hardware, Prometheus stack and SNMP sit together.</li>
+<li>Man pages that duplicate reference pages. rbd, ceph, radosgw-admin, ceph-volume, cephfs-top and cephadm each have both a man page and a prose page covering the same commands. Recommendation: man pages are the single CLI reference in Door 6 (generated into JSON per Move 3); prose pages keep procedures and link to the man page for options; retire rbd/man/index and rados/man/index hubs; add the six man pages missing from man_index.rst.</li>
+<li>dev/ pages that are user-facing. About 20 pages (listed in the dev family map) carry operator content: Kerberos set-up, perf counters and histograms, CRUSH MSR, health reports, config system, CephFS mirroring and snapshots concepts, S3 compliance, RBD file formats. Recommendation: move the operator halves into Doors 3, 4 and 6 during each section&#x27;s rebuild and leave design halves in Door 7; drop the &quot;Cephadm Feature Planning&quot; link from cephadm/index so design proposals stop appearing in user navigation.</li>
+<li>health-checks.rst (2391 lines). It is the health-code catalogue and the natural spine of a symptom-organized Door 5. Recommendation: generate the code table into Door 6 from source, and build the Door 5 hub as symptom pages that link codes to the existing rados, cephfs, radosgw and cephadm troubleshooting pages; keep the service troubleshooting pages inside Door 4 so each service stays self-contained.</li>
+<li>architecture/ depth. Recommendation: Door 1 Learn keeps storage-cluster, scalability-high-availability, dynamic-cluster-management, erasure-coding and ceph-clients; ceph-protocol and extending-ceph move to Door 7 internals; cache-tiering retires with rados/operations/cache-tiering.</li>
+<li>Two meanings of &quot;security&quot;. The proposal&#x27;s Operate door lists security (cephx, users, certificates), while the security/ directory is the vulnerability process and CVE list. Recommendation: Operate &gt; Security gathers rados/operations/user-management, rados/configuration/auth-config-ref, cephadm/certmgr, oauth2-proxy and mgmt-gateway; security/index, process, securitylead and workinggroup go to Door 7; cves.rst and the CVE pages go to Door 6 with a link from Door 2 upgrades.</li>
+<li>cephadm/services pages for storage daemons. mds, rgw, nfs, smb and iscsi are deployment procedures for a service, written from cephadm&#x27;s point of view. Recommendation: they become the Set up part of each service (with a service-spec reference in Door 6); mon, mgr, osd, monitoring, snmp-gateway, mgmt-gateway, oauth2-proxy, tracing and custom-container stay in Door 3.</li>
+<li>Upgrades. cephadm/upgrade, cephfs/upgrading, rados/operations/require-osd-release, require-min-compat-client and the upgrade notes inside releases/*.rst are five places. Recommendation: Door 2 &gt; Upgrade hub (as the proposal puts upgrades in Deploy) with one procedure per path and the service-specific steps included from the services.</li>
+<li>NFS and SMB. NFS spans cephadm/services/nfs, mgr/nfs (1242 lines), cephfs/nfs, radosgw/nfs and csi/nfs; SMB spans cephadm/services/smb and mgr/smb (2084 lines). Recommendation: File &gt; NFS and File &gt; SMB sub-services each in the five-part shape, built from the mgr and cephadm pages; radosgw/nfs stays under Object with a cross-link (or is marked legacy); csi/nfs stays in Kubernetes.</li>
+<li>iSCSI gateway. 13 pages plus cephadm/services/iscsi for a gateway in maintenance mode. Recommendation: Block &gt; Gateways with NVMe-oF first and iSCSI marked legacy; retire iscsi-target-ansible; collapse the three hub pages.</li>
+<li>RGW SDK examples. Ten language example pages (seven S3, three Swift), several against outdated SDK versions. Recommendation: keep one &quot;client examples&quot; reference page per API in Object &gt; Reference and move the per-language pages to ceph.io or an examples repo; do not carry them into the template unchanged.</li>
+<li>rados/api. librados-intro is a 1052-line tutorial for application developers, the rest are API references. Recommendation: API references (C, C++, Python, sqlite, objclass) to Door 6, generated where automodule allows; librados-intro to Door 7 as &quot;Build applications on Ceph&quot;.</li>
+<li>releases/general. Cadence and lifecycle are what a new reader needs to choose a release. Recommendation: Door 6 keeps the page; Door 1 gets a short &quot;Which release should I run&quot; concept that links to it.</li>
+<li>crimson. A tech-preview deployment page whose internals live in dev/crimson. Recommendation: Door 2 &gt; Advanced deployments with a tech-preview banner; flags and metrics sections become Reference stubs; dev/crimson stays in Door 7.</li>
+<li>Windows client pages. install/windows-install, windows-basic-config and windows-troubleshooting are orphans; rbd/rbd-windows and cephfs/ceph-dokan cover the same clients. Recommendation: Door 2 &gt; Clients &gt; Windows for install and config, the service pages keep mapping and mounting, windows-troubleshooting joins Door 5.</li>
+<li>Monitoring spread. monitoring/index, cephadm/services/monitoring, mgr/prometheus, mgr/alerts and the per-service metrics pages (radosgw/metrics, cephfs/metrics, rbd iscsi-monitoring) are five homes. Recommendation: Door 3 &gt; Monitoring landing owns the stack (deploy, Prometheus module, alerts, SNMP, hardware); each service&#x27;s Operate part owns its metrics page; monitoring/index&#x27;s per-service sections move to the services.</li>
+<li>Tracing. jaegertracing/index, cephadm/services/tracing and dev/developer_guide/jaegertracing describe the same setup. Recommendation: one Operate page (deploy and enable tracing) and one Door 7 page (instrumenting code).</li>
+<li>start/quick-rbd. Reachable only from an iSCSI page, written for pre-cephadm clusters. Recommendation: rewrite as the Door 1 block quick start on top of cephadm, or retire in favour of the Block Set up procedures.</li>
+<li>Dashboard. mgr/dashboard.rst is 1752 lines and a root toctree entry. Recommendation: Door 3 &gt; Dashboard with three pages (set up and SSO, operate, feature reference); the 2748-line dash-devel stays in Door 7.</li>
+<li>Naming and orphan hygiene found during the mapping: cephfs/standby.rst has no document title; radosgw/index links rgw-cache.rst with its extension; cephfs/experimental-features.rst is not in any toctree; the three .inc.rst files under mgr/dashboard_plugins are includes and must not be given metadata blocks of their own.</li>
+</ol>
+<h2>Reusable as-is</h2>
+<ul>
+<li>csi/ already has the proposed shape: a Learn landing with a scope statement, then one Set up page per backend that prepares the Ceph side and links to canonical Ceph-CSI docs. Reuse it as the model for the Kubernetes service and for how to write external-integration pages.</li>
+<li>cephfs/index.rst already groups its toctrees as Administration, Mounting, Concepts, Troubleshooting and Disaster Recovery, and Developer Guides. The headings are hidden inside raw HTML comments; un-hiding and renaming them to Learn, Set up, Operate, Troubleshoot, Reference gives the File service its navigation without moving files.</li>
+<li>rados/ is already split by door: configuration/ (Reference), operations/ (Operate), troubleshooting/ (Troubleshoot), api/ (Reference). The Door 3, 5 and 6 toctrees can point at these directories directly in the navigation-layer phase.</li>
+<li>rbd/index.rst hubs (Basic Commands, Operations, Integrations, Manpages, APIs) map onto Set up, Operate, Set up (integrations), Reference, Reference. The Operations and Integrations toctrees can be relabeled rather than rebuilt.</li>
+<li>install/index.rst is already a deployment-method chooser (cephadm, Rook, other tools, manual, Windows) and can be the Door 2 landing with light edits.</li>
+<li>cephadm/ already separates install, adoption, upgrade, operations and troubleshooting; only services/ and operations.rst need splitting.</li>
+<li>rados/troubleshooting/index and the three long troubleshooting pages (mon, osd, pg) are already problem-led and form the first draft of the Door 5 hub; cephfs/troubleshooting and radosgw/troubleshooting are also symptom-led.</li>
+<li>Generated reference is already in place for Door 6: confval directives in rados/configuration/*-ref, rbd/rbd-config-ref, cephfs/mds-config-ref and client-config-ref, radosgw/config-ref, mgr module option tables via mgr_module, automodule API pages, and the man pages built from man_index.rst. Move 3&#x27;s JSON export can start from these sources without rewriting prose.</li>
+<li>releases/index.rst and security/cves.rst are already reference lists; glossary.rst is complete as a Door 6 page.</li>
+<li>dev/developer_guide/index.rst and dev/internals.rst already form the two Door 7 tracks (contribute, internals) and need only re-homing plus the extraction of the user-facing pages listed above.</li>
+<li>architecture/index.rst toctree order (storage cluster, scalability, dynamic management, erasure coding, clients) already reads as a Learn track for Door 1.</li>
+</ul>
+<footer><span><a href="../">Back to the proposal</a> · Plain-text source: <a href="https://github.com/eameh-LF/ceph-docs-rebuild">github.com/eameh-LF/ceph-docs-rebuild</a></span></footer>
+</div>
+</body>
+</html>

@@ -1,6 +1,0 @@
-title: Ceph docs rebuild
-description: A proposal to rebuild the Ceph documentation around the reader
-theme: jekyll-theme-primer
-markdown: kramdown
-kramdown:
-  input: GFM
