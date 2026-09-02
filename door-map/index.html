@@ -6,17 +6,46 @@
 <meta name="description" content="Every page on ceph/ceph main mapped to one of the seven proposed doors, with the decisions the team needs to make.">
 <meta name="author" content="Emmanuel Ameh">
 <title>Ceph Docs Door Map</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Titillium+Web:wght@600;700&display=swap">
 <style>
-  :root{color-scheme:light;--paper:#f3f5f8;--surface:#ffffff;--inset:#e9edf2;--ink:#161c26;--ink2:#4b5566;--muted:#788293;--rule:#dbe1e9;--rule2:#c3ccd8;--accent:#cf3b31;--accent-ink:#b02f27;
-    --display:"Red Hat Display",system-ui,sans-serif;--serif:"Source Serif 4",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
-  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--paper:#11151b;--surface:#191f28;--inset:#1f2731;--ink:#eaeef3;--ink2:#b4bcc8;--muted:#818b9b;--rule:#2a323e;--rule2:#3a4452;--accent:#ef6a60;--accent-ink:#f38a82}}
-  :root[data-theme="dark"]{color-scheme:dark;--paper:#11151b;--surface:#191f28;--inset:#1f2731;--ink:#eaeef3;--ink2:#b4bcc8;--muted:#818b9b;--rule:#2a323e;--rule2:#3a4452;--accent:#ef6a60;--accent-ink:#f38a82}
+  :root{
+    color-scheme:light;
+    --paper:#ffffff; --surface:#ffffff; --inset:#f1f5f9;
+    --ink:#22232f; --ink2:#3d4650; --muted:#6b7684;
+    --rule:#d4dee7; --rule2:#b9c6d3;
+    --accent:#dd1313; --accent-ink:#b01010; --accent-soft:#fdeaea;
+    --ok:#1c74e9; --ok-soft:#e9f1fd; --ok-ink:#0f4fa8;
+    --no:#9aa6b4;
+    --display:"Titillium Web","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --body:"Inter","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+    --mono:Menlo,Consolas,"Roboto Mono","Ubuntu Monospace","Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#16172a; --surface:#22232f; --inset:#2a2b3b;
+    --ink:#f1f5f9; --ink2:#c4ccd6; --muted:#8b95a5;
+    --rule:#33354a; --rule2:#474a63;
+    --accent:#f05c56; --accent-ink:#f58a85; --accent-soft:#3a1e22;
+    --ok:#5aa2f5; --ok-soft:#17253d; --ok-ink:#a9cdfa;
+    --no:#6b7687;
+  }}
+  :root[data-theme="dark"]{
+    color-scheme:dark;
+    --paper:#16172a; --surface:#22232f; --inset:#2a2b3b;
+    --ink:#f1f5f9; --ink2:#c4ccd6; --muted:#8b95a5;
+    --rule:#33354a; --rule2:#474a63;
+    --accent:#f05c56; --accent-ink:#f58a85; --accent-soft:#3a1e22;
+    --ok:#5aa2f5; --ok-soft:#17253d; --ok-ink:#a9cdfa;
+    --no:#6b7687;
+  }
+  .brand{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0;border-bottom:4px solid var(--accent)}
+  .brand img{height:34px;width:auto;display:block}
+  .brand .tag{font-family:var(--display);font-size:.95rem;font-weight:600;color:var(--ink2);letter-spacing:.01em;text-align:right}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.5}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
   .wrap{max-width:72rem;margin:0 auto;padding:2.5rem 1.5rem 4rem}
   h1,h2,h3{font-family:var(--display);letter-spacing:-.01em;text-wrap:balance}
-  h1{font-size:clamp(2rem,4.5vw,2.8rem);line-height:1.05;margin:0 0 .8rem;padding-bottom:1rem;border-bottom:2px solid var(--ink)}
+  h1{font-size:clamp(2rem,4.5vw,2.8rem);line-height:1.05;margin:1.4rem 0 .8rem;padding-bottom:1rem;border-bottom:1px solid var(--rule2)}
   h2{font-size:1.5rem;margin:2.6rem 0 .6rem;padding-top:1rem;border-top:1px solid var(--rule2)}
   h3{font-size:1.1rem;margin:1.8rem 0 .5rem;color:var(--ink)}
   p{max-width:46rem;margin:0 0 .9rem;color:var(--ink2)}
@@ -40,6 +69,11 @@
 </head>
 <body>
 <div class="wrap">
+  <div class="brand">
+    <picture><source srcset="../assets/ceph-logo-reversed.png" media="(prefers-color-scheme: dark)"><img src="../assets/ceph-logo.png" alt="Ceph"></picture>
+    <span class="tag">Documentation rebuild · a proposal by Emmanuel Ameh</span>
+  </div>
+  
 <p class="eyebrow">Ceph documentation · Companion to the rebuild proposal · September 2026</p>
 <h1>Ceph Docs Door Map</h1>
 <p>Companion to the Ceph Docs Rebuild proposal. Drafted 2 September 2026 against ceph/ceph main at commit d78578929f9 (616 .rst pages). Every table below is a proposal for the team to correct; the Ambiguities section lists the judgment calls that need a decision.</p>

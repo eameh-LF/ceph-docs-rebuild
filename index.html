@@ -7,41 +7,44 @@
 <meta name="author" content="Emmanuel Ameh">
 <title>Ceph Docs Rebuild</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Titillium+Web:wght@600;700&display=swap">
 <style>
   :root{
     color-scheme:light;
-    --paper:#f3f5f8; --surface:#ffffff; --inset:#e9edf2;
-    --ink:#161c26; --ink2:#4b5566; --muted:#788293;
-    --rule:#dbe1e9; --rule2:#c3ccd8;
-    --accent:#cf3b31; --accent-ink:#b02f27; --accent-soft:#fbe9e6;
-    --ok:#2b8a5c; --ok-soft:#e2f2e9; --ok-ink:#1f6b46;
-    --no:#8f9aab;
-    --display:"Red Hat Display",system-ui,-apple-system,"Segoe UI",sans-serif;
-    --serif:"Source Serif 4","Iowan Old Style",Georgia,"Times New Roman",serif;
-    --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --paper:#ffffff; --surface:#ffffff; --inset:#f1f5f9;
+    --ink:#22232f; --ink2:#3d4650; --muted:#6b7684;
+    --rule:#d4dee7; --rule2:#b9c6d3;
+    --accent:#dd1313; --accent-ink:#b01010; --accent-soft:#fdeaea;
+    --ok:#1c74e9; --ok-soft:#e9f1fd; --ok-ink:#0f4fa8;
+    --no:#9aa6b4;
+    --display:"Titillium Web","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --body:"Inter","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+    --mono:Menlo,Consolas,"Roboto Mono","Ubuntu Monospace","Liberation Mono",monospace;
   }
   @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
     color-scheme:dark;
-    --paper:#11151b; --surface:#191f28; --inset:#1f2731;
-    --ink:#eaeef3; --ink2:#b4bcc8; --muted:#818b9b;
-    --rule:#2a323e; --rule2:#3a4452;
-    --accent:#ef6a60; --accent-ink:#f38a82; --accent-soft:#3a201d;
-    --ok:#52b983; --ok-soft:#17301f; --ok-ink:#8fdbb0;
+    --paper:#16172a; --surface:#22232f; --inset:#2a2b3b;
+    --ink:#f1f5f9; --ink2:#c4ccd6; --muted:#8b95a5;
+    --rule:#33354a; --rule2:#474a63;
+    --accent:#f05c56; --accent-ink:#f58a85; --accent-soft:#3a1e22;
+    --ok:#5aa2f5; --ok-soft:#17253d; --ok-ink:#a9cdfa;
     --no:#6b7687;
   }}
   :root[data-theme="dark"]{
     color-scheme:dark;
-    --paper:#11151b; --surface:#191f28; --inset:#1f2731;
-    --ink:#eaeef3; --ink2:#b4bcc8; --muted:#818b9b;
-    --rule:#2a323e; --rule2:#3a4452;
-    --accent:#ef6a60; --accent-ink:#f38a82; --accent-soft:#3a201d;
-    --ok:#52b983; --ok-soft:#17301f; --ok-ink:#8fdbb0;
+    --paper:#16172a; --surface:#22232f; --inset:#2a2b3b;
+    --ink:#f1f5f9; --ink2:#c4ccd6; --muted:#8b95a5;
+    --rule:#33354a; --rule2:#474a63;
+    --accent:#f05c56; --accent-ink:#f58a85; --accent-soft:#3a1e22;
+    --ok:#5aa2f5; --ok-soft:#17253d; --ok-ink:#a9cdfa;
     --no:#6b7687;
   }
+  .brand{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0;border-bottom:4px solid var(--accent)}
+  .brand img{height:34px;width:auto;display:block}
+  .brand .tag{font-family:var(--display);font-size:.95rem;font-weight:600;color:var(--ink2);letter-spacing:.01em;text-align:right}
   *{box-sizing:border-box}
   html{background:var(--paper)}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
   a{color:var(--accent-ink);text-decoration-thickness:1px;text-underline-offset:2px}
   a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .wrap{max-width:62rem;margin:0 auto;padding:2.5rem 1.5rem 4rem}
@@ -53,8 +56,8 @@
   .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
   strong{font-weight:600}
 
-  .mast{padding:1.2rem 0 2rem;border-bottom:2px solid var(--ink)}
-  .mast h1{font-size:clamp(2.6rem,6vw,4rem);font-weight:700;line-height:1.02;margin:.6rem 0 1rem}
+  .mast{padding:1.6rem 0 2rem;border-bottom:1px solid var(--rule2)}
+  .mast h1{font-size:clamp(2.6rem,6vw,4rem);font-weight:700;line-height:1;margin:.5rem 0 .8rem;letter-spacing:-.005em}
   .mast h1 .v{color:var(--accent)}
   .stand{font-size:1.3rem;line-height:1.4;max-width:38rem;margin:0 0 1.3rem}
   .meta{display:flex;flex-wrap:wrap;gap:.35rem 2rem;font-family:var(--display);font-size:.88rem;color:var(--ink2)}
@@ -162,6 +165,11 @@
 </head>
 <body>
 <div class="wrap">
+  <div class="brand">
+    <picture><source srcset="assets/ceph-logo-reversed.png" media="(prefers-color-scheme: dark)"><img src="assets/ceph-logo.png" alt="Ceph"></picture>
+    <span class="tag">Documentation rebuild · a proposal by Emmanuel Ameh</span>
+  </div>
+  
   <header class="mast">
     <div class="eyebrow">Ceph documentation · Proposal to the team · September 2026</div>
     <h1>Ceph Docs <span class="v">Rebuild</span></h1>
