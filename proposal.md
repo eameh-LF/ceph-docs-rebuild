@@ -3,31 +3,9 @@
 
 *A proposal to the Ceph documentation team. Emmanuel Ameh, September 2026. Draft for review.*
 
-## Where I am after six months
+## In short
 
-Since April, I have worked auditing the docs, filing what was wrong, fixing the dangerous and the obvious, and learning how the project reviews and ships. That was the right first step, and it is not finished, but it is not a strategy. It fixes pages; it does not change or improve how our docs are consumed.
-
-Where that stands today:
-
-- 65 defects found and filed
-- 30 fixed or in review
-- 43 pull requests merged
-- 34 still open
-
-I will keep working the remaining 34 in the background, about a day a week, folded into whichever section is being rebuilt. The rest of this document is about what I want to do instead of more of that.
-
-## What I am proposing
-
-Stop treating the docs as pages to fix. Rebuild them, top to bottom, around what the reader is trying to do, in modular pages that can be reused, checked, and read by machines as easily as by people.
-
-Some context on where we start. All of this was checked against `main` on 2 September 2026 (commit `d78578929f9`) and against the live site.
-
-- The docs are organised by daemon and module. There are 26 entries in the sidebar, eleven of them single pages, arranged the way Ceph is built rather than the way it is used. The landing page has no map of its own and points first-time users at the developer guide.
-- The procedures a new user meets first (installing packages, creating a pool for a service, creating a client user) appear on five to seven pages each, and they have drifted. Two of the seven client-user copies leave out a capability the canonical page says is required.
-- No page carries metadata. Nothing records which release a page applies to or when it was last true.
-- An AI assistant asking about Ceph gets HTML by default, with no index and no metadata to cite. Read the Docs can already serve a Markdown version of each page, but nothing points to it.
-
-Three changes fix that.
+Since April I have been on cleanup: 65 defects found, 30 fixed or in review, 34 still open and being worked in the background at about a day a week. Necessary, but it fixes pages one at a time and does not change why they go wrong. It is time to change the structure itself: stop treating the docs as pages to fix, and rebuild them around what the reader is trying to do. Three moves do that.
 
 ## 1. A new architecture: seven doors, one shape
 

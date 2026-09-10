@@ -71,6 +71,8 @@
   .strip div{font-family:var(--display);font-size:.86rem;color:var(--ink2)}
   .strip b{display:block;font-size:1.6rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.1}
 
+  #intro{padding-top:1.6rem}
+  .intro{font-size:1.12rem;line-height:1.55;max-width:44rem}
   .pivot{font-family:var(--display);font-size:clamp(1.4rem,2.8vw,1.9rem);font-weight:600;line-height:1.3;letter-spacing:-.01em;max-width:36rem;margin:0 0 1rem;padding-left:1rem;border-left:4px solid var(--accent)}
 
   .move{display:grid;grid-template-columns:4.2rem 1fr;gap:1rem;margin-top:2.2rem}
@@ -178,32 +180,14 @@
     </div>
   </header>
 
-  <section id="sofar">
-    <div class="shead"><span class="n">01</span><h2>Six months in</h2></div>
+  <section id="intro">
     <div class="prose">
-      <p>Since April, I have worked auditing the docs, filing what was wrong, fixing the dangerous and the obvious, and learning how the project reviews and ships. That was the right first step, and it is not finished, but it is not a strategy. It fixes pages; it does not change or improve how our docs are consumed.</p>
-    </div>
-    <div class="strip">
-      <div><b>65</b>defects found and filed</div>
-      <div><b>30</b>fixed or in review</div>
-      <div><b>43</b>pull requests merged</div>
-      <div><b>34</b>still open, kept in the background</div>
-    </div>
-    <div class="prose">
-      <p>The remaining cleanup continues at about a day a week, folded into whichever section is being rebuilt. Everything else in this document is the pivot.</p>
-    </div>
-  </section>
-
-  <section id="pivot">
-    <div class="shead"><span class="n">02</span><h2>The pivot</h2></div>
-    <p class="pivot">Stop treating the docs as pages to fix. Rebuild them top to bottom around what the reader is trying to do, in modular pages that can be reused, checked, and read by machines.</p>
-    <div class="prose">
-      <p>Today the documentation is organized by daemon and module: 26 entries in the sidebar, eleven of them single pages, arranged the way Ceph is built rather than the way it is used. The landing page has no map of its own and sends first-time users to the developer guide. The procedures a new user meets first, installing packages, creating a pool for a service and creating a client user, appear on five to seven pages each and have drifted: two of the seven client-user copies omit a capability the canonical page requires. No page carries metadata, so nothing knows what release a page applies to or when it was last true. And an AI agent asked about Ceph gets HTML by default, with no index and no metadata to cite; the Markdown form the site can already serve is advertised nowhere. Three moves change that.</p>
+      <p class="intro">Since April I have been on cleanup: 65 defects found, 30 fixed or in review, 34 still open and being worked in the background at about a day a week. Necessary, but it fixes pages one at a time and does not change why they go wrong. It is time to change the structure itself: stop treating the docs as pages to fix, and rebuild them around what the reader is trying to do. Three moves do that.</p>
     </div>
   </section>
 
   <section id="moves">
-    <div class="shead"><span class="n">03</span><h2>Three moves</h2></div>
+    <div class="shead"><span class="n">01</span><h2>Three moves</h2></div>
 
     <div class="move">
       <div class="big">1</div>
@@ -290,7 +274,7 @@
   </section>
 
   <section id="rollout">
-    <div class="shead"><span class="n">04</span><h2>Rollout: what you will see, and when</h2></div>
+    <div class="shead"><span class="n">02</span><h2>Rollout: what you will see, and when</h2></div>
     <div class="prose">
       <p>Each step ends with something visible on docs.ceph.com. The source stays reStructuredText throughout. Dates are proposals to confirm with the team.</p>
     </div>
@@ -376,7 +360,7 @@
   </section>
 
   <section id="asks">
-    <div class="shead"><span class="n">05</span><h2>What I need from the team</h2></div>
+    <div class="shead"><span class="n">03</span><h2>What I need from the team</h2></div>
     <div class="asks">
       <div class="ask"><h3>Approve the direction</h3><p>The seven doors and the three page types. The <a href="door-map/">page-by-page map</a> of all 616 pages to their new homes is a companion to this proposal; it names the twenty or so judgment calls (manager modules, NFS and SMB, man pages, iSCSI) that need the team's view.</p></div>
       <div class="ask"><h3>Pick the first service</h3><p>Block (RBD) is my proposal: the smallest and calmest section (41 pages, 33 doc commits since 2025, five open doc issues) with a visible gap to close, since it has no troubleshooting page. CephFS follows. cephadm is the alternative, as a Deploy-door pilot, if that matters more to you.</p></div>
