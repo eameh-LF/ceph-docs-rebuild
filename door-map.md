@@ -1,13 +1,13 @@
 
 # Ceph docs rebuild: door map
 
-Companion to the Ceph Docs Rebuild proposal. Drafted 2 September 2026 against ceph/ceph main at commit d78578929f9 (616 .rst pages). Every table below is a proposal for the team to correct; the Ambiguities section lists the judgment calls that need a decision.
+Companion to the Ceph Docs Rebuild proposal. Drafted 2 September 2026 against ceph/ceph main at commit d78578929f9 (616 .rst pages). Two pages have been added to main since, a CephFS quality-of-service page and a developer page, so the tree now stands at 618; neither changes the mapping. Every table below is a proposal for the team to correct; the Ambiguities section lists the judgment calls that need a decision.
 
 ## Map of old pages to new homes
 
 Draft against upstream `main` at commit d78578929f9 (2 September 2026), read from the `doc/` tree. Titles are each file's first document heading (overline or underline form). Doors follow the proposal: 1 Start here, 2 Deploy, 3 Operate, 4 Storage services (Block, File, Object, Kubernetes), 5 Troubleshoot, 6 Reference, 7 Develop and contribute. Parts inside a service: Learn, Set up, Operate, Troubleshoot, Reference. For Deploy and Operate pages the same five words are used where they fit.
 
-Inventory on main: 616 `.rst` files, including 51 man pages and a few include fragments. The root toctree has 26 entries. Per-directory counts today: rbd 41, radosgw 76, cephfs 57, rados 72, cephadm 27 + install 15 = 42, dev 154.
+Inventory at that commit: 616 `.rst` files, including 51 man pages and a few include fragments. The root toctree has 26 entries. Per-directory counts today: rbd 41, radosgw 76, cephfs 57, rados 72, cephadm 27 + install 15 = 42, dev 154.
 
 Marks used in the note column: `hub` = toctree-only page that dissolves into navigation; `stub` = under about 25 lines with no real content; `external` = integration with software outside Ceph; `mixed` = clearly mixes concept and procedure (or procedure and reference) and must be split under the three-type template; `long (N)` = line count that forces a split under one-task-per-procedure; `deprec` = carries a deprecation or obsolescence notice.
 

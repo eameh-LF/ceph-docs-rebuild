@@ -182,7 +182,7 @@
 
   <section id="intro">
     <div class="prose">
-      <p class="intro">Since April I have been on cleanup: 65 defects found, 30 fixed or in review, 34 still open and being worked in the background at about a day a week. Necessary, but it fixes pages one at a time and does not change why they go wrong. It is time to change the structure itself: stop treating the docs as pages to fix, and rebuild them around what the reader is trying to do. Three moves do that.</p>
+      <p class="intro">Since April I have been on cleanup: 65 defects found, 32 fixed or in review, 32 still open and still being worked in the background. Necessary, but it fixes pages one at a time and does not change why they go wrong. It is time to change the structure itself: stop treating the docs as pages to fix, and rebuild them around what the reader is trying to do. Three moves do that.</p>
     </div>
   </section>
 
@@ -194,7 +194,7 @@
       <div>
         <h3>A new architecture: seven doors, one shape</h3>
         <div class="prose">
-          <p>The top level becomes seven doors ordered by the reader's journey. Inside every storage service, the same five parts appear in the same order, so a reader who has learned one section can navigate all of them. Nothing is deleted: all 616 pages already have a home in the seven doors (the <a href="door-map/">page-by-page map</a> is a companion to this proposal), and they are mapped into the new navigation first, then moved behind redirects. The tree half does this already: the CephFS index groups its pages into concepts, administration, mounting and troubleshooting but hides the headings, the RADOS section is split into configuration, operations, troubleshooting and APIs, and the new CSI chapter uses one page shape for all four backends. Move 1 makes that visible everywhere and finishes it.</p>
+          <p>The top level becomes seven doors ordered by the reader's journey. Inside every storage service, the same five parts appear in the same order, so a reader who has learned one section can navigate all of them. Nothing is deleted: all 618 pages already have a home in the seven doors (the <a href="door-map/">page-by-page map</a> is a companion to this proposal), and they are mapped into the new navigation first, then moved behind redirects. The tree half does this already: the CephFS index groups its pages into concepts, administration, mounting and troubleshooting but hides the headings, the RADOS section is split into configuration, operations, troubleshooting and APIs, and the new CSI chapter uses one page shape for all four backends. Move 1 makes that visible everywhere and finishes it.</p>
         </div>
         <div class="nav2">
           <div class="navcol">
@@ -207,15 +207,15 @@
               <li><i>1</i><div><b>Start here</b> <em>13 pages</em><br><span>What Ceph is, the architecture in brief, choosing a deployment and a release, quick starts</span></div></li>
               <li><i>2</i><div><b>Deploy</b> <em>21 pages</em><br><span>cephadm first, Rook and CSI on Kubernetes, requirements, Windows clients, and one upgrade hub for steps now spread over five places</span></div></li>
               <li><i>3</i><div><b>Operate</b> <em>72 pages</em><br><span>Day-two cluster operations: pools, CRUSH, monitoring, dashboard, security, manager modules, maintenance</span></div></li>
-              <li><i>4</i><div><b>Storage services</b> <em>190 pages</em><br><span>Block (RBD, NVMe-oF), File (CephFS, NFS, SMB), Object (RGW), Kubernetes (CSI), each in the same shape</span></div></li>
+              <li><i>4</i><div><b>Storage services</b> <em>191 pages</em><br><span>Block (RBD, NVMe-oF), File (CephFS, NFS, SMB), Object (RGW), Kubernetes (CSI), each in the same shape</span></div></li>
               <li><i>5</i><div><b>Troubleshoot</b> <em>11 pages</em><br><span>One hub keyed by symptom over the seven troubleshooting pages and 96 health-check codes that exist today, plus the pages missing for Block, NVMe-oF, SMB and CSI</span></div></li>
-              <li><i>6</i><div><b>Reference</b> <em>141 pages</em><br><span>Configuration options, CLI and man pages, APIs, release notes. 36 percent of options and the full command tree are generated today; the rest follows</span></div></li>
-              <li><i>7</i><div><b>Develop and contribute</b> <em>168 pages</em><br><span>Developer guide, internals, docs guide, governance, foundation, technical charter</span></div></li>
+              <li><i>6</i><div><b>Reference</b> <em>141 pages</em><br><span>Configuration options, CLI and man pages, APIs, release notes. 37 percent of options and the full command tree are generated today; the rest follows</span></div></li>
+              <li><i>7</i><div><b>Develop and contribute</b> <em>169 pages</em><br><span>Developer guide, internals, docs guide, governance, foundation, technical charter</span></div></li>
             </ol>
           </div>
         </div>
         <p class="shape"><b>The shape inside every service:</b> <span>Learn</span><span>Set up</span><span>Operate</span><span>Troubleshoot</span><span>Reference</span></p>
-        <p class="pre">Page counts are today's pages mapped to each door on main. About 90 need rewriting; the other 526 need metadata and a new home only. Precedent: Kubernetes (Getting started, Concepts, Tasks, Tutorials, Reference, Contribute) and the Diataxis model, whose four types Django's documentation is organized around and which Canonical, Cloudflare and Gatsby have adopted.</p>
+        <p class="pre">Page counts are today's pages mapped to each door on main. About 90 need rewriting; the other 528 need metadata and a new home only. Precedent: Kubernetes (Getting started, Concepts, Tasks, Tutorials, Reference, Contribute) and the Diataxis model, whose four types Django's documentation is organized around and which Canonical, Cloudflare and Gatsby have adopted.</p>
       </div>
     </div>
 
@@ -262,8 +262,8 @@
               <tr><td>An index of the docs</td><td><span class="pill no">404</span>llms.txt and llms-full.txt return 404 at the root and under every version; the sitemap lists ten version roots and no pages</td><td>llms.txt and llms-full.txt emitted by the build (sphinx-llm, the extension Read the Docs recommends) and served at the root from latest</td></tr>
               <tr><td>A generated plain-text copy of each page</td><td><span class="pill no">Hidden</span>two forms exist but nothing advertises them: raw source under _sources, and a Markdown rendering Read the Docs returns when asked for text/markdown. No .md URLs, no link from any page, no front matter</td><td>A Markdown rendering of every page, produced by the build at a stable .md URL, listed in llms.txt, carrying title, release and review metadata. The .rst source is untouched</td></tr>
               <tr><td>Page metadata</td><td><span class="pill no">0 of 612</span>live pages carry content metadata: no description, canonical URL, applies-to release, review date or owner</td><td>Type, applies-to releases, last reviewed and owner on every page; canonical URLs set in the build</td></tr>
-              <tr><td>Machine-readable reference</td><td><span class="pill no">Parsed, not published</span>the build already reads the option YAML and command tables to render HTML; 36 percent of options reach a page and the full command list sits on one hidden page</td><td>Every option and command rendered, and published as JSON next to the pages from the same sources</td></tr>
-              <tr><td>Stable, citable anchors</td><td><span class="pill no">318 of 612</span>pages have no named anchor; section ids change whenever a title changes</td><td>Every page and every procedure carries a named label, enforced by a build check</td></tr>
+              <tr><td>Machine-readable reference</td><td><span class="pill no">Parsed, not published</span>the build already reads the option YAML and command tables to render HTML; 37 percent of options reach a page and the full command list sits on one hidden page</td><td>Every option and command rendered, and published as JSON next to the pages from the same sources</td></tr>
+              <tr><td>Stable, citable anchors</td><td><span class="pill no">298 of 612</span>published pages carry a named anchor; the rest have none, and section ids change whenever a title changes</td><td>Every page and every procedure carries a named label, enforced by a build check</td></tr>
               <tr><td>Direct query</td><td><span class="pill no">Unadvertised</span>a Read the Docs search API and a Sphinx inventory exist, discoverable only if you already know; no MCP server</td><td>Stretch: a Ceph docs MCP server over the Markdown and JSON outputs, usable by agents and the dashboard</td></tr>
             </tbody>
           </table>
@@ -311,7 +311,7 @@
           <li>Land named anchors on every RBD page first, so links keep working when pages split. 34 of the 41 have none today.</li>
           <li>Rewrite the nine core pages (commands, snapshots, mirroring, live migration, encryption, the two caches, Windows, the index) into about thirty modular pages on the template: one task per page, with metadata and a verify step.</li>
           <li>Write the Troubleshoot part from nothing: three to five symptom-led pages.</li>
-          <li>Re-home the client and gateway pages with metadata only; the Kubernetes and Nomad pages move to the CSI door. The 13 iSCSI pages and the cephadm iSCSI service page collapse into one retirement page: unmaintained and not recommended, NVMe-oF as the supported path, prior-release docs for anyone still running it, and a guarded link to the PetaSAN fork.</li>
+          <li>Re-home the client and gateway pages with metadata only; the Kubernetes and Nomad pages move to the CSI door. The 13 iSCSI pages and the cephadm iSCSI service page collapse into one retirement page: unmaintained and not recommended, NVMe-oF as the supported path, prior-release docs for anyone still running it, and a pointer to the community fork for anyone still stuck on it.</li>
           <li>Single-source the repeated procedures inside Block. "Create a pool for RBD images" is written out six times today.</li>
           <li>Add redirects for the pages that split, and review the result with the RBD reviewer.</li>
           </ul>
@@ -326,12 +326,12 @@
         </div>
         <div>
           <ul>
-          <li>File (CephFS, 57 pages) goes first, because its index already has the shape. It proves the regroup path rather than the rewrite path.</li>
+          <li>File (CephFS, 58 pages) goes first, because its index already has the shape. It proves the regroup path rather than the rewrite path.</li>
           <li>Object (RGW, 76 pages) leads on generated reference: half of it is API and option reference, and its flat index of about fifty entries gets the five headings.</li>
           <li>Cluster operations (72 pages) is already split by directory; each subdirectory becomes the matching door part.</li>
           <li>Deploy (cephadm and install, 42 pages): the duplicated install and upgrade procedures finally merge, and one upgrade hub replaces five places.</li>
           <li>The OSD management guide is the first new single-sourced page in Operate: the material exists today, scattered across the corpus.</li>
-          <li>Generated option reference grows from 36 percent toward all 2,166 options, one options file at a time.</li>
+          <li>Generated option reference grows from 37 percent toward all 2,173 options, one options file at a time.</li>
           <li>Conversions run from the step 2 checklist and are filed as tracker items, so other contributors can pick them up.</li>
           </ul>
           <div class="see"><b>You will see:</b> the user-facing tree fully in the new shape.</div>
@@ -345,9 +345,9 @@
         </div>
         <div>
           <ul>
-          <li>Developer docs (154 pages) consolidated into one track. The twenty or so operator pages hiding in dev/ move to their user doors.</li>
+          <li>Developer docs (155 pages) consolidated into one track. The twenty or so operator pages hiding in dev/ move to their user doors.</li>
           <li>Old navigation retired on main. Release branches keep theirs until end of life, so redirects apply to latest.</li>
-          <li>Build checks: every page has metadata and a named anchor, procedure pages carry the template's parts, and placeholders or broken cross-references fail the build. The strict build is red on main today for an unrelated autodoc warning (tracker 80357), which has to be fixed first.</li>
+          <li>Build checks: every page has metadata and a named anchor, procedure pages carry the template's parts, and placeholders or broken cross-references fail the build.</li>
           <li>Configuration options and commands published as JSON next to the pages, from the same sources the HTML uses.</li>
           <li>A Ceph docs MCP server, if the stretch goal is approved.</li>
           <li>The first docs health report: open defects, option coverage, pages missing metadata, review latency.</li>
@@ -356,23 +356,23 @@
         </div>
       </div>
     </div>
-    <div class="bg"><b>In the background throughout:</b> the 34 open register items close as each section is rebuilt, about a day a week, so the cleanup never stops but never again sets the agenda.</div>
+    <div class="bg"><b>In the background throughout:</b> the open register items close as each section is rebuilt, so the cleanup never stops but never again sets the agenda.</div>
   </section>
 
   <section id="asks">
     <div class="shead"><span class="n">03</span><h2>What I need from the team</h2></div>
     <div class="asks">
-      <div class="ask"><h3>Approve the direction</h3><p>The seven doors and the three page types. The <a href="door-map/">page-by-page map</a> of all 616 pages to their new homes is a companion to this proposal; it names the twenty or so judgment calls (manager modules, NFS and SMB, man pages, iSCSI) that need the team's view.</p></div>
-      <div class="ask"><h3>Pick the first service</h3><p>Block (RBD) is my proposal: the smallest and calmest section (41 pages, 33 doc commits since 2025, five open doc issues) with a visible gap to close, since it has no troubleshooting page. CephFS follows. cephadm is the alternative, as a Deploy-door pilot, if that matters more to you.</p></div>
-      <div class="ask"><h3>One subject-matter reviewer per section</h3><p>For the roughly 90 pages that get rewritten. The other 526 are re-homes with metadata, which the docs team reviews. Conversions are batched per section so nobody gets a trickle.</p></div>
-      <div class="ask"><h3>Two weeks on the template</h3><p>Comments on the page template by the end of September, then it is frozen for the first rebuild and revised only after Block ships.</p></div>
+      <div class="ask"><h3>Approve the direction</h3><p>The seven doors and the three page types. The <a href="door-map/">page-by-page map</a> of all 618 pages to their new homes is a companion to this proposal; it names the twenty or so judgment calls (manager modules, NFS and SMB, man pages, iSCSI) that need the team's view.</p></div>
+      <div class="ask"><h3>Pick the first service</h3><p>Block (RBD) is my proposal: the smallest and calmest section, 41 pages, with a visible gap to close since it has no troubleshooting page. CephFS follows. cephadm is the alternative, as a Deploy-door pilot, if that matters more to you.</p></div>
+      <div class="ask"><h3>One subject-matter reviewer per section</h3><p>For the roughly 90 pages that get rewritten. The other 528 are re-homes with metadata, which the docs team reviews. Conversions are batched per section so nobody gets a trickle.</p></div>
+      <div class="ask"><h3>Two weeks on the template</h3><p>A short comment period on the page template, then it is frozen for the first rebuild and revised only after Block ships.</p></div>
       <div class="ask"><h3>Buy-in: the developer path</h3><p>Developers write most new content and keep doing so where they write today, in the same directories. The docs team handles placement and template conformance. The template stays an advisory checklist, not a gate, until the first rebuilt sections prove it.</p></div>
     </div>
     <p class="kicker">The cleanup showed me how the docs break. The rebuild is how they stop breaking.</p>
   </section>
 
   <footer>
-    <span>Figures verified 2 September 2026 against tracker.ceph.com, ceph/ceph main at commit d78578929f9, ceph/ceph.io, and the live docs.ceph.com site. Companion: <a href="door-map/">the page-by-page door map</a>. Plain-text source: <a href="https://github.com/eameh-LF/ceph-docs-rebuild">github.com/eameh-LF/ceph-docs-rebuild</a>.</span>
+    <span>Figures verified 14 September 2026 against tracker.ceph.com, ceph/ceph main at commit 481c3130957, ceph/ceph.io, and the live docs.ceph.com site. Companion: <a href="door-map/">the page-by-page door map</a>. Plain-text source: <a href="https://github.com/eameh-LF/ceph-docs-rebuild">github.com/eameh-LF/ceph-docs-rebuild</a>.</span>
     <span>Sources: <a href="https://redhat-documentation.github.io/modular-docs/">Red Hat modular documentation reference guide</a> · <a href="https://canonical.com/blog/diataxis-a-new-foundation-for-canonical-documentation">Canonical on Diataxis</a> · <a href="https://kubernetes.io/docs/home/">Kubernetes documentation structure</a> · <a href="https://docs.readthedocs.com/platform/latest/reference/llms-txt.html">Read the Docs llms.txt support</a> · <a href="https://github.com/NVIDIA/sphinx-llm">sphinx-llm</a> · <a href="https://www.rankability.com/data/llms-txt-adoption/">llms.txt adoption, June 2026</a> · <a href="https://blog.cloudflare.com/markdown-for-agents/">Cloudflare, Markdown for agents</a> · <a href="https://diataxis.fr/">Diataxis</a> · <a href="https://docs.redhat.com/en/documentation/red_hat_ceph_storage/8/html-single/installation_guide/index">Red Hat Ceph Storage 8 installation guide</a></span>
     <span>Companion documents for the detail: "Ceph Docs 2.0" (management plan) and the maintainer RFC "Ceph Documentation Modernization".</span>
   </footer>
