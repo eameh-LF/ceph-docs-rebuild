@@ -83,7 +83,7 @@ Change the front of the site. Move nothing.
 - Group each service's pages under the same five headings.
 - Add one troubleshooting page linking the seven that exist today.
 - One build change switches on the index and the plain-text copies.
-- Agree the page template with the team, and walk the map through with Ville first.
+- Agree the page template with the team, and walk the map through with the docs team before anything moves.
 
 **You will see:** docs.ceph.com opens on seven clear ways in, and every existing link still works.
 
