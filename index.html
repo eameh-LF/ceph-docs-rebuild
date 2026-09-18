@@ -225,7 +225,7 @@
       <div>
         <h3>Modular pages: three types, one template</h3>
         <div class="prose">
-          <p>Every page becomes one of three types and follows one template. A procedure covers one task, says which releases it applies to, and ends with how to check it worked. Repeated procedures are written once and pulled in wherever they are needed, so they cannot drift apart. Creating a pool for RBD images is written out six times in the Block section today, and only one of those copies tells you how to verify it.</p>
+          <p>Every page becomes one of three types and follows one template. Door and section pages follow the same template's fourth shape, the assembly: an intro, the pages grouped by what the reader is doing, then next steps. A procedure covers one task, says which releases it applies to, and ends with how to check it worked. Repeated procedures are written once and pulled in wherever they are needed, so they cannot drift apart. Creating a pool for RBD images is written out six times in the Block section today, and only one of those copies tells you how to verify it.</p>
           <p>Command reference stays in the man pages, so it still works offline. Prose pages pull the entry from there when the docs are built, rather than repeating it. The first trial is already up as <a href="https://github.com/ceph/ceph/pull/71609">PR 71609</a>.</p>
         </div>
         <div class="tpl">
@@ -236,16 +236,16 @@
           </div>
           <div class="page">
             <div class="t">Create an erasure-coded pool</div>
-            <div class="m">type: procedure · applies to: Squid, Tentacle · reviewed: 2026-09 · owner: rados</div>
-            <div class="row"><b>Before you start</b><span>Cluster health, permissions, an EC profile chosen</span></div>
-            <div class="row"><b>Steps</b><span>Numbered. One command each, with the output you should see</span></div>
-            <div class="row"><b>Verify</b><span>The command that proves it worked</span></div>
-            <div class="row"><b>If it fails</b><span>The two or three most common failures and what they mean</span></div>
-            <div class="row"><b>Related</b><span>The concept behind it, the reference for every option</span></div>
+            <div class="m">type: procedure · applies to: Squid, Tentacle · reviewed: 2026-09 · owner: rados<br>Applies to and Last reviewed also appear in the page body, because the Markdown view that assistants fetch drops hidden metadata.</div>
+            <div class="row"><b>Prerequisites</b><span>Cluster health, permissions, an EC profile chosen</span></div>
+            <div class="row"><b>Procedure</b><span>Numbered. One command each, with the output you should see</span></div>
+            <div class="row"><b>Verification</b><span>The command that proves it worked</span></div>
+            <div class="row"><b>Troubleshooting</b><span>The two or three most common failures and what they mean</span></div>
+            <div class="row"><b>Next steps, Additional resources</b><span>What to do next; the concept behind it and the reference for every option</span></div>
             <div class="row"><b>House rules</b><span>Cross-link related pages generously. Example values fail safely if pasted (osd.1701, not osd.0)</span></div>
           </div>
         </div>
-        <p class="pre">Red Hat and IBM already write their Ceph guides this way, with the same prerequisites, procedure and verification shape.</p>
+        <p class="pre">The headings are the ones Red Hat Ceph Storage guides already use, so contributors who know those guides need nothing new. Every page is also cut to what the reader needs to act, following the four minimalism principles (action oriented, anchored in the task, error recovery, reading to do or to look up). Worked examples in reStructuredText: <a href="templates/">concept, procedure, reference and door page</a>.</p>
       </div>
     </div>
 
@@ -294,6 +294,7 @@
             <li>Agree the page template, and walk the map through with the docs team before anything moves.</li>
           </ul>
           <div class="see"><b>You will see:</b> docs.ceph.com opens on seven clear ways in, and every existing link still works.</div>
+          <p class="lead" style="margin-top:.9rem"><b>Where this stands (18 September):</b> the first door is built and up for review as a draft, <a href="https://github.com/ceph/ceph/pull/71882">PR 71882</a>. Start Here, Architecture and the landing page: 14 pages, every one on the template, no file moved. The 4,300-word hardware page became a principles page and four lookup pages. Both quick starts end with verification and troubleshooting. Each page went through independent review passes that checked every command against the source and cut a fifth of the words; those passes also caught a benchmark example that had been wrong on the live site for years.</p>
         </div>
       </div>
       <div class="step">

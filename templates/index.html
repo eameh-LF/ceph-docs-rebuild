@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Worked examples of the four page templates used in the Ceph docs rebuild, in reStructuredText.">
+<meta name="author" content="Emmanuel Ameh">
+<title>Templates · Ceph Docs Rebuild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Titillium+Web:wght@600;700&display=swap">
+<style>
+  :root{
+    color-scheme:light;
+    --paper:#ffffff; --surface:#ffffff; --inset:#f1f5f9;
+    --ink:#22232f; --ink2:#3d4650; --muted:#6b7684;
+    --rule:#d4dee7; --rule2:#b9c6d3;
+    --accent:#dd1313; --accent-ink:#b01010; --accent-soft:#fdeaea;
+    --ok:#1c74e9; --ok-soft:#e9f1fd; --ok-ink:#0f4fa8;
+    --no:#9aa6b4;
+    --display:"Titillium Web","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --body:"Inter","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+    --mono:Menlo,Consolas,"Roboto Mono","Ubuntu Monospace","Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#16172a; --surface:#22232f; --inset:#2a2b3b;
+    --ink:#f1f5f9; --ink2:#c4ccd6; --muted:#8b95a5;
+    --rule:#33354a; --rule2:#474a63;
+    --accent:#f05c56; --accent-ink:#f58a85; --accent-soft:#3a1e22;
+    --ok:#5aa2f5; --ok-soft:#17253d; --ok-ink:#a9cdfa;
+    --no:#6b7687;
+  }}
+  :root[data-theme="dark"]{
+    color-scheme:dark;
+    --paper:#16172a; --surface:#22232f; --inset:#2a2b3b;
+    --ink:#f1f5f9; --ink2:#c4ccd6; --muted:#8b95a5;
+    --rule:#33354a; --rule2:#474a63;
+    --accent:#f05c56; --accent-ink:#f58a85; --accent-soft:#3a1e22;
+    --ok:#5aa2f5; --ok-soft:#17253d; --ok-ink:#a9cdfa;
+    --no:#6b7687;
+  }
+  .brand{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.9rem 0;border-bottom:4px solid var(--accent)}
+  .brand img{height:34px;width:auto;display:block}
+  .brand .tag{font-family:var(--display);font-size:.95rem;font-weight:600;color:var(--ink2);letter-spacing:.01em;text-align:right}
+  *{box-sizing:border-box}
+  html{background:var(--paper)}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent-ink);text-decoration-thickness:1px;text-underline-offset:2px}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .wrap{max-width:62rem;margin:0 auto;padding:2.5rem 1.5rem 4rem}
+  .prose{max-width:42rem}
+  .prose p{margin:0 0 1rem}
+  h1,h2,h3,h4{font-family:var(--display);letter-spacing:-.01em;text-wrap:balance;margin:0}
+  h2{font-size:1.7rem;font-weight:700;line-height:1.2}
+  h3{font-size:1.12rem;font-weight:600;line-height:1.3}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  strong{font-weight:600}
+
+  .mast{padding:1.6rem 0 2rem;border-bottom:1px solid var(--rule2)}
+  .mast h1{font-size:clamp(2.6rem,6vw,4rem);font-weight:700;line-height:1;margin:.5rem 0 .8rem;letter-spacing:-.005em}
+  .mast h1 .v{color:var(--accent)}
+  .stand{font-size:1.3rem;line-height:1.4;max-width:38rem;margin:0 0 1.3rem}
+  .meta{display:flex;flex-wrap:wrap;gap:.35rem 2rem;font-family:var(--display);font-size:.88rem;color:var(--ink2)}
+  .meta b{font-weight:600;color:var(--ink)}
+
+  section{padding:2.6rem 0 0}
+  .shead{display:grid;grid-template-columns:3rem 1fr;gap:1rem;align-items:baseline;border-top:1px solid var(--rule2);padding-top:1.1rem;margin-bottom:1.2rem}
+  .shead .n{font-family:var(--mono);font-size:.85rem;color:var(--accent);font-weight:500}
+
+  .strip{display:flex;flex-wrap:wrap;gap:.6rem 2.4rem;margin:.4rem 0 1.2rem;padding:.9rem 1.1rem;background:var(--inset)}
+  .strip div{font-family:var(--display);font-size:.86rem;color:var(--ink2)}
+  .strip b{display:block;font-size:1.6rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.1}
+
+  #intro{padding-top:1.6rem}
+  .intro{font-size:1.12rem;line-height:1.55;max-width:44rem}
+  .pivot{font-family:var(--display);font-size:clamp(1.4rem,2.8vw,1.9rem);font-weight:600;line-height:1.3;letter-spacing:-.01em;max-width:36rem;margin:0 0 1rem;padding-left:1rem;border-left:4px solid var(--accent)}
+
+  .move{display:grid;grid-template-columns:4.2rem 1fr;gap:1rem;margin-top:2.2rem}
+  .move .big{font-family:var(--display);font-size:3rem;font-weight:700;color:var(--accent);line-height:.9;letter-spacing:-.04em}
+  .move h3{font-size:1.4rem;margin-bottom:.5rem}
+  .move .prose p{font-size:1rem}
+  .move .pre{font-size:.9rem;color:var(--ink2);margin:.2rem 0 0}
+
+  /* before / after nav */
+  .nav2{display:grid;grid-template-columns:1fr 1.25fr;gap:1.2rem;margin:1.1rem 0 .4rem}
+  .navcol{border:1px solid var(--rule);background:var(--surface);padding:1rem 1.1rem}
+  .navcol h4{font-family:var(--display);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 .6rem}
+  .navcol.after h4{color:var(--ok-ink)}
+  .navcol ul{margin:0;padding:0;list-style:none;font-family:var(--mono);font-size:.78rem;line-height:1.5;color:var(--ink2);columns:2;column-gap:1.2rem}
+  .navcol.after ol{margin:0;padding:0;list-style:none;display:grid;gap:.55rem}
+  .navcol.after li{display:grid;grid-template-columns:1.6rem 1fr;gap:.4rem;font-size:.92rem;line-height:1.35}
+  .navcol.after li b{font-family:var(--display);font-weight:600;color:var(--ink)}
+  .navcol.after li span{color:var(--ink2);font-size:.86rem}
+  .navcol.after li i{font-family:var(--mono);font-style:normal;font-size:.75rem;color:var(--accent);padding-top:.15rem}
+  .navcol.after li em{font-family:var(--mono);font-style:normal;font-size:.7rem;color:var(--muted);margin-left:.45rem;white-space:nowrap}
+  .shape{margin:.9rem 0 0;font-family:var(--display);font-size:.88rem;color:var(--ink2)}
+  .shape b{color:var(--ink)}
+  .shape span{font-family:var(--mono);font-size:.78rem;color:var(--ink);background:var(--inset);padding:.15rem .45rem;margin-right:.25rem;white-space:nowrap}
+
+  /* page template */
+  .tpl{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin:1.1rem 0 .4rem;align-items:start}
+  .page{border:1px solid var(--rule2);background:var(--surface);padding:1rem 1.1rem 1.1rem;font-family:var(--display);font-size:.86rem;color:var(--ink2);position:relative}
+  .page::before{content:"procedure page";position:absolute;top:-.6rem;left:.9rem;background:var(--accent);color:#fff;font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:.15rem .5rem}
+  .page .t{font-weight:700;font-size:1.05rem;color:var(--ink);margin:.3rem 0 .2rem}
+  .page .m{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-bottom:.6rem}
+  .page .row{display:grid;grid-template-columns:7.2rem 1fr;gap:.5rem;padding:.4rem 0;border-top:1px dashed var(--rule)}
+  .page .row b{font-weight:600;color:var(--ink)}
+  .types{display:grid;gap:.7rem}
+  .type{border-left:3px solid var(--ink);padding:.1rem 0 .1rem .8rem}
+  .type h4{font-family:var(--display);font-size:1rem;margin:0 0 .15rem}
+  .type p{margin:0;font-size:.92rem;color:var(--ink2)}
+
+  /* agent-ready table */
+  .tw{overflow-x:auto;margin:1.1rem 0 .3rem}
+  table{border-collapse:collapse;width:100%;font-size:.92rem;line-height:1.4}
+  th{font-family:var(--display);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.4rem .7rem .5rem;border-bottom:1px solid var(--rule2);font-weight:600}
+  td{padding:.6rem .7rem;border-bottom:1px solid var(--rule);vertical-align:top}
+  td:first-child{font-family:var(--display);font-weight:600;white-space:nowrap}
+  .pill{display:inline-block;font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;padding:.12rem .45rem;margin-right:.4rem;white-space:nowrap}
+  .ag th:nth-child(1),.ag td:nth-child(1){width:21%}
+  .ag th:nth-child(2),.ag td:nth-child(2){width:36%}
+  .ag td{font-size:.9rem}
+  .ag td:nth-child(2){color:var(--ink2)}
+  .pill.no{background:var(--inset);color:var(--ink2)}
+  .pill.ok{background:var(--ok-soft);color:var(--ok-ink)}
+
+  /* rollout */
+  .steps{display:grid;margin-top:1.2rem;border-top:1px solid var(--rule2)}
+  .step{display:grid;grid-template-columns:12.5rem 1fr;gap:1.6rem;padding:1.3rem 0 1.5rem;border-bottom:1px solid var(--rule)}
+  .step .when{font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .step.now .when{color:var(--accent);font-weight:500}
+  .step.now .when::before{content:"";display:inline-block;width:.6rem;height:.6rem;border-radius:50%;background:var(--accent);margin-right:.5rem;vertical-align:1px}
+  .step h3{margin:.3rem 0 .5rem;font-size:1.15rem}
+  .step .lead{font-family:var(--display);font-weight:600;font-size:.95rem;color:var(--ink);margin:0}
+  .step ul{margin:0 0 .9rem;padding:0;list-style:none;display:grid;gap:.45rem;font-size:.93rem;color:var(--ink2)}
+  .step li{padding-left:1.05rem;position:relative}
+  .step li::before{content:"";position:absolute;left:0;top:.6em;width:.38rem;height:.38rem;background:var(--rule2)}
+  .step.now li::before{background:var(--accent)}
+  .step .see{font-family:var(--display);font-size:.9rem;color:var(--ink);padding:.6rem .8rem;background:var(--ok-soft);border-left:3px solid var(--ok)}
+  .step .see b{color:var(--ok-ink);font-weight:600}
+  .bg{margin:1.6rem 0 0;padding:.9rem 1.1rem;border:1px solid var(--rule);background:var(--surface);font-size:.95rem;max-width:44rem}
+  .bg b{font-family:var(--display);font-weight:600}
+
+  .asks{counter-reset:ask;display:grid;grid-template-columns:1fr 1fr;gap:1.3rem 3rem;margin-top:1.2rem}
+  .ask{position:relative;padding-left:2.6rem}
+  .ask::before{counter-increment:ask;content:counter(ask);position:absolute;left:0;top:-.1rem;font-family:var(--display);font-size:1.9rem;font-weight:700;color:var(--accent);line-height:1;letter-spacing:-.03em}
+  .ask h3{margin-bottom:.3rem;font-size:1.05rem}
+  .ask p{margin:0;font-size:.95rem;color:var(--ink2)}
+  .kicker{margin:2.2rem 0 0;font-size:1.2rem;line-height:1.4;max-width:38rem;font-style:italic}
+
+  footer{margin-top:3.2rem;padding-top:1rem;border-top:1px solid var(--rule2);font-family:var(--display);font-size:.8rem;color:var(--muted);display:grid;gap:.35rem}
+  footer a{color:var(--ink2)}
+
+  @media (max-width:860px){
+    .nav2,.tpl,.asks{grid-template-columns:1fr}
+    .step{grid-template-columns:1fr;gap:.6rem}
+  }
+  @media (max-width:600px){
+    body{font-size:16px}
+    .move{grid-template-columns:1fr;gap:.3rem}
+    .move .big{font-size:2.2rem}
+    .shead{grid-template-columns:1fr;gap:.3rem}
+    .navcol ul{columns:1}
+  }
+  @media print{body{background:#fff;color:#000;font-size:11pt}.wrap{max-width:none;padding:0}section{break-inside:avoid-page}}
+</style>
+
+  <style>
+  .ex{margin:1.6rem 0}
+  .ex h2{margin:0 0 .3rem}
+  .ex p.what{color:var(--ink2);margin:0 0 .6rem}
+  .ex pre{font-family:var(--mono);font-size:.78rem;line-height:1.45;background:var(--inset);padding:1rem;overflow:auto;border-left:3px solid var(--accent);max-height:34rem;white-space:pre}
+  .ex .src{font-size:.85rem;color:var(--ink2)}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <div class="eyebrow">Ceph documentation · Page templates · September 2026</div>
+    <h1>Four page <span class="v">templates</span></h1>
+    <div class="meta">
+      <span><b>Status</b> Worked examples from the first door, open for comment</span>
+    </div>
+  </header>
+  <p class="intro">These are real pages from the <a href="https://github.com/ceph/ceph/pull/71882">first door</a>, not blank forms. Each follows the Red Hat modular documentation shape, rendered in reStructuredText. Copy the one that matches the page you are writing. The full set is in the <a href="../">proposal</a>.</p>
+  <section class="ex" id="concept">
+    <h2>Concept</h2>
+    <p class="what">One idea the reader needs before acting. Noun-phrase title, a short abstract, the facts in a table, no commands, no third-level headings, Additional Resources at the end.</p>
+    <pre>.. _ceph-cluster-components:
+
+=============================
+ The Parts of a Ceph Cluster
+=============================
+
+.. meta::
+   :description: The daemons that make up a Ceph cluster, what each one does, and how many of each a cluster needs.
+   :ceph-page-type: concept
+   :ceph-applies-to: squid, tentacle
+   :ceph-reviewed: 2026-09
+   :ceph-owner: docs
+
+A Ceph cluster is a set of daemons (background programs) that run on one or
+more hosts. Three kinds
+are always present: Monitors, Managers, and OSDs. Two more are added for
+specific storage interfaces: Metadata Servers for CephFS, and Object Gateways
+for object storage.
+
+.. list-table::
+   :header-rows: 1
+   :widths: 18 14 46 22
+
+   * - Daemon
+     - Process
+     - What it does
+     - How many
+   * - :term:`Monitor &lt;Ceph Monitor&gt;`
+     - ``ceph-mon``
+     - Holds the maps of the cluster state (:ref:`monitor map
+       &lt;display-mon-map&gt;`, Manager map, OSD map, MDS map, CRUSH map) that
+       daemons use to coordinate, and handles authentication between daemons
+       and clients.
+     - Three for redundancy; a majority must be up or the cluster stops. One
+       is enough for a test cluster.
+   * - :term:`Manager &lt;Ceph Manager&gt;`
+     - ``ceph-mgr``
+     - Tracks runtime metrics and cluster state (storage utilization,
+       performance, load) and hosts Python modules for orchestration
+       (deploying daemons, through ``ceph orch``), the :ref:`Dashboard
+       &lt;mgr-dashboard&gt;`, data balancing, and access for non-native clients
+       such as NFS.
+     - Two for high availability, ideally one per Monitor; with one, a
+       Manager restart pauses the Dashboard and modules. One is enough for a
+       test cluster.
+   * - :term:`OSD &lt;Ceph OSD&gt;`
+     - ``ceph-osd``
+     - Manages one storage device, usually one disk. Stores data as objects,
+       replicates, recovers, and rebalances it, and reports OSDs that stop
+       answering heartbeat checks.
+     - At least as many as the number of copies of each object (or of
+       chunks, for erasure coding); below that, pools cannot become healthy.
+       Three for redundancy in production.
+   * - :term:`Metadata Server &lt;Ceph Metadata Server&gt;`
+     - ``ceph-mds``
+     - Stores the metadata of the :term:`Ceph File System` (directory
+       listings, file attributes). Needed only if you use CephFS. See
+       :ref:`orchestrator-cli-cephfs` and :ref:`arch-cephfs`.
+     - At least one active per file system, plus a standby.
+   * - :term:`Object Gateway &lt;Ceph Object Gateway&gt;`
+     - ``ceph-radosgw``
+     - An HTTP gateway that provides S3-compatible and Swift-compatible APIs.
+       Needed only if you use object storage.
+     - One, or more behind a load balancer.
+
+How Data Is Placed
+==================
+
+Ceph stores data as objects in logical pools. Ceph hashes each object name
+to a :term:`placement group&lt;Placement Groups (PGs)&gt;` (PG), and the
+:term:`CRUSH` algorithm calculates which OSDs store that PG. Because every
+daemon and client can run the same calculation, nothing keeps a central lookup
+table, and the cluster can scale, rebalance, and recover on its own.
+
+Additional Resources
+====================
+
+- :doc:`Beginner&#x27;s Guide &lt;beginners-guide&gt;`
+- :ref:`Architecture &lt;architecture&gt;`
+- :ref:`Deploying a Single-Host Test Cluster &lt;quick-start-cephadm&gt;`
+</pre>
+    <p class="src">Source: <a href="https://github.com/eameh-LF/ceph/blob/wip-doc-door1-start-here/doc/start/ceph-cluster-components.rst">doc/start/ceph-cluster-components.rst</a> on the branch · <a href="concept.rst">raw .rst</a></p>
+  </section>
+  <section class="ex" id="procedure">
+    <h2>Procedure</h2>
+    <p class="what">One task. Gerund title, abstract, a visible Applies to line, then Prerequisites, Procedure (one command per step with the output to expect), Verification, Troubleshooting, Next Steps, Additional Resources. Example values fail safely if pasted.</p>
+    <pre>.. _quick-rbd:
+
+========================================
+ Creating and Mounting a Block Device
+========================================
+
+.. meta::
+   :description: Create a Ceph block device image, map it on a client, and mount a file system on it.
+   :ceph-page-type: procedure
+   :ceph-applies-to: squid, tentacle
+   :ceph-reviewed: 2026-09
+   :ceph-owner: rbd
+
+This procedure creates a :term:`Ceph Block Device` (RBD) image, maps it on a
+Linux client, and mounts a file system on it. Use it to try block storage on a
+new cluster. For day-to-day image management, see :ref:`ceph_block_device`.
+
+:Applies to: Squid, Tentacle
+:Last reviewed: September 2026
+
+Prerequisites
+=============
+
+- A running Ceph cluster that reports ``HEALTH_OK``.
+- A Linux client host that has the ``ceph-common`` package installed, and a
+  copy of ``/etc/ceph/ceph.conf`` and of a :term:`keyring&lt;Keyring&gt;` that is
+  allowed to use the cluster. On a cephadm bootstrap host both files are in
+  ``/etc/ceph``; the keyring is ``ceph.client.admin.keyring``.
+- A client host that is not also a host of the Ceph cluster, unless the client
+  is a virtual machine. Mapping a block device with the kernel client on a
+  host that runs Ceph daemons can cause a deadlock.
+
+Procedure
+=========
+
+#. On a cluster host, inside ``cephadm shell``, create a :term:`pool&lt;Pools&gt;`
+   for block device images. This example uses the pool name ``rbd1701``:
+
+   .. prompt:: bash #
+
+      ceph osd pool create rbd1701
+
+   The command prints ``pool &#x27;rbd1701&#x27; created``.
+
+#. Initialize the pool for use by RBD:
+
+   .. prompt:: bash #
+
+      rbd pool init rbd1701
+
+   The command prints nothing on success.
+
+#. On the client host, create a 1 GB image:
+
+   .. prompt:: bash #
+
+      rbd create rbd1701/image1701 --size 1G
+
+   The command prints nothing. ``rbd ls rbd1701`` lists ``image1701``.
+
+#. Map the image to a block device:
+
+   .. prompt:: bash #
+
+      rbd map rbd1701/image1701
+
+   The command prints the device name, for example ``/dev/rbd0``. The next
+   steps use the link ``/dev/rbd/rbd1701/image1701`` that the ``ceph-common``
+   udev rule creates. If that link does not exist, use the ``/dev/rbdN`` name
+   instead.
+
+#. Create a file system on the device:
+
+   .. prompt:: bash #
+
+      mkfs.ext4 /dev/rbd/rbd1701/image1701
+
+   The output ends with ``Writing superblocks and filesystem accounting
+   information: done``.
+
+#. Create a mount point:
+
+   .. prompt:: bash #
+
+      mkdir /mnt/ceph-block-device
+
+#. Mount the file system:
+
+   .. prompt:: bash #
+
+      mount /dev/rbd/rbd1701/image1701 /mnt/ceph-block-device
+
+   The command prints nothing on success.
+
+Verification
+============
+
+- List the mapped images:
+
+  .. prompt:: bash #
+
+     rbd device list
+
+  The output shows ``image1701`` in pool ``rbd1701`` and the device that it is
+  mapped to.
+
+- Confirm that the file system is mounted:
+
+  .. prompt:: bash #
+
+     df -h /mnt/ceph-block-device
+
+  The output shows the ``/dev/rbd`` device mounted on
+  ``/mnt/ceph-block-device`` with about 1 GB of space.
+
+Troubleshooting
+===============
+
+- If ``rbd map`` reports ``RBD image feature set mismatch``, the kernel on the
+  client does not support every feature that is enabled on the image. Run the
+  ``rbd feature disable`` command that the error message suggests, then map
+  the image again.
+- If ``rbd map`` reports ``rbd: map failed: (2) No such file or directory`` or
+  ``modprobe: FATAL: Module rbd not found``, the client kernel has no ``rbd``
+  module. Run ``modprobe rbd``, then map the image again.
+- If ``mkfs.ext4`` or ``mount`` reports ``No such file or directory`` for
+  ``/dev/rbd/rbd1701/image1701``, the udev link was not created. Use the
+  ``/dev/rbdN`` device name that ``rbd map`` printed.
+- If ``rbd`` commands hang or report an authentication error, check that
+  ``/etc/ceph/ceph.conf`` and the keyring on the client are copies of the
+  files on the cluster. Then check that the client can reach the Monitors
+  over the network.
+
+Next Steps
+==========
+
+- Map the image automatically at boot. See the :ref:`rbdmap manpage &lt;rbdmap&gt;`.
+- Create a Ceph user for block device clients instead of using the ``admin``
+  user. See :doc:`/rbd/rados-rbd-cmds`.
+
+Additional Resources
+====================
+
+- :ref:`ceph_block_device`
+- :ref:`Pools &lt;rados_pools&gt;`
+- :doc:`/rbd/rbd-ko`
+</pre>
+    <p class="src">Source: <a href="https://github.com/eameh-LF/ceph/blob/wip-doc-door1-start-here/doc/start/quick-rbd.rst">doc/start/quick-rbd.rst</a> on the branch · <a href="procedure.rst">raw .rst</a></p>
+  </section>
+  <section class="ex" id="reference">
+    <h2>Reference</h2>
+    <p class="what">Facts to look up. Abstract of one or two sentences, then the table, then Additional Resources.</p>
+    <pre>.. _minimum-hardware:
+
+=============================
+ Minimum Hardware per Daemon
+=============================
+
+.. meta::
+   :description: The minimum CPU, memory, storage, and network resources for each Ceph daemon.
+   :ceph-page-type: reference
+   :ceph-applies-to: squid, tentacle
+   :ceph-reviewed: 2026-09
+   :ceph-owner: docs
+
+The smallest configuration that each daemon runs with. Cores means threads
+when hyperthreading is enabled. Production clusters need more; see
+:ref:`hardware-recommendations`.
+
++--------------+----------------+------------------------------------------+
+|  Process     | Criteria       | Minimum (recommended where shown)        |
++==============+================+==========================================+
+| ``ceph-osd`` | Processor      | 1 thread minimum, 3 recommended per HDD  |
+|              |                | OSD; 4 minimum, 6 recommended per NVMe   |
+|              |                | SSD OSD.                                 |
+|              +----------------+------------------------------------------+
+|              | RAM            | &gt;= 4 GiB per OSD; see :ref:`CPU and      |
+|              |                | Memory Sizing &lt;hardware-cpu-memory&gt;`     |
+|              +----------------+------------------------------------------+
+|              | Storage Drives | 1x storage drive per OSD in most cases.  |
+|              |                | PCIe Gen 4+ SSDs larger than 30 TB may   |
+|              |                | benefit from being split into two or     |
+|              |                | more OSDs.                               |
+|              +----------------+------------------------------------------+
+|              | DB/WAL offload |  1x SSD partition per HDD OSD            |
+|              | (optional)     |  4-5x HDD OSDs per DB/WAL SATA SSD       |
+|              |                |  &lt;= 15 HDD OSDs per DB/WAL NVMe SSD      |
+|              +----------------+------------------------------------------+
+|              | Network        | 1 Gb/s minimum; 10 Gb/s recommended      |
+|              |                | (:ref:`Network Sizing                    |
+|              |                | &lt;hardware-networks&gt;`)                    |
++--------------+----------------+------------------------------------------+
+| ``ceph-mon`` | Processor      | 2 cores minimum                          |
+|              +----------------+------------------------------------------+
+|              | RAM            |  &gt;= 5 GB per daemon (large / production  |
+|              |                |  clusters need more)                     |
+|              +----------------+------------------------------------------+
+|              | Storage        |  100 GB per daemon, SSD strongly urged   |
+|              +----------------+------------------------------------------+
+|              | Network        | 1 Gb/s minimum; 10 Gb/s recommended      |
+|              |                | (:ref:`Network Sizing                    |
+|              |                | &lt;hardware-networks&gt;`)                    |
++--------------+----------------+------------------------------------------+
+| ``ceph-mds`` | Processor      | 2 cores minimum, higher freq is better   |
+|              |                | than more cores                          |
+|              +----------------+------------------------------------------+
+|              | RAM            |  &gt;= 8 GiB per daemon                     |
+|              +----------------+------------------------------------------+
+|              | Network        | 1 Gb/s minimum; 10 Gb/s recommended      |
+|              |                | (:ref:`Network Sizing                    |
+|              |                | &lt;hardware-networks&gt;`)                    |
++--------------+----------------+------------------------------------------+
+
+Thread counts are before replication and vary with CPU and drive model,
+erasure coding, and compression; ARM CPUs may need more cores. Benchmark.
+
+.. warning:: Use enterprise-quality storage media for production workloads.
+
+.. tip:: Use a separate drive for the OS. If a node has only one drive, put
+   the OSD on its own partition. See
+   :ref:`Storage Devices &lt;hardware-storage-devices&gt;`.
+
+Additional Resources
+====================
+
+- :ref:`hardware-recommendations`
+- :ref:`os-recommendations`
+</pre>
+    <p class="src">Source: <a href="https://github.com/eameh-LF/ceph/blob/wip-doc-door1-start-here/doc/start/minimum-hardware.rst">doc/start/minimum-hardware.rst</a> on the branch · <a href="reference.rst">raw .rst</a></p>
+  </section>
+  <section class="ex" id="door">
+    <h2>Door page (assembly)</h2>
+    <p class="what">A door or section page. Abstract, a hidden toctree so every page keeps its own URL, the pages grouped by what the reader is doing, Next Steps, Additional Resources.</p>
+    <pre>.. _start-here:
+
+============
+ Start Here
+============
+
+.. meta::
+   :description: The starting point for readers who are new to Ceph: what to read, what to try, and where to look things up.
+   :ceph-page-type: assembly
+   :ceph-applies-to: squid, tentacle
+   :ceph-reviewed: 2026-09
+   :ceph-owner: docs
+
+Read the Learn pages, then deploy a test cluster under Set Up. The Look Up
+pages hold the numbers you need while you plan.
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   Beginner&#x27;s Guide &lt;beginners-guide&gt;
+   ceph-cluster-components
+   quick-start-cephadm
+   quick-rbd
+   Hardware Recommendations &lt;hardware-recommendations&gt;
+   minimum-hardware
+   hardware-cpu-memory
+   hardware-storage-devices
+   hardware-networks
+   OS Recommendations &lt;os-recommendations&gt;
+   get-involved
+   documenting-ceph
+
+Learn
+=====
+
+Read these before you install anything.
+
+- :doc:`Beginner&#x27;s Guide &lt;beginners-guide&gt;`: what Ceph is, in plain language.
+- :ref:`The Parts of a Ceph Cluster &lt;ceph-cluster-components&gt;`: the daemons
+  in a cluster, what each one does, and how many you need.
+- :ref:`Architecture &lt;architecture&gt;`: how Ceph stores data, places it with
+  :term:`CRUSH`, and recovers from failures.
+- :ref:`Hardware Recommendations &lt;hardware-recommendations&gt;`: how to choose
+  CPUs, memory, storage devices, and networks for a cluster.
+
+Set Up
+======
+
+- :ref:`Deploying a Single-Host Test Cluster &lt;quick-start-cephadm&gt;`: a working
+  cluster on one machine, for learning and testing.
+- :ref:`Creating and Mounting a Block Device &lt;quick-rbd&gt;`: a first block
+  device on the new cluster.
+
+Look Up
+=======
+
+- :ref:`Minimum Hardware per Daemon &lt;minimum-hardware&gt;`: the smallest
+  configuration for each daemon.
+- :ref:`CPU and Memory Sizing &lt;hardware-cpu-memory&gt;`: cores and RAM for each
+  daemon, and the settings that control memory use.
+- :ref:`Storage Devices &lt;hardware-storage-devices&gt;`: drive layout, HDD and
+  SSD selection, controllers, and write caches.
+- :ref:`Network Sizing &lt;hardware-networks&gt;`: link speeds, replication times,
+  bonding, and management networks.
+- :ref:`OS Recommendations &lt;os-recommendations&gt;`: the platforms that each Ceph
+  release is built and tested on.
+- :ref:`Ceph Releases &lt;ceph-releases-general&gt;`: the release cycle, and which
+  releases are currently maintained.
+- :doc:`Glossary &lt;/glossary&gt;`: definitions of the terms used throughout this
+  documentation.
+
+Next Steps
+==========
+
+- Deploy a production cluster. See :ref:`cephadm_deploying_new_cluster`, or
+  :ref:`install-overview` for the other installation methods, including Rook
+  for Kubernetes.
+- Set up the kind of storage that your applications need:
+  :ref:`Ceph Block Device &lt;ceph_block_device&gt;`,
+  :ref:`Ceph File System &lt;ceph-file-system&gt;`,
+  :ref:`Ceph Object Gateway &lt;object-gateway&gt;`, or
+  :ref:`Ceph CSI &lt;ceph-csi&gt;` for Kubernetes.
+
+Additional Resources
+====================
+
+- :ref:`Ceph Community Channels &lt;get-involved&gt;`: mailing lists, chat channels, and
+  community meetings.
+- :ref:`Troubleshooting &lt;rados_troubleshooting&gt;`: what to check when a
+  cluster is unhealthy.
+- :ref:`Documenting Ceph &lt;documenting_ceph&gt;`: how to fix or improve this
+  documentation.
+</pre>
+    <p class="src">Source: <a href="https://github.com/eameh-LF/ceph/blob/wip-doc-door1-start-here/doc/start/index.rst">doc/start/index.rst</a> on the branch · <a href="door.rst">raw .rst</a></p>
+  </section>
+  <footer>
+    <span>Templates follow the <a href="https://redhat-documentation.github.io/modular-docs/">Red Hat modular documentation reference guide</a>. Page metadata field names are a proposal for the comment period.</span>
+  </footer>
+</div>
+</body>
+</html>

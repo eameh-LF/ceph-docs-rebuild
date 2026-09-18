@@ -35,7 +35,7 @@ Page counts are today's pages mapped to each door. About 90 need rewriting; the 
 
 ## 2. Modular pages: three types, one template
 
-Every page becomes one of three types and follows one template. A procedure covers one task, says which releases it applies to, and ends with how to check it worked. Repeated procedures are written once and pulled in wherever they are needed, so they cannot drift apart. Creating a pool for RBD images is written out six times in the Block section today, and only one of those copies tells you how to verify it.
+Every page becomes one of three types and follows one template. Door and section pages follow the same template's fourth shape, the assembly: an intro, the pages grouped by what the reader is doing, then next steps. A procedure covers one task, says which releases it applies to, and ends with how to check it worked. Repeated procedures are written once and pulled in wherever they are needed, so they cannot drift apart. Creating a pool for RBD images is written out six times in the Block section today, and only one of those copies tells you how to verify it.
 
 - **Concept.** Explains one idea the reader needs before acting. No commands, no steps.
 - **Procedure.** One task, numbered steps, one command per step, expected output, verification.
@@ -45,17 +45,17 @@ A procedure page, using "Create an erasure-coded pool" as the example:
 
 | Part | Content |
 |---|---|
-| Metadata | type: procedure. applies to: Squid, Tentacle. reviewed: 2026-09. owner: rados |
-| Before you start | Cluster health, permissions, an EC profile chosen |
-| Steps | Numbered. One command each, with the output you should see |
-| Verify | The command that proves it worked |
-| If it fails | The two or three most common failures and what they mean |
-| Related | The concept behind it, the reference for every option |
+| Metadata | type: procedure. applies to: Squid, Tentacle. reviewed: 2026-09. owner: rados. Applies to and Last reviewed also appear in the page body, because the Markdown view that assistants fetch drops hidden metadata |
+| Prerequisites | Cluster health, permissions, an EC profile chosen |
+| Procedure | Numbered. One command each, with the output you should see |
+| Verification | The command that proves it worked |
+| Troubleshooting | The two or three most common failures and what they mean |
+| Next steps, Additional resources | What to do next; the concept behind it and the reference for every option |
 | House rules | Cross-link related pages generously. Example values fail safely if pasted (osd.1701, not osd.0) |
 
 Command reference stays in the man pages, so it still works offline. Prose pages pull the entry from there when the docs are built, rather than repeating it. The first trial is already up as [PR 71609](https://github.com/ceph/ceph/pull/71609).
 
-Red Hat and IBM already write their Ceph guides this way, with the same prerequisites, procedure and verification shape.
+The headings are the ones Red Hat Ceph Storage guides already use, so contributors who know those guides need nothing new. Every page is also cut to what the reader needs to act, following the four minimalism principles (action oriented, anchored in the task, error recovery, reading to do or to look up). Worked examples in reStructuredText are in the [templates](templates/) folder.
 
 ## 3. Machine-readable, as a byproduct
 
@@ -86,6 +86,8 @@ Change the front of the site. Move nothing.
 - Agree the page template, and walk the map through with the docs team before anything moves.
 
 **You will see:** docs.ceph.com opens on seven clear ways in, and every existing link still works.
+
+**Where this stands (18 September):** the first door is built and up for review as a draft, [PR 71882](https://github.com/ceph/ceph/pull/71882). Start Here, Architecture and the landing page: 14 pages, every one on the template, no file moved. The 4,300-word hardware page became a principles page and four lookup pages. Both quick starts end with verification and troubleshooting. Each page went through independent review passes that checked every command against the source and cut a fifth of the words; those passes also caught a benchmark example that had been wrong on the live site for years.
 
 ### Step 2, Nov to Dec 2026: first service rebuilt
 
