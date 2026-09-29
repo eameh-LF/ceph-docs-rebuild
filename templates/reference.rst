@@ -7,9 +7,6 @@
 .. meta::
    :description: The minimum CPU, memory, storage, and network resources for each Ceph daemon.
    :ceph-page-type: reference
-   :ceph-applies-to: squid, tentacle
-   :ceph-reviewed: 2026-09
-   :ceph-owner: docs
 
 The smallest configuration that each daemon runs with. Cores means threads
 when hyperthreading is enabled. Production clusters need more; see
@@ -31,7 +28,7 @@ when hyperthreading is enabled. Production clusters need more; see
 |              |                | more OSDs.                               |
 |              +----------------+------------------------------------------+
 |              | DB/WAL offload |  1x SSD partition per HDD OSD            |
-|              | (optional)     |  4-5x HDD OSDs per DB/WAL SATA SSD       |
+|              | (optional)     |  4-5x HDD OSDs per DB/WAL SAS or SATA SSD|
 |              |                |  <= 15 HDD OSDs per DB/WAL NVMe SSD      |
 |              +----------------+------------------------------------------+
 |              | Network        | 1 Gb/s minimum; 10 Gb/s recommended      |

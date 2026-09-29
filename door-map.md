@@ -1,7 +1,7 @@
 
 # Ceph docs rebuild: door map
 
-Companion to the Ceph Docs Rebuild proposal. Drafted 2 September 2026 against ceph/ceph main at commit d78578929f9 (616 .rst pages). Two pages have been added to main since, a CephFS quality-of-service page and a developer page, so the tree now stands at 618; neither changes the mapping. Every table below is a proposal for the team to correct; the Ambiguities section lists the judgment calls that need a decision.
+Companion to the Ceph Docs Rebuild proposal. Drafted 2 September 2026 against ceph/ceph main at commit d78578929f9 (616 .rst pages). Two pages have been added to main since, a CephFS quality-of-service page and a developer page, so the tree now stands at 618; neither changes the mapping. Door 1 has since merged, as [PR 71882](https://github.com/ceph/ceph/pull/71882) on 29 September 2026, so the index.rst, start/ and architecture/ rows below describe those pages as they were before it. In that change quick-rbd became a cephadm quick start, and the hardware and OS pages are linked from Start Here for now. Every table below is a proposal for the team to correct; the Ambiguities section lists the judgment calls that need a decision.
 
 ## Map of old pages to new homes
 
@@ -459,7 +459,7 @@ Rule for the rewrite estimate. A page counts as "rewrite" if any of these hold: 
 17. Windows client pages. install/windows-install, windows-basic-config and windows-troubleshooting are orphans; rbd/rbd-windows and cephfs/ceph-dokan cover the same clients. Recommendation: Door 2 > Clients > Windows for install and config, the service pages keep mapping and mounting, windows-troubleshooting joins Door 5.
 18. Monitoring spread. monitoring/index, cephadm/services/monitoring, mgr/prometheus, mgr/alerts and the per-service metrics pages (radosgw/metrics, cephfs/metrics, rbd iscsi-monitoring) are five homes. Recommendation: Door 3 > Monitoring landing owns the stack (deploy, Prometheus module, alerts, SNMP, hardware); each service's Operate part owns its metrics page; monitoring/index's per-service sections move to the services.
 19. Tracing. jaegertracing/index, cephadm/services/tracing and dev/developer_guide/jaegertracing describe the same setup. Recommendation: one Operate page (deploy and enable tracing) and one Door 7 page (instrumenting code).
-20. start/quick-rbd. Reachable only from an iSCSI page, written for pre-cephadm clusters. Recommendation: rewrite as the Door 1 block quick start on top of cephadm, or retire in favour of the Block Set up procedures.
+20. start/quick-rbd. Reachable only from an iSCSI page, written for pre-cephadm clusters. Recommendation: rewrite as the Door 1 block quick start on top of cephadm, or retire in favour of the Block Set up procedures. Settled in PR 71882: rewritten as the Door 1 block quick start.
 21. Dashboard. mgr/dashboard.rst is 1752 lines and a root toctree entry. Recommendation: Door 3 > Dashboard with three pages (set up and SSO, operate, feature reference); the 2748-line dash-devel stays in Door 7.
 22. Naming and orphan hygiene found during the mapping: cephfs/standby.rst has no document title; radosgw/index links rgw-cache.rst with its extension; cephfs/experimental-features.rst is not in any toctree; the three .inc.rst files under mgr/dashboard_plugins are includes and must not be given metadata blocks of their own.
 

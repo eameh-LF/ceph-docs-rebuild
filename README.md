@@ -5,7 +5,7 @@ A proposal to the Ceph documentation team: rebuild docs.ceph.com around what the
 - **The proposal:** https://eameh-lf.github.io/ceph-docs-rebuild/
 - **The door map**, every page on `main` assigned to its new home: https://eameh-lf.github.io/ceph-docs-rebuild/door-map/
 - **The page templates**, four worked examples from the first door: https://eameh-lf.github.io/ceph-docs-rebuild/templates/
-- **The first door**, up for review as a draft: https://github.com/ceph/ceph/pull/71882
+- **The first door**, merged into ceph/ceph main on 29 September 2026 and live at https://docs.ceph.com/en/latest/start/ (pull request: https://github.com/ceph/ceph/pull/71882)
 
 The same content as plain Markdown, for reading or quoting in review: [proposal.md](proposal.md) and [door-map.md](door-map.md).
 

@@ -179,10 +179,10 @@
     <div class="eyebrow">Ceph documentation · Page templates · September 2026</div>
     <h1>Four page <span class="v">templates</span></h1>
     <div class="meta">
-      <span><b>Status</b> Worked examples from the first door, open for comment</span>
+      <span><b>Status</b> Worked examples from the first door, merged into ceph/ceph main</span>
     </div>
   </header>
-  <p class="intro">These are real pages from the <a href="https://github.com/ceph/ceph/pull/71882">first door</a>, not blank forms. Each follows the Red Hat modular documentation shape, rendered in reStructuredText. Copy the one that matches the page you are writing. The full set is in the <a href="../">proposal</a>.</p>
+  <p class="intro">These are real pages from the <a href="https://docs.ceph.com/en/latest/start/">first door</a> (merged as <a href="https://github.com/ceph/ceph/pull/71882">PR 71882</a>), not blank forms. Each follows the Red Hat modular documentation shape, rendered in reStructuredText. Copy the one that matches the page you are writing. The full set is in the <a href="../">proposal</a>.</p>
   <section class="ex" id="concept">
     <h2>Concept</h2>
     <p class="what">One idea the reader needs before acting. Noun-phrase title, a short abstract, the facts in a table, no commands, no third-level headings, Additional Resources at the end.</p>
@@ -193,17 +193,13 @@
 =============================
 
 .. meta::
-   :description: The daemons that make up a Ceph cluster, what each one does, and how many of each a cluster needs.
+   :description: The daemons in a Ceph cluster, what each does, and how many a cluster needs.
    :ceph-page-type: concept
-   :ceph-applies-to: squid, tentacle
-   :ceph-reviewed: 2026-09
-   :ceph-owner: docs
 
 A Ceph cluster is a set of daemons (background programs) that run on one or
-more hosts. Three kinds
-are always present: Monitors, Managers, and OSDs. Two more are added for
-specific storage interfaces: Metadata Servers for CephFS, and Object Gateways
-for object storage.
+more hosts. Three kinds are always present: Monitors, Managers, and OSDs. Two
+more are added for specific storage interfaces: Metadata Servers for CephFS,
+and Object Gateways for object storage.
 
 .. list-table::
    :header-rows: 1
@@ -228,16 +224,16 @@ for object storage.
        (deploying daemons, through ``ceph orch``), the :ref:`Dashboard
        &lt;mgr-dashboard&gt;`, data balancing, and access for non-native clients
        such as NFS.
-     - Two for high availability, ideally one per Monitor; with one, a
-       Manager restart pauses the Dashboard and modules. One is enough for a
-       test cluster.
+     - At least two for high availability, ideally one per Monitor; with
+       one, a Manager restart pauses the Dashboard and modules. One is enough
+       for a test cluster.
    * - :term:`OSD &lt;Ceph OSD&gt;`
      - ``ceph-osd``
-     - Manages one storage device, usually one disk. Stores data as objects,
-       replicates, recovers, and rebalances it, and reports OSDs that stop
-       answering heartbeat checks.
-     - At least as many as the number of copies of each object (or of
-       chunks, for erasure coding); below that, pools cannot become healthy.
+     - Manages one unit of underlying storage, usually an entire HDD or SSD.
+       Stores data as objects, replicates, recovers, and rebalances it, and
+       reports OSDs that stop answering heartbeat checks.
+     - At least as many as the number of object replicas or shards; below
+       that, pools cannot become healthy.
        Three for redundancy in production.
    * - :term:`Metadata Server &lt;Ceph Metadata Server&gt;`
      - ``ceph-mds``
@@ -267,11 +263,11 @@ Additional Resources
 - :ref:`Architecture &lt;architecture&gt;`
 - :ref:`Deploying a Single-Host Test Cluster &lt;quick-start-cephadm&gt;`
 </pre>
-    <p class="src">Source: <a href="https://github.com/eameh-LF/ceph/blob/wip-doc-door1-start-here/doc/start/ceph-cluster-components.rst">doc/start/ceph-cluster-components.rst</a> on the branch · <a href="concept.rst">raw .rst</a></p>
+    <p class="src">Source: <a href="https://github.com/ceph/ceph/blob/d732a9bd76697df3927f61ef37c40c9ec6d81913/doc/start/ceph-cluster-components.rst">doc/start/ceph-cluster-components.rst</a> as merged · <a href="concept.rst">raw .rst</a></p>
   </section>
   <section class="ex" id="procedure">
     <h2>Procedure</h2>
-    <p class="what">One task. Gerund title, abstract, a visible Applies to line, then Prerequisites, Procedure (one command per step with the output to expect), Verification, Troubleshooting, Next Steps, Additional Resources. Example values fail safely if pasted.</p>
+    <p class="what">One task. Gerund title, abstract, then Prerequisites, Procedure (one command per step with the output to expect), Verification, Troubleshooting, Next Steps, Additional Resources. Example values fail safely if pasted.</p>
     <pre>.. _quick-rbd:
 
 ========================================
@@ -281,16 +277,10 @@ Additional Resources
 .. meta::
    :description: Create a Ceph block device image, map it on a client, and mount a file system on it.
    :ceph-page-type: procedure
-   :ceph-applies-to: squid, tentacle
-   :ceph-reviewed: 2026-09
-   :ceph-owner: rbd
 
 This procedure creates a :term:`Ceph Block Device` (RBD) image, maps it on a
 Linux client, and mounts a file system on it. Use it to try block storage on a
 new cluster. For day-to-day image management, see :ref:`ceph_block_device`.
-
-:Applies to: Squid, Tentacle
-:Last reviewed: September 2026
 
 Prerequisites
 =============
@@ -419,11 +409,11 @@ Additional Resources
 - :ref:`Pools &lt;rados_pools&gt;`
 - :doc:`/rbd/rbd-ko`
 </pre>
-    <p class="src">Source: <a href="https://github.com/eameh-LF/ceph/blob/wip-doc-door1-start-here/doc/start/quick-rbd.rst">doc/start/quick-rbd.rst</a> on the branch · <a href="procedure.rst">raw .rst</a></p>
+    <p class="src">Source: <a href="https://github.com/ceph/ceph/blob/d732a9bd76697df3927f61ef37c40c9ec6d81913/doc/start/quick-rbd.rst">doc/start/quick-rbd.rst</a> as merged · <a href="procedure.rst">raw .rst</a></p>
   </section>
   <section class="ex" id="reference">
     <h2>Reference</h2>
-    <p class="what">Facts to look up. Abstract of one or two sentences, then the table, then Additional Resources.</p>
+    <p class="what">Facts to look up. Abstract of one or two sentences, then the table, then Additional Resources. This page comes from the hardware split, which I am testing with the community through a short survey, so its final shape may change.</p>
     <pre>.. _minimum-hardware:
 
 =============================
@@ -433,9 +423,6 @@ Additional Resources
 .. meta::
    :description: The minimum CPU, memory, storage, and network resources for each Ceph daemon.
    :ceph-page-type: reference
-   :ceph-applies-to: squid, tentacle
-   :ceph-reviewed: 2026-09
-   :ceph-owner: docs
 
 The smallest configuration that each daemon runs with. Cores means threads
 when hyperthreading is enabled. Production clusters need more; see
@@ -457,7 +444,7 @@ when hyperthreading is enabled. Production clusters need more; see
 |              |                | more OSDs.                               |
 |              +----------------+------------------------------------------+
 |              | DB/WAL offload |  1x SSD partition per HDD OSD            |
-|              | (optional)     |  4-5x HDD OSDs per DB/WAL SATA SSD       |
+|              | (optional)     |  4-5x HDD OSDs per DB/WAL SAS or SATA SSD|
 |              |                |  &lt;= 15 HDD OSDs per DB/WAL NVMe SSD      |
 |              +----------------+------------------------------------------+
 |              | Network        | 1 Gb/s minimum; 10 Gb/s recommended      |
@@ -500,7 +487,7 @@ Additional Resources
 - :ref:`hardware-recommendations`
 - :ref:`os-recommendations`
 </pre>
-    <p class="src">Source: <a href="https://github.com/eameh-LF/ceph/blob/wip-doc-door1-start-here/doc/start/minimum-hardware.rst">doc/start/minimum-hardware.rst</a> on the branch · <a href="reference.rst">raw .rst</a></p>
+    <p class="src">Source: <a href="https://github.com/ceph/ceph/blob/d732a9bd76697df3927f61ef37c40c9ec6d81913/doc/start/minimum-hardware.rst">doc/start/minimum-hardware.rst</a> as merged · <a href="reference.rst">raw .rst</a></p>
   </section>
   <section class="ex" id="door">
     <h2>Door page (assembly)</h2>
@@ -514,9 +501,6 @@ Additional Resources
 .. meta::
    :description: The starting point for readers who are new to Ceph: what to read, what to try, and where to look things up.
    :ceph-page-type: assembly
-   :ceph-applies-to: squid, tentacle
-   :ceph-reviewed: 2026-09
-   :ceph-owner: docs
 
 Read the Learn pages, then deploy a test cluster under Set Up. The Look Up
 pages hold the numbers you need while you plan.
@@ -599,10 +583,10 @@ Additional Resources
 - :ref:`Documenting Ceph &lt;documenting_ceph&gt;`: how to fix or improve this
   documentation.
 </pre>
-    <p class="src">Source: <a href="https://github.com/eameh-LF/ceph/blob/wip-doc-door1-start-here/doc/start/index.rst">doc/start/index.rst</a> on the branch · <a href="door.rst">raw .rst</a></p>
+    <p class="src">Source: <a href="https://github.com/ceph/ceph/blob/d732a9bd76697df3927f61ef37c40c9ec6d81913/doc/start/index.rst">doc/start/index.rst</a> as merged · <a href="door.rst">raw .rst</a></p>
   </section>
   <footer>
-    <span>Templates follow the <a href="https://redhat-documentation.github.io/modular-docs/">Red Hat modular documentation reference guide</a>. Page metadata field names are a proposal for the comment period.</span>
+    <span>Templates follow the <a href="https://redhat-documentation.github.io/modular-docs/">Red Hat modular documentation reference guide</a>. Each page carries two metadata fields, description and ceph-page-type.</span>
   </footer>
 </div>
 </body>
